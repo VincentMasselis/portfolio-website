@@ -1,0 +1,62 @@
+package com.masselis.portfolio.ui.screens
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.masselis.portfolio.data.PortfolioData
+import com.masselis.portfolio.ui.components.ProjectCard
+import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.layout.PortfolioScaffold
+import com.masselis.portfolio.ui.theme.DarkNavy
+import com.masselis.portfolio.ui.theme.LightGray
+
+@Composable
+fun ProjectsScreen(navController: NavController) {
+    PortfolioScaffold(navController) {
+        ProjectsHeaderSection()
+        ProjectsListSection()
+    }
+}
+
+@Composable
+private fun ProjectsHeaderSection() {
+    Section(backgroundColor = DarkNavy) {
+        Text(
+            text = "MES R\u00C9ALISATIONS",
+            style = MaterialTheme.typography.displaySmall,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = "D\u00E9couvrez mes projets Android et multiplateformes.",
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.White.copy(alpha = 0.7f),
+        )
+    }
+}
+
+@Composable
+private fun ProjectsListSection() {
+    Section(backgroundColor = LightGray) {
+        PortfolioData.projects.forEachIndexed { index, project ->
+            ProjectCard(
+                title = project.title,
+                description = project.description,
+                bulletPoints = project.bulletPoints,
+                techStack = project.techStack,
+            )
+            if (index < PortfolioData.projects.lastIndex) {
+                Spacer(Modifier.height(24.dp))
+            }
+        }
+    }
+}
