@@ -35,9 +35,10 @@ internal fun TopNavBar(
     windowSizeClass: WindowSizeClass,
     onNavigate: (Route) -> Unit,
     onMenuClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(DarkNavy)
             .padding(horizontal = 24.dp, vertical = 12.dp),

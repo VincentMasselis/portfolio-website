@@ -17,8 +17,8 @@ import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 
 @Composable
-internal fun ProjectsScreen() {
-    Column {
+internal fun ProjectsScreen(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         ProjectsHeaderSection()
         ProjectsListSection()
     }

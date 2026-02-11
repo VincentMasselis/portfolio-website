@@ -36,8 +36,8 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-internal fun ContactScreen() {
-    Column {
+internal fun ContactScreen(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         ContactHeaderSection()
         ContactGridSection()
         LocationSection()

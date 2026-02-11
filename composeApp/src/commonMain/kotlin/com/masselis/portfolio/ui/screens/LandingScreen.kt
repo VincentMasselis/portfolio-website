@@ -39,8 +39,8 @@ import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-internal fun LandingScreen(navController: NavController) {
-    Column {
+internal fun LandingScreen(navController: NavController, modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         HeroSection(onCtaClick = { navController.navigate(Route.Projects) })
         ProjectsPreviewSection()
         AboutPreviewSection()

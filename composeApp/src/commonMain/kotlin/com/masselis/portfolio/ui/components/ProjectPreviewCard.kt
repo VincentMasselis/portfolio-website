@@ -24,36 +24,37 @@ import org.jetbrains.compose.resources.painterResource
 internal fun ProjectPreviewCard(
     title: String,
     bulletPoints: List<String>,
-    image: DrawableResource
+    image: DrawableResource,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier.Companion
+        modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Color.Companion.White),
+            .background(Color.White),
     ) {
         Image(
             painter = painterResource(image),
             contentDescription = title,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(160.dp),
         )
-        Column(modifier = Modifier.Companion.padding(16.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Companion.Bold,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
             )
-            Spacer(Modifier.Companion.height(8.dp))
+            Spacer(Modifier.height(8.dp))
             bulletPoints.forEach { point ->
                 Text(
                     text = "- $point",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.Companion.padding(vertical = 2.dp),
+                    modifier = Modifier.padding(vertical = 2.dp),
                 )
             }
         }
