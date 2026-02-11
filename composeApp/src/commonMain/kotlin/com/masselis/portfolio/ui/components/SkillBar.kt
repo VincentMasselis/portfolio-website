@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.theme.AccentGreen
 
 @Composable
-internal fun SkillBar(label: String, progress: Float) {
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+internal fun SkillBar(label: String, progress: Float, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(vertical = 8.dp)) {
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,

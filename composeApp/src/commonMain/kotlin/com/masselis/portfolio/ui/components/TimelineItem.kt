@@ -27,9 +27,10 @@ internal fun TimelineItem(
     title: String,
     description: String,
     isLast: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier.height(IntrinsicSize.Min),
+        modifier = modifier.height(IntrinsicSize.Min),
         verticalAlignment = Alignment.Top,
     ) {
         // Date column

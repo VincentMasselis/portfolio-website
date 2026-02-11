@@ -124,6 +124,7 @@ public fun App(
                                     currentRoute = currentRoute,
                                     windowSizeClass = windowSizeClass,
                                     onNavigate = navigateTo,
+                                    bottomPadding = it.calculateBottomPadding()
                                 )
                             }
                         }

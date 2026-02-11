@@ -30,9 +30,10 @@ import com.masselis.portfolio.ui.theme.DarkNavy
 internal fun NavigationDrawerContent(
     currentRoute: Route,
     onNavigate: (Route) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .width(280.dp)
             .fillMaxHeight()
             .background(DarkNavy)
