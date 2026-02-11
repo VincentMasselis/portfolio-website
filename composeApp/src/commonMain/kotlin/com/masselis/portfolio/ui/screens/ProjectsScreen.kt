@@ -1,6 +1,6 @@
 package com.masselis.portfolio.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -10,17 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.Section
-import com.masselis.portfolio.ui.layout.PortfolioScaffold
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 
 @Composable
-fun ProjectsScreen(navController: NavController) {
-    PortfolioScaffold(navController) {
+fun ProjectsScreen() {
+    Column {
         ProjectsHeaderSection()
         ProjectsListSection()
     }

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -29,18 +28,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Section
-import com.masselis.portfolio.ui.layout.PortfolioScaffold
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-fun ContactScreen(navController: NavController) {
-    PortfolioScaffold(navController) {
+fun ContactScreen() {
+    Column {
         ContactHeaderSection()
         ContactGridSection()
         LocationSection()
@@ -90,15 +87,35 @@ private fun ContactGridSection() {
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    ContactGridCard(icons[0], contacts[0].url, contacts[0].label, Modifier.fillMaxWidth())
-                    ContactGridCard(icons[2], contacts[2].url, contacts[2].label, Modifier.fillMaxWidth())
+                    ContactGridCard(
+                        icons[0],
+                        contacts[0].url,
+                        contacts[0].label,
+                        Modifier.fillMaxWidth()
+                    )
+                    ContactGridCard(
+                        icons[2],
+                        contacts[2].url,
+                        contacts[2].label,
+                        Modifier.fillMaxWidth()
+                    )
                 }
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    ContactGridCard(icons[1], contacts[1].url, contacts[1].label, Modifier.fillMaxWidth())
-                    ContactGridCard(icons[3], contacts[3].url, contacts[3].label, Modifier.fillMaxWidth())
+                    ContactGridCard(
+                        icons[1],
+                        contacts[1].url,
+                        contacts[1].label,
+                        Modifier.fillMaxWidth()
+                    )
+                    ContactGridCard(
+                        icons[3],
+                        contacts[3].url,
+                        contacts[3].label,
+                        Modifier.fillMaxWidth()
+                    )
                 }
             }
         }
