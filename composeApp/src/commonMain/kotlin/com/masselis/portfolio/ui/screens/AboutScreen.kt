@@ -37,7 +37,7 @@ import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-fun AboutScreen() {
+internal fun AboutScreen() {
     Column {
         AboutHeroSection()
         SkillsSection()

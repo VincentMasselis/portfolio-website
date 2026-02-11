@@ -8,7 +8,7 @@ import com.masselis.portfolio.navigation.Route
 import kotlinx.browser.window
 
 @OptIn(ExperimentalComposeUiApi::class, kotlin.js.ExperimentalWasmJsInterop::class)
-fun main() {
+internal fun main() {
     ComposeViewport {
         val navController = rememberNavController()
         // Parse initial URL fragment

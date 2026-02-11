@@ -3,7 +3,7 @@ package com.masselis.portfolio.navigation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-sealed interface Route {
+internal sealed interface Route {
     @Serializable
     @SerialName("home")
     data object Home : Route

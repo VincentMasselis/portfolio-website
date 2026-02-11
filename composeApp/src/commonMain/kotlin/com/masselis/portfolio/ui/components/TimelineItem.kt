@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.theme.AccentGreen
 
 @Composable
-fun TimelineItem(
+internal fun TimelineItem(
     dateRange: String,
     title: String,
     description: String,
