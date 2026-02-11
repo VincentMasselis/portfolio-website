@@ -28,7 +28,7 @@ import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-fun Footer(
+internal fun Footer(
     currentRoute: Route,
     windowSizeClass: WindowSizeClass,
     onNavigate: (Route) -> Unit,

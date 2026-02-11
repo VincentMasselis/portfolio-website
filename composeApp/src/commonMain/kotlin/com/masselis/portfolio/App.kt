@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 private val startDestination: Route = Route.Home
 
 @Composable
-fun App(
+public fun App(
     navController: NavHostController = rememberNavController()
 ) {
     PortfolioTheme {

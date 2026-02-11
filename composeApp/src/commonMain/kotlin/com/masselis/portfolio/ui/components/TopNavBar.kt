@@ -30,7 +30,7 @@ import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-fun TopNavBar(
+internal fun TopNavBar(
     currentRoute: Route,
     windowSizeClass: WindowSizeClass,
     onNavigate: (Route) -> Unit,

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.theme.RepoCardBlue
 
 @Composable
-fun RepoCard(
+internal fun RepoCard(
     repoName: String,
     stars: String,
     language: String,

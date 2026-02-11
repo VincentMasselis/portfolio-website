@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.theme.AccentGreen
@@ -38,7 +39,7 @@ import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-fun LandingScreen(navController: NavController) {
+internal fun LandingScreen(navController: NavController) {
     Column {
         HeroSection(onCtaClick = { navController.navigate(Route.Projects) })
         ProjectsPreviewSection()
@@ -91,7 +92,7 @@ private fun ProjectsPreviewSection() {
         val projects = PortfolioData.projects.take(2)
         if (windowSizeClass == WindowSizeClass.Compact) {
             projects.forEach { project ->
-                ProjectPreviewCard(project.title, project.bulletPoints)
+                ProjectPreviewCard(project.title, project.bulletPoints, project.image)
                 Spacer(Modifier.height(16.dp))
             }
         } else {
@@ -101,50 +102,9 @@ private fun ProjectsPreviewSection() {
             ) {
                 projects.forEach { project ->
                     Box(modifier = Modifier.weight(1f)) {
-                        ProjectPreviewCard(project.title, project.bulletPoints)
+                        ProjectPreviewCard(project.title, project.bulletPoints, project.image)
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ProjectPreviewCard(title: String, bulletPoints: List<String>) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color.White),
-    ) {
-        // Green accent header
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp)
-                .background(AccentGreen.copy(alpha = 0.85f)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = "\uD83D\uDCF1",
-                style = MaterialTheme.typography.displayLarge,
-            )
-        }
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Spacer(Modifier.height(8.dp))
-            bulletPoints.forEach { point ->
-                Text(
-                    text = "- $point",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(vertical = 2.dp),
-                )
             }
         }
     }

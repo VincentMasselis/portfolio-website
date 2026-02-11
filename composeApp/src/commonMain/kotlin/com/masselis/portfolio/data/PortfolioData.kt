@@ -1,17 +1,22 @@
 package com.masselis.portfolio.data
 
-data class Skill(val name: String, val progress: Float)
-data class TimelineEntry(val dateRange: String, val title: String, val description: String)
-data class Project(
+import org.jetbrains.compose.resources.DrawableResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.compose_multiplatform
+
+internal data class Skill(val name: String, val progress: Float)
+internal data class TimelineEntry(val dateRange: String, val title: String, val description: String)
+internal data class Project(
     val title: String,
     val description: String,
     val bulletPoints: List<String>,
     val techStack: List<String>,
+    val image: DrawableResource,
 )
-data class ContactInfo(val label: String, val url: String, val iconName: String)
-data class RepoInfo(val name: String, val stars: String, val language: String)
+internal data class ContactInfo(val label: String, val url: String, val iconName: String)
+internal data class RepoInfo(val name: String, val stars: String, val language: String)
 
-object PortfolioData {
+internal object PortfolioData {
     const val heroTitle = "ARCHITECTE D'APPLICATIONS\nANDROID & EXPERT RX"
     const val heroSubtitle = "Je transforme des besoins complexes en exp\u00E9riences mobiles fluides."
 
@@ -63,6 +68,7 @@ object PortfolioData {
                 "100k+ t\u00E9l\u00E9chargements",
             ),
             techStack = listOf("Kotlin", "Jetpack Compose", "Room", "Retrofit"),
+            image = Res.drawable.compose_multiplatform, // TODO Replace with actual project image
         ),
         Project(
             title = "CLIENT : LOGISTICS SOLUTIONS",
@@ -73,6 +79,7 @@ object PortfolioData {
                 "Crash-free rate : 99.9%",
             ),
             techStack = listOf("Kotlin", "MVVM", "Hilt", "Google Maps SDK"),
+            image = Res.drawable.compose_multiplatform, // TODO Replace with actual project image
         ),
         Project(
             title = "SMART HOME CONTROLLER",
@@ -83,6 +90,7 @@ object PortfolioData {
                 "Support hors-ligne",
             ),
             techStack = listOf("KMP", "Compose Multiplatform", "MQTT", "SQLDelight"),
+            image = Res.drawable.compose_multiplatform, // TODO Replace with actual project image
         ),
     )
 

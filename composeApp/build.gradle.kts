@@ -10,6 +10,7 @@ plugins {
 }
 
 kotlin {
+    explicitApi()
     androidLibrary  {
         namespace = "com.masselis.portfolio"
         minSdk = libs.versions.android.minSdk.get().toInt()

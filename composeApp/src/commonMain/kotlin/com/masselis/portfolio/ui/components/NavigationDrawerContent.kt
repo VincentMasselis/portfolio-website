@@ -27,7 +27,7 @@ import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 
 @Composable
-fun NavigationDrawerContent(
+internal fun NavigationDrawerContent(
     currentRoute: Route,
     onNavigate: (Route) -> Unit,
 ) {

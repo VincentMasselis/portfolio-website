@@ -17,7 +17,7 @@ import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 
 @Composable
-fun ProjectsScreen() {
+internal fun ProjectsScreen() {
     Column {
         ProjectsHeaderSection()
         ProjectsListSection()
@@ -51,6 +51,7 @@ private fun ProjectsListSection() {
                 description = project.description,
                 bulletPoints = project.bulletPoints,
                 techStack = project.techStack,
+                image = project.image,
             )
             if (index < PortfolioData.projects.lastIndex) {
                 Spacer(Modifier.height(24.dp))

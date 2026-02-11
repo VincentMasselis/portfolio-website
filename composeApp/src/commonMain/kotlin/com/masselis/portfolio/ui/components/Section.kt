@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Section(
+internal fun Section(
     backgroundColor: Color,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,

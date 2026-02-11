@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.theme.DarkNavy
 
 @Composable
-fun ContactCard(
+internal fun ContactCard(
     icon: ImageVector,
     url: String,
     label: String,

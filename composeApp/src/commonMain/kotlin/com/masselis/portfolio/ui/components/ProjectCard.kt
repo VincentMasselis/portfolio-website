@@ -1,5 +1,6 @@
 package com.masselis.portfolio.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,21 +17,24 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.theme.AccentGreen
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ProjectCard(
+internal fun ProjectCard(
     title: String,
     description: String,
     bulletPoints: List<String>,
     techStack: List<String>,
+    image: DrawableResource,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -39,20 +43,15 @@ fun ProjectCard(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
-        // Green accent header
-        Box(
+        Image(
+            painter = painterResource(image),
+            contentDescription = title,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
-                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-                .background(AccentGreen.copy(alpha = 0.85f)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = "\uD83D\uDCF1",
-                style = MaterialTheme.typography.displayLarge,
-            )
-        }
+                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+        )
 
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
