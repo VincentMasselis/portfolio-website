@@ -3,6 +3,7 @@ package com.masselis.portfolio
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,15 +18,15 @@ import com.masselis.portfolio.ui.screens.ProjectsScreen
 import com.masselis.portfolio.ui.theme.PortfolioTheme
 
 @Composable
-fun App(onNavHostReady: suspend (NavController) -> Unit = {}) {
+fun App(
+    navController: NavHostController = rememberNavController()
+) {
     PortfolioTheme {
-        val navController = rememberNavController()
         NavHost(navController, startDestination = Home) {
             composable<Home> { LandingScreen(navController) }
             composable<About> { AboutScreen(navController) }
             composable<Projects> { ProjectsScreen(navController) }
             composable<Contact> { ContactScreen(navController) }
         }
-        LaunchedEffect(navController) { onNavHostReady(navController) }
     }
 }
