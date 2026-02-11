@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,7 +30,6 @@ import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.navigation.Projects
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
-import com.masselis.portfolio.ui.layout.PortfolioScaffold
 import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
@@ -42,7 +39,7 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
 fun LandingScreen(navController: NavController) {
-    PortfolioScaffold(navController) {
+    Column {
         HeroSection(onCtaClick = { navController.navigate(Projects) })
         ProjectsPreviewSection()
         AboutPreviewSection()

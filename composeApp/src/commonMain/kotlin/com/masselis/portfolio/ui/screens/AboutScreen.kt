@@ -25,14 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SkillBar
 import com.masselis.portfolio.ui.components.TimelineItem
-import com.masselis.portfolio.ui.layout.PortfolioScaffold
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
@@ -40,8 +37,8 @@ import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-fun AboutScreen(navController: NavController) {
-    PortfolioScaffold(navController) {
+fun AboutScreen() {
+    Column {
         AboutHeroSection()
         SkillsSection()
         ExpertiseSection()
@@ -92,10 +89,10 @@ private fun AboutHeroText() {
     Spacer(Modifier.height(16.dp))
     Text(
         text = "Vincent Masselis est un d\u00E9veloppeur Android Senior avec plus de 10 ans d'exp\u00E9rience, " +
-            "sp\u00E9cialis\u00E9 dans l'architecture robuste (Clean Architecture, MVVM), la programmation " +
-            "r\u00E9active (RxJava, Kotlin Flow) et les interfaces modernes (Jetpack Compose). Il " +
-            "collabore avec des startups et des grandes entreprises pour cr\u00E9er des applications " +
-            "performantes et \u00E9volutives.",
+                "sp\u00E9cialis\u00E9 dans l'architecture robuste (Clean Architecture, MVVM), la programmation " +
+                "r\u00E9active (RxJava, Kotlin Flow) et les interfaces modernes (Jetpack Compose). Il " +
+                "collabore avec des startups et des grandes entreprises pour cr\u00E9er des applications " +
+                "performantes et \u00E9volutives.",
         style = MaterialTheme.typography.bodyMedium,
         color = TextWhite,
     )

@@ -41,17 +41,30 @@ fun TopNavBar(
             .background(DarkNavy)
             .padding(horizontal = 24.dp, vertical = 12.dp),
     ) {
-        // Branding - left
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.align(Alignment.CenterStart),
         ) {
-            Icon(
-                imageVector = Icons.Default.PhoneAndroid,
-                contentDescription = null,
-                tint = AccentGreen,
-                modifier = Modifier.size(24.dp),
-            )
+            // Nav links - hamburger (mobile)
+            if (windowSizeClass == WindowSizeClass.Compact) {
+                IconButton(
+                    onClick = onMenuClick,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menu",
+                        tint = Color.White,
+                    )
+                }
+            } else {
+                Icon(
+                    imageVector = Icons.Default.PhoneAndroid,
+                    contentDescription = null,
+                    tint = AccentGreen,
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+            // Branding - left
             Spacer(Modifier.width(8.dp))
             Text(
                 text = "RxVincent",
@@ -61,19 +74,8 @@ fun TopNavBar(
             )
         }
 
-        // Nav links - right (desktop) or hamburger (mobile)
-        if (windowSizeClass == WindowSizeClass.Compact) {
-            IconButton(
-                onClick = onMenuClick,
-                modifier = Modifier.align(Alignment.CenterEnd),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu",
-                    tint = Color.White,
-                )
-            }
-        } else {
+        // Nav links - right (desktop)
+        if (windowSizeClass != WindowSizeClass.Compact) {
             Row(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
