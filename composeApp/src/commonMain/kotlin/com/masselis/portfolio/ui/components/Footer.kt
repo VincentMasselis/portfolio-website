@@ -22,15 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
 fun Footer(
-    currentRoute: String,
+    currentRoute: Route,
     windowSizeClass: WindowSizeClass,
-    onNavigate: (String) -> Unit,
+    onNavigate: (Route) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -65,10 +66,10 @@ fun Footer(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                FooterNavLink("Home", "home", currentRoute, onNavigate)
-                FooterNavLink("About", "about", currentRoute, onNavigate)
-                FooterNavLink("Project", "projects", currentRoute, onNavigate)
-                FooterNavLink("Contact", "contact", currentRoute, onNavigate)
+                FooterNavLink("Home", Route.Home, currentRoute, onNavigate)
+                FooterNavLink("About", Route.About, currentRoute, onNavigate)
+                FooterNavLink("Project", Route.Projects, currentRoute, onNavigate)
+                FooterNavLink("Contact", Route.Contact, currentRoute, onNavigate)
             }
         }
     }
@@ -77,11 +78,11 @@ fun Footer(
 @Composable
 private fun FooterNavLink(
     label: String,
-    route: String,
-    currentRoute: String,
-    onNavigate: (String) -> Unit,
+    route: Route,
+    currentRoute: Route,
+    onNavigate: (Route) -> Unit,
 ) {
-    val isActive = currentRoute.startsWith(route)
+    val isActive = currentRoute === route
     Text(
         text = label,
         style = MaterialTheme.typography.labelMedium,

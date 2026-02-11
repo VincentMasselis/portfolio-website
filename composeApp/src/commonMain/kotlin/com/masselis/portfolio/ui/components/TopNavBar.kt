@@ -24,15 +24,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
 fun TopNavBar(
-    currentRoute: String,
+    currentRoute: Route,
     windowSizeClass: WindowSizeClass,
-    onNavigate: (String) -> Unit,
+    onNavigate: (Route) -> Unit,
     onMenuClick: () -> Unit,
 ) {
     Box(
@@ -81,10 +82,10 @@ fun TopNavBar(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                NavLink("Home", "home", currentRoute, onNavigate)
-                NavLink("About", "about", currentRoute, onNavigate)
-                NavLink("Project", "projects", currentRoute, onNavigate)
-                NavLink("Contact", "contact", currentRoute, onNavigate)
+                NavLink("Home", Route.Home, currentRoute, onNavigate)
+                NavLink("About", Route.About, currentRoute, onNavigate)
+                NavLink("Project", Route.Projects, currentRoute, onNavigate)
+                NavLink("Contact", Route.Contact, currentRoute, onNavigate)
             }
         }
     }
@@ -93,11 +94,11 @@ fun TopNavBar(
 @Composable
 private fun NavLink(
     label: String,
-    route: String,
-    currentRoute: String,
-    onNavigate: (String) -> Unit,
+    route: Route,
+    currentRoute: Route,
+    onNavigate: (Route) -> Unit,
 ) {
-    val isActive = currentRoute.startsWith(route)
+    val isActive = currentRoute === route
     Text(
         text = label,
         style = MaterialTheme.typography.labelLarge,

@@ -4,9 +4,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.rememberNavController
-import com.masselis.portfolio.navigation.About
-import com.masselis.portfolio.navigation.Contact
-import com.masselis.portfolio.navigation.Projects
+import com.masselis.portfolio.navigation.Route
 import kotlinx.browser.window
 
 @OptIn(ExperimentalComposeUiApi::class, kotlin.js.ExperimentalWasmJsInterop::class)
@@ -17,9 +15,9 @@ fun main() {
         LaunchedEffect(navController) {
             val initRoute = window.location.hash.substringAfter('#', "")
             when {
-                initRoute.startsWith("about") -> navController.navigate(About)
-                initRoute.startsWith("projects") -> navController.navigate(Projects)
-                initRoute.startsWith("contact") -> navController.navigate(Contact)
+                initRoute.startsWith("about") -> navController.navigate(Route.About)
+                initRoute.startsWith("projects") -> navController.navigate(Route.Projects)
+                initRoute.startsWith("contact") -> navController.navigate(Route.Contact)
             }
             // Update browser URL when navigation changes
             navController.addOnDestinationChangedListener { _, destination, _ ->

@@ -22,13 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 
 @Composable
 fun NavigationDrawerContent(
-    currentRoute: String,
-    onNavigate: (String) -> Unit,
+    currentRoute: Route,
+    onNavigate: (Route) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -56,21 +57,21 @@ fun NavigationDrawerContent(
 
         Spacer(Modifier.height(32.dp))
 
-        DrawerNavItem("Home", "home", currentRoute, onNavigate)
-        DrawerNavItem("Projets", "projects", currentRoute, onNavigate)
-        DrawerNavItem("\u00C0 Propos", "about", currentRoute, onNavigate)
-        DrawerNavItem("Contact", "contact", currentRoute, onNavigate)
+        DrawerNavItem("Home", Route.Home, currentRoute, onNavigate)
+        DrawerNavItem("\u00C0 Propos", Route.About, currentRoute, onNavigate)
+        DrawerNavItem("Projets", Route.Projects, currentRoute, onNavigate)
+        DrawerNavItem("Contact", Route.Contact, currentRoute, onNavigate)
     }
 }
 
 @Composable
 private fun DrawerNavItem(
     label: String,
-    route: String,
-    currentRoute: String,
-    onNavigate: (String) -> Unit,
+    route: Route,
+    currentRoute: Route,
+    onNavigate: (Route) -> Unit,
 ) {
-    val isActive = currentRoute.startsWith(route)
+    val isActive = currentRoute === route
     Text(
         text = label,
         style = MaterialTheme.typography.headlineMedium,
