@@ -3,18 +3,24 @@ package com.masselis.portfolio.navigation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-@SerialName("home")
-data object Home
+sealed interface Route {
+    @Serializable
+    @SerialName("home")
+    data object Home : Route
 
-@Serializable
-@SerialName("about")
-data object About
+    @Serializable
+    @SerialName("about")
+    data object About : Route
 
-@Serializable
-@SerialName("projects")
-data object Projects
+    @Serializable
+    @SerialName("projects")
+    data object Projects : Route
 
-@Serializable
-@SerialName("contact")
-data object Contact
+    @Serializable
+    @SerialName("contact")
+    data object Contact : Route
+
+    companion object {
+        val classes = listOf(Home, About, Projects, Contact).map { it::class }
+    }
+}

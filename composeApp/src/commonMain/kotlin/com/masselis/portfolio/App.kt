@@ -1,5 +1,9 @@
 package com.masselis.portfolio
 
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,15 +19,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.masselis.portfolio.navigation.About
-import com.masselis.portfolio.navigation.Contact
-import com.masselis.portfolio.navigation.Home
-import com.masselis.portfolio.navigation.Projects
+import androidx.navigation.toRoute
+import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.NavigationDrawerContent
 import com.masselis.portfolio.ui.components.TopNavBar
@@ -37,6 +40,8 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import kotlinx.coroutines.launch
 
+private val startDestination: Route = Route.Home
+
 @Composable
 fun App(
     navController: NavHostController = rememberNavController()
@@ -46,27 +51,31 @@ fun App(
             val windowSizeClass = rememberWindowSizeClass(maxWidth.value.toInt())
             CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
                 val backStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = backStackEntry?.destination?.route.orEmpty()
+                val currentRoute = Route
+                    .classes
+                    .firstOrNull { clazz -> backStackEntry?.destination?.hasRoute(clazz) ?: false }
+                    ?.let { clazz -> backStackEntry?.toRoute(clazz) }
+                    ?: startDestination
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
 
-                val navigateTo: (String) -> Unit = { route ->
+                val navigateTo: (Route) -> Unit = { route ->
                     scope.launch { drawerState.close() }
                     when (route) {
-                        "home" -> navController.navigate(Home) {
-                            popUpTo(Home) { inclusive = true }
+                        Route.Home -> navController.navigate(Route.Home) {
+                            popUpTo(Route.Home) { inclusive = true }
                         }
 
-                        "about" -> navController.navigate(About) {
-                            popUpTo(Home)
+                        Route.About -> navController.navigate(Route.About) {
+                            popUpTo(Route.Home)
                         }
 
-                        "projects" -> navController.navigate(Projects) {
-                            popUpTo(Home)
+                        Route.Contact -> navController.navigate(Route.Contact) {
+                            popUpTo(Route.Home)
                         }
 
-                        "contact" -> navController.navigate(Contact) {
-                            popUpTo(Home)
+                        Route.Projects -> navController.navigate(Route.Projects) {
+                            popUpTo(Route.Home)
                         }
                     }
                 }
@@ -98,11 +107,18 @@ fun App(
                                     .fillMaxSize()
                                     .verticalScroll(rememberScrollState()),
                             ) {
-                                NavHost(navController, startDestination = Home) {
-                                    composable<Home> { LandingScreen(navController) }
-                                    composable<About> { AboutScreen() }
-                                    composable<Projects> { ProjectsScreen() }
-                                    composable<Contact> { ContactScreen() }
+                                NavHost(
+                                    navController,
+                                    startDestination = startDestination,
+                                    enterTransition = { fadeIn(tween(300)) },
+                                    exitTransition = { fadeOut(snap(delayMillis = 300)) },
+                                    popEnterTransition = { fadeIn(tween(300)) },
+                                    popExitTransition = { fadeOut(snap(delayMillis = 300)) },
+                                ) {
+                                    composable<Route.Home> { LandingScreen(navController) }
+                                    composable<Route.About> { AboutScreen() }
+                                    composable<Route.Projects> { ProjectsScreen() }
+                                    composable<Route.Contact> { ContactScreen() }
                                 }
                                 Footer(
                                     currentRoute = currentRoute,

@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.masselis.portfolio.data.PortfolioData
-import com.masselis.portfolio.navigation.Projects
+import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.theme.AccentGreen
@@ -40,7 +40,7 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass
 @Composable
 fun LandingScreen(navController: NavController) {
     Column {
-        HeroSection(onCtaClick = { navController.navigate(Projects) })
+        HeroSection(onCtaClick = { navController.navigate(Route.Projects) })
         ProjectsPreviewSection()
         AboutPreviewSection()
         GitHubSection()
