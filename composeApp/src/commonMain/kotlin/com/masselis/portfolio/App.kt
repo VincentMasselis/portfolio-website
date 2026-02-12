@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -44,7 +45,8 @@ private val startDestination: Route = Route.Home
 
 @Composable
 public fun App(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    onNavHostReady: () -> Unit,
 ) {
     PortfolioTheme {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -120,6 +122,9 @@ public fun App(
                                     composable<Route.About> { AboutScreen() }
                                     composable<Route.Projects> { ProjectsScreen() }
                                     composable<Route.Contact> { ContactScreen() }
+                                }
+                                LaunchedEffect(navController) {
+                                    onNavHostReady()
                                 }
                                 Footer(
                                     currentRoute = currentRoute,
