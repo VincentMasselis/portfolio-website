@@ -21,6 +21,7 @@ internal sealed interface Route {
     data object Contact : Route
 
     companion object {
-        val classes = listOf(Home, About, Projects, Contact).map { it::class }
+        val routes = listOf(Home, About, Projects, Contact)
+        val classes = routes.map { it::class }
     }
 }

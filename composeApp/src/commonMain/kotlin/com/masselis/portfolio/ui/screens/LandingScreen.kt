@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,9 @@ import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.cubeinstore
+import portfolio.composeapp.generated.resources.kadiska
 
 @Composable
 internal fun LandingScreen(
@@ -68,7 +72,7 @@ private fun HeroSection(
     ) {
         Spacer(Modifier.height(32.dp))
         Text(
-            text = PortfolioData.heroTitle,
+            text = "DÉVELOPPEUR SENIOR ANDROID\nKOTLIN MULTIPLATFORM\nSOFTWARE ARCHITECT",
             style = MaterialTheme.typography.displayMedium,
             color = Color.White,
             textAlign = TextAlign.Center,
@@ -76,7 +80,7 @@ private fun HeroSection(
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = PortfolioData.heroSubtitle,
+            text = "Architecte • Expert • Passionné",
             style = MaterialTheme.typography.bodyLarge,
             color = TextWhite,
             textAlign = TextAlign.Center,
@@ -91,7 +95,7 @@ private fun HeroSection(
                 .padding(horizontal = 24.dp, vertical = 12.dp),
         ) {
             Text(
-                text = "Voir mes r\u00E9alisations",
+                text = "Voir mes réalisations",
                 style = MaterialTheme.typography.labelLarge,
                 color = AccentGreen,
             )
@@ -103,26 +107,63 @@ private fun HeroSection(
 @Composable
 private fun ProjectsPreviewSection() {
     val windowSizeClass = LocalWindowSizeClass.current
-    Section(backgroundColor = LightGray) {
-        val projects = PortfolioData.projects.take(2)
-        if (windowSizeClass == WindowSizeClass.Compact) {
-            projects.forEach { project ->
-                ProjectPreviewCard(project.title, project.bulletPoints, project.image)
-                Spacer(Modifier.height(16.dp))
+    Section(
+        backgroundColor = Color.Transparent,
+        paddingValues = PaddingValues.Section.copy(top = 0.dp),
+        modifier = Modifier.layout { measurable, constraints ->
+            val placeable = measurable.measure(constraints)
+            val overlapPx = 32.dp.roundToPx()
+            layout(placeable.width, placeable.height - overlapPx) {
+                placeable.place(0, -overlapPx)
             }
+        }
+    ) {
+        if (windowSizeClass == WindowSizeClass.Compact) {
+            CubeInStore()
+            Spacer(Modifier.height(16.dp))
+            Kadiska()
         } else {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                projects.forEach { project ->
-                    Box(modifier = Modifier.weight(1f)) {
-                        ProjectPreviewCard(project.title, project.bulletPoints, project.image)
-                    }
-                }
+                Box(Modifier.weight(1f)) { CubeInStore() }
+                Box(Modifier.weight(1f)) { Kadiska() }
             }
         }
     }
+}
+
+@Composable
+private fun CubeInStore(
+    modifier: Modifier = Modifier
+) {
+    ProjectPreviewCard(
+        "Decathlon CubeInStore",
+        listOf(
+            "100k utilisateurs mensuels",
+            "+600k lignes de code",
+            "+20 développeurs",
+            "+50 pays"
+        ),
+        Res.drawable.cubeinstore
+    )
+}
+
+@Composable
+private fun Kadiska(
+    modifier: Modifier = Modifier
+) {
+    ProjectPreviewCard(
+        "Kadiska Android",
+        listOf(
+            "B2B",
+            "Analyse réseau low-level",
+            "Services en arrière-plan complexes",
+            "Fort enjeux business"
+        ),
+        Res.drawable.kadiska
+    )
 }
 
 @Composable

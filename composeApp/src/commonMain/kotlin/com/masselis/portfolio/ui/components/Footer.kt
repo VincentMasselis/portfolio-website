@@ -51,7 +51,7 @@ internal fun Footer(
         Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
             Column {
                 Text(
-                    text = "Copyright © 2026 Vincent Masselis",
+                    text = "Copyright© 2026 Vincent Masselis",
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = Bold,
                     color = Color.White,

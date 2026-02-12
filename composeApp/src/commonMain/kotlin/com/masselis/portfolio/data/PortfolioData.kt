@@ -17,9 +17,6 @@ internal data class ContactInfo(val label: String, val url: String, val iconName
 internal data class RepoInfo(val name: String, val stars: String, val language: String)
 
 internal object PortfolioData {
-    const val heroTitle = "ARCHITECTE D'APPLICATIONS\nANDROID & EXPERT RX"
-    const val heroSubtitle = "Je transforme des besoins complexes en exp\u00E9riences mobiles fluides."
-
     val skills = listOf(
         Skill("Kotlin", 0.90f),
         Skill("Jetpack Compose", 0.85f),
