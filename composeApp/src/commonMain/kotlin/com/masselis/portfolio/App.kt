@@ -114,6 +114,7 @@ public fun App(
                                     exitTransition = { fadeOut(snap(delayMillis = 300)) },
                                     popEnterTransition = { fadeIn(tween(300)) },
                                     popExitTransition = { fadeOut(snap(delayMillis = 300)) },
+                                    modifier = Modifier.weight(1f)
                                 ) {
                                     composable<Route.Home> { LandingScreen(navController) }
                                     composable<Route.About> { AboutScreen() }
@@ -127,7 +128,8 @@ public fun App(
                                     bottomPadding = it.calculateBottomPadding()
                                 )
                             }
-                        }
+                        },
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
