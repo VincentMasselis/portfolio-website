@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,23 +31,32 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-internal fun ContactScreen(modifier: Modifier = Modifier) {
+internal fun ContactScreen(
+    scaffoldPadding: PaddingValues,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier) {
-        ContactHeaderSection()
+        ContactHeaderSection(scaffoldPadding)
         ContactGridSection()
         LocationSection()
     }
 }
 
 @Composable
-private fun ContactHeaderSection() {
-    Section(backgroundColor = DarkNavy) {
+private fun ContactHeaderSection(
+    scaffoldPadding: PaddingValues,
+) {
+    Section(
+        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        backgroundColor = DarkNavy,
+    ) {
         Text(
             text = "Restons en Contact",
             style = MaterialTheme.typography.displaySmall,
@@ -58,7 +68,9 @@ private fun ContactHeaderSection() {
 @Composable
 private fun ContactGridSection() {
     val windowSizeClass = LocalWindowSizeClass.current
-    Section(backgroundColor = LightGray) {
+    Section(
+        backgroundColor = LightGray
+    ) {
         val contacts = PortfolioData.contacts
         val icons = listOf(
             Icons.Default.Person,    // LinkedIn
@@ -78,7 +90,6 @@ private fun ContactGridSection() {
                 Spacer(Modifier.height(16.dp))
             }
         } else {
-            // 2x2 grid
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth(),
@@ -160,9 +171,12 @@ private fun ContactGridCard(
 @Composable
 private fun LocationSection() {
     val windowSizeClass = LocalWindowSizeClass.current
-    Section(backgroundColor = Color.White) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White),
+    ) {
         if (windowSizeClass == WindowSizeClass.Compact) {
-            // Map placeholder
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -184,7 +198,6 @@ private fun LocationSection() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                // Map placeholder
                 Box(
                     modifier = Modifier
                         .weight(1f)

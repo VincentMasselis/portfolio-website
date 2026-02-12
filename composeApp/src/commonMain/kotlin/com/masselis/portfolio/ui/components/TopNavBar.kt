@@ -1,22 +1,21 @@
 package com.masselis.portfolio.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +28,7 @@ import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TopNavBar(
     currentRoute: Route,
@@ -37,21 +37,12 @@ internal fun TopNavBar(
     onMenuClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(DarkNavy)
-            .padding(horizontal = 24.dp, vertical = 12.dp),
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.align(Alignment.CenterStart),
-        ) {
-            // Nav links - hamburger (mobile)
+    TopAppBar(
+        modifier = modifier,
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = DarkNavy),
+        navigationIcon = {
             if (windowSizeClass == WindowSizeClass.Compact) {
-                IconButton(
-                    onClick = onMenuClick,
-                ) {
+                IconButton(onClick = onMenuClick) {
                     Icon(
                         imageVector = Icons.Default.Menu,
                         contentDescription = "Menu",
@@ -59,37 +50,40 @@ internal fun TopNavBar(
                     )
                 }
             } else {
-                Icon(
-                    imageVector = Icons.Default.PhoneAndroid,
-                    contentDescription = null,
-                    tint = AccentGreen,
-                    modifier = Modifier.size(24.dp),
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Spacer(Modifier.width(16.dp))
+                    Icon(
+                        imageVector = Icons.Default.PhoneAndroid,
+                        contentDescription = null,
+                        tint = AccentGreen,
+                        modifier = Modifier.size(24.dp),
+                    )
+                }
             }
-            // Branding - left
-            Spacer(Modifier.width(8.dp))
+        },
+        title = {
             Text(
                 text = "RxVincent",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
             )
-        }
-
-        // Nav links - right (desktop)
-        if (windowSizeClass != WindowSizeClass.Compact) {
-            Row(
-                modifier = Modifier.align(Alignment.CenterEnd),
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                NavLink("Home", Route.Home, currentRoute, onNavigate)
-                NavLink("About", Route.About, currentRoute, onNavigate)
-                NavLink("Project", Route.Projects, currentRoute, onNavigate)
-                NavLink("Contact", Route.Contact, currentRoute, onNavigate)
+        },
+        actions = {
+            if (windowSizeClass != WindowSizeClass.Compact) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    NavLink("Home", Route.Home, currentRoute, onNavigate)
+                    NavLink("About", Route.About, currentRoute, onNavigate)
+                    NavLink("Project", Route.Projects, currentRoute, onNavigate)
+                    NavLink("Contact", Route.Contact, currentRoute, onNavigate)
+                }
+                Spacer(Modifier.width(16.dp))
             }
-        }
-    }
+        },
+    )
 }
 
 @Composable

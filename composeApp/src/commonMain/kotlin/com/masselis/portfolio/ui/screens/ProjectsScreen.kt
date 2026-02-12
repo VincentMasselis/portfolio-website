@@ -1,6 +1,7 @@
 package com.masselis.portfolio.ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -13,20 +14,29 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 
 @Composable
-internal fun ProjectsScreen(modifier: Modifier = Modifier) {
+internal fun ProjectsScreen(
+    scaffoldPadding: PaddingValues,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier) {
-        ProjectsHeaderSection()
+        ProjectsHeaderSection(scaffoldPadding)
         ProjectsListSection()
     }
 }
 
 @Composable
-private fun ProjectsHeaderSection() {
-    Section(backgroundColor = DarkNavy) {
+private fun ProjectsHeaderSection(
+    scaffoldPadding: PaddingValues,
+) {
+    Section(
+        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        backgroundColor = DarkNavy,
+    ) {
         Text(
             text = "MES R\u00C9ALISATIONS",
             style = MaterialTheme.typography.displaySmall,

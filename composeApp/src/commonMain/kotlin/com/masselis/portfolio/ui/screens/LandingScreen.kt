@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
@@ -39,9 +41,16 @@ import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-internal fun LandingScreen(navController: NavController, modifier: Modifier = Modifier) {
+internal fun LandingScreen(
+    navController: NavController,
+    scaffoldPadding: PaddingValues,
+    modifier: Modifier = Modifier,
+) {
     Column(modifier = modifier) {
-        HeroSection(onCtaClick = { navController.navigate(Route.Projects) })
+        HeroSection(
+            scaffoldPadding = scaffoldPadding,
+            showProjects = { navController.navigate(Route.Projects) }
+        )
         ProjectsPreviewSection()
         AboutPreviewSection()
         GitHubSection()
@@ -49,8 +58,14 @@ internal fun LandingScreen(navController: NavController, modifier: Modifier = Mo
 }
 
 @Composable
-private fun HeroSection(onCtaClick: () -> Unit) {
-    Section(backgroundColor = DarkNavy) {
+private fun HeroSection(
+    scaffoldPadding: PaddingValues,
+    showProjects: () -> Unit,
+) {
+    Section(
+        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        backgroundColor = DarkNavy,
+    ) {
         Spacer(Modifier.height(32.dp))
         Text(
             text = PortfolioData.heroTitle,
@@ -72,7 +87,7 @@ private fun HeroSection(onCtaClick: () -> Unit) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .border(1.dp, AccentGreen, RoundedCornerShape(24.dp))
-                .clickable(onClick = onCtaClick)
+                .clickable(onClick = showProjects)
                 .padding(horizontal = 24.dp, vertical = 12.dp),
         ) {
             Text(
@@ -112,10 +127,9 @@ private fun ProjectsPreviewSection() {
 
 @Composable
 private fun AboutPreviewSection() {
+    val windowSizeClass = LocalWindowSizeClass.current
     Section(backgroundColor = Color.White) {
-        val windowSizeClass = LocalWindowSizeClass.current
         if (windowSizeClass == WindowSizeClass.Compact) {
-            // Stacked layout
             Box(
                 modifier = Modifier
                     .size(180.dp)
@@ -182,7 +196,6 @@ private fun GitHubSection() {
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
-        // GitHub icon placeholder
         Text(
             text = "\uD83D\uDC31",
             style = MaterialTheme.typography.displayLarge,

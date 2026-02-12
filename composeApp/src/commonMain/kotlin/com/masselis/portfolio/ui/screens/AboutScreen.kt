@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SkillBar
 import com.masselis.portfolio.ui.components.TimelineItem
+import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
@@ -37,9 +39,12 @@ import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
-internal fun AboutScreen(modifier: Modifier = Modifier) {
+internal fun AboutScreen(
+    scaffoldPadding: PaddingValues,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier) {
-        AboutHeroSection()
+        AboutHeroSection(scaffoldPadding)
         SkillsSection()
         ExpertiseSection()
         CareerTimelineSection()
@@ -47,9 +52,14 @@ internal fun AboutScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun AboutHeroSection() {
+private fun AboutHeroSection(
+    scaffoldPadding: PaddingValues,
+) {
     val windowSizeClass = LocalWindowSizeClass.current
-    Section(backgroundColor = DarkNavy) {
+    Section(
+        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        backgroundColor = DarkNavy,
+    ) {
         if (windowSizeClass == WindowSizeClass.Compact) {
             Box(
                 modifier = Modifier
@@ -113,7 +123,6 @@ private fun SkillsSection() {
                 SkillBar(label = skill.name, progress = skill.progress)
             }
         } else {
-            // 2-column grid
             val leftColumn = PortfolioData.skills.filterIndexed { i, _ -> i % 2 == 0 }
             val rightColumn = PortfolioData.skills.filterIndexed { i, _ -> i % 2 == 1 }
             Row(

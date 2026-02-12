@@ -41,7 +41,6 @@ internal fun ProjectCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Image(
             painter = painterResource(image),

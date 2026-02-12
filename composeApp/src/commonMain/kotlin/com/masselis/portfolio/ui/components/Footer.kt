@@ -2,39 +2,41 @@ package com.masselis.portfolio.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.navigation.Route
-import com.masselis.portfolio.ui.theme.AccentGreen
 import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
+import org.jetbrains.compose.resources.painterResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.ic_bluesky
+import portfolio.composeapp.generated.resources.ic_linkedin
 
 @Composable
 internal fun Footer(
     currentRoute: Route,
     windowSizeClass: WindowSizeClass,
-    bottomPadding: Dp,
     onNavigate: (Route) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -42,60 +44,58 @@ internal fun Footer(
         modifier = modifier
             .fillMaxWidth()
             .background(DarkNavy)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .windowInsetsPadding(WindowInsets.navigationBars),
     ) {
-        Box {
-            // Branding - left
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.align(Alignment.CenterStart),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PhoneAndroid,
-                    contentDescription = null,
-                    tint = AccentGreen,
-                    modifier = Modifier.size(20.dp),
-                )
-                Spacer(Modifier.width(8.dp))
+        val uriHandler = LocalUriHandler.current
+        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Column {
                 Text(
-                    text = "RxVincent",
+                    text = "Copyright © 2026 Vincent Masselis",
                     style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = Bold,
                     color = Color.White,
                 )
-            }
-
-            // Nav links - right (hide on compact)
-            if (windowSizeClass != WindowSizeClass.Compact) {
                 Row(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri("https://github.com/VincentMasselis/portfolio-website")
+                    }
                 ) {
-                    FooterNavLink("Home", Route.Home, currentRoute, onNavigate)
-                    FooterNavLink("About", Route.About, currentRoute, onNavigate)
-                    FooterNavLink("Project", Route.Projects, currentRoute, onNavigate)
-                    FooterNavLink("Contact", Route.Contact, currentRoute, onNavigate)
+                    Text(
+                        text = "Built in Kotlin Multiplatform with Compose",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = Bold,
+                        textDecoration = TextDecoration.Underline,
+                        color = Color.White,
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.OpenInNew,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.padding(start = 4.dp).size(12.dp),
+                    )
+                }
+            }
+            Spacer(Modifier.weight(1f))
+            Row(horizontalArrangement = spacedBy(8.dp)) {
+                IconButton(onClick = { uriHandler.openUri("https://linkedin.com/in/vincentmasselis") }) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_linkedin),
+                        contentDescription = "LinkedIn",
+                        tint = Color.White,
+                        modifier = Modifier.size(24.dp),
+                    )
+                }
+                IconButton(onClick = { uriHandler.openUri("https://bsky.app/profile/rxvincent.masselis.com") }) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_bluesky),
+                        contentDescription = "Bluesky",
+                        tint = Color.White,
+                        modifier = Modifier.size(24.dp),
+                    )
                 }
             }
         }
-        Spacer(Modifier.fillMaxWidth().height(bottomPadding))
     }
-}
-
-@Composable
-private fun FooterNavLink(
-    label: String,
-    route: Route,
-    currentRoute: Route,
-    onNavigate: (Route) -> Unit,
-) {
-    val isActive = currentRoute === route
-    Text(
-        text = label,
-        style = MaterialTheme.typography.labelMedium,
-        color = if (isActive) AccentGreen else Color.White,
-        textDecoration = if (isActive) TextDecoration.Underline else TextDecoration.None,
-        modifier = Modifier.clickable { onNavigate(route) },
-    )
 }

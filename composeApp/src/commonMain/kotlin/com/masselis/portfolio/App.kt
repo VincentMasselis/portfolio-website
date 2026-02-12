@@ -6,7 +6,11 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerValue
@@ -46,7 +50,7 @@ private val startDestination: Route = Route.Home
 @Composable
 public fun App(
     navController: NavHostController = rememberNavController(),
-    onNavHostReady: () -> Unit,
+    onNavHostReady: () -> Unit = {},
 ) {
     PortfolioTheme {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -103,7 +107,7 @@ public fun App(
                                 onMenuClick = { scope.launch { drawerState.open() } },
                             )
                         },
-                        content = {
+                        content = { padding ->
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -116,22 +120,24 @@ public fun App(
                                     exitTransition = { fadeOut(snap(delayMillis = 300)) },
                                     popEnterTransition = { fadeIn(tween(300)) },
                                     popExitTransition = { fadeOut(snap(delayMillis = 300)) },
-                                    modifier = Modifier.weight(1f)
+                                    modifier = Modifier.consumeWindowInsets(WindowInsets.navigationBars)
                                 ) {
-                                    composable<Route.Home> { LandingScreen(navController) }
-                                    composable<Route.About> { AboutScreen() }
-                                    composable<Route.Projects> { ProjectsScreen() }
-                                    composable<Route.Contact> { ContactScreen() }
+                                    composable<Route.Home> {
+                                        LandingScreen(navController, padding)
+                                    }
+                                    composable<Route.About> { AboutScreen(padding) }
+                                    composable<Route.Projects> { ProjectsScreen(padding) }
+                                    composable<Route.Contact> { ContactScreen(padding) }
                                 }
-                                LaunchedEffect(navController) {
-                                    onNavHostReady()
-                                }
+                                Spacer(Modifier.weight(1f))
                                 Footer(
                                     currentRoute = currentRoute,
                                     windowSizeClass = windowSizeClass,
                                     onNavigate = navigateTo,
-                                    bottomPadding = it.calculateBottomPadding()
                                 )
+                                LaunchedEffect(navController) {
+                                    onNavHostReady()
+                                }
                             }
                         },
                         modifier = Modifier.fillMaxSize()
