@@ -23,9 +23,8 @@ internal fun main() {
             navController = navController,
             onNavHostReady = {
                 fun setRouteFromLocation(location: Location) {
-                    location.hash
-                        .substringAfter('#', "")
-                        .let { hash -> Route.routes.firstOrNull { it.hash == hash } }
+                    Route.routes
+                        .firstOrNull { it.path == location.pathname }
                         ?.also { route ->
                             navController.navigate(route) {
                                 popUpTo(Route.Home)
@@ -36,10 +35,9 @@ internal fun main() {
                 fun setLocationFromDestination(destination: NavDestination) {
                     Route.routes
                         .firstOrNull { destination.hasRoute(it::class) }
-                        ?.hash
-                        ?.let { "#$it" }
-                        ?.also { newHash ->
-                            window.history.pushState(null, "", window.location.pathname + newHash)
+                        ?.path
+                        ?.also { newPath ->
+                            window.history.pushState(null, "", newPath)
                         }
                 }
 
@@ -64,11 +62,11 @@ internal fun main() {
     }
 }
 
-private val Route.hash: String
+private val Route.path: String
     get() = when (this) {
-        Route.Home -> ""
-        Route.About -> "about"
-        Route.Contact -> "contact"
-        Route.Projects -> "projects"
+        Route.Home -> "/"
+        Route.About -> "/about"
+        Route.Contact -> "/contact"
+        Route.Projects -> "/projects"
     }
 
