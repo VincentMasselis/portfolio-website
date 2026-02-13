@@ -76,8 +76,8 @@ internal fun TopNavBar(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     NavLink("Home", Route.Home, currentRoute, onNavigate)
-                    NavLink("About", Route.About, currentRoute, onNavigate)
-                    NavLink("Project", Route.Projects, currentRoute, onNavigate)
+                    NavLink("À propos", Route.About, currentRoute, onNavigate)
+                    NavLink("Projets", Route.Projects, currentRoute, onNavigate)
                     NavLink("Contact", Route.Contact, currentRoute, onNavigate)
                 }
                 Spacer(Modifier.width(16.dp))

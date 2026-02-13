@@ -59,7 +59,7 @@ internal fun NavigationDrawerContent(
         Spacer(Modifier.height(32.dp))
 
         DrawerNavItem("Home", Route.Home, currentRoute, onNavigate)
-        DrawerNavItem("\u00C0 Propos", Route.About, currentRoute, onNavigate)
+        DrawerNavItem("À propos", Route.About, currentRoute, onNavigate)
         DrawerNavItem("Projets", Route.Projects, currentRoute, onNavigate)
         DrawerNavItem("Contact", Route.Contact, currentRoute, onNavigate)
     }

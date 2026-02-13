@@ -1,6 +1,5 @@
 package com.masselis.portfolio.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +15,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.LocalCafe
+import androidx.compose.material.icons.filled.Phonelink
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
@@ -171,11 +176,10 @@ private fun AboutPreviewSection() {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(backgroundColor = Color.White) {
         if (windowSizeClass == WindowSizeClass.Compact) {
-            Box(
+            MyselfImage(
                 modifier = Modifier
-                    .size(180.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color.Gray.copy(alpha = 0.3f))
+                    .size(180.dp)
                     .align(Alignment.CenterHorizontally),
             )
             Spacer(Modifier.height(24.dp))
@@ -185,11 +189,10 @@ private fun AboutPreviewSection() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(32.dp),
             ) {
-                Box(
+                MyselfImage(
                     modifier = Modifier
-                        .size(220.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color.Gray.copy(alpha = 0.3f)),
+                        .size(220.dp)
                 )
                 Column(modifier = Modifier.weight(1f)) {
                     AboutText()
@@ -208,21 +211,37 @@ private fun AboutText() {
     )
     Spacer(Modifier.height(8.dp))
     Text(
-        text = "Vincent Masselis,\nSenior Android Dev.",
+        text = "Vincent Masselis,\nDéveloppeur Senior",
         style = MaterialTheme.typography.headlineMedium,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground,
     )
     Spacer(Modifier.height(12.dp))
     Text(
-        text = "Passionn\u00E9 par la Clean Architecture et le code testable.",
+        text = "Je convertis le café en code depuis 2010",
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
     )
     Spacer(Modifier.height(12.dp))
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(text = "\u2615", style = MaterialTheme.typography.displaySmall)
-        Text(text = "\uD83C\uDFAE", style = MaterialTheme.typography.displaySmall)
+        Icon(
+            Icons.Default.LocalCafe,
+            contentDescription = null,
+            modifier = Modifier.size(36.dp),
+            tint = MaterialTheme.colorScheme.onBackground,
+        )
+        Icon(
+            Icons.Default.Code,
+            contentDescription = null,
+            modifier = Modifier.size(36.dp),
+            tint = MaterialTheme.colorScheme.onBackground,
+        )
+        Icon(
+            Icons.Default.Phonelink,
+            contentDescription = null,
+            modifier = Modifier.size(36.dp),
+            tint = MaterialTheme.colorScheme.onBackground,
+        )
     }
 }
 
@@ -237,11 +256,11 @@ private fun GitHubSection() {
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(8.dp))
-        Text(
-            text = "\uD83D\uDC31",
-            style = MaterialTheme.typography.displayLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+        Icon(
+            Icons.Default.Code,
+            contentDescription = null,
+            modifier = Modifier.size(48.dp).align(Alignment.CenterHorizontally),
+            tint = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(Modifier.height(24.dp))
         LazyRow(
