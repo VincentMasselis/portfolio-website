@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,8 +10,11 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.metro)
+    alias(libs.plugins.ksp)
     id("org.jetbrains.kotlin.plugin.parcelize")
 }
+
+ksp { arg("circuit.codegen.mode", "metro") }
 
 kotlin {
     explicitApi()
@@ -48,12 +53,17 @@ kotlin {
 
     compilerOptions {
         freeCompilerArgs.addAll(
-            "-P=plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=com.masselis.portfolio.CommonParcelize",
+            "-P=plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=com.masselis.portfolio.utils.CommonParcelize",
             "-Xexpect-actual-classes"
         )
     }
 
     sourceSets {
+        commonMain {
+            kotlin {
+                srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+            }
+        }
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
@@ -76,6 +86,7 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.circuit.foundation)
+            implementation(libs.circuit.codegen.annotations)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -91,4 +102,12 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+    add("kspCommonMainMetadata", libs.circuit.codegen)
+}
+
+tasks.withType<KotlinCompilationTask<*>>().configureEach {
+    if (this is AbstractKotlinCompile<*>) {
+        incremental = false
+    }
+    dependsOn("kspCommonMainKotlinMetadata")
 }

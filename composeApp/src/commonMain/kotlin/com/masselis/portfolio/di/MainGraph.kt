@@ -7,7 +7,7 @@ import dev.zacsweers.metro.createGraph
 
 @DependencyGraph(
     scope = AppScope::class,
-    bindingContainers = [Bindings::class, CircuitBinding::class]
+    bindingContainers = [Bindings::class]
 )
 internal interface MainGraph {
     val circuit: Circuit

@@ -6,7 +6,7 @@ import io.ktor.client.request.get
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-internal class GitHubApi(
+public class GitHubApi(
     private val client: HttpClient
 ) {
 
