@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.ui.theme.DarkNavy
 
 @Composable
 internal fun ContactCard(
@@ -27,7 +26,7 @@ internal fun ContactCard(
 ) {
     Column(
         modifier = modifier
-            .border(1.dp, DarkNavy.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -36,7 +35,7 @@ internal fun ContactCard(
             imageVector = icon,
             contentDescription = label,
             modifier = Modifier.size(64.dp),
-            tint = DarkNavy,
+            tint = MaterialTheme.colorScheme.primaryContainer,
         )
         Spacer(Modifier.height(16.dp))
         Text(

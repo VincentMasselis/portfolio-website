@@ -15,8 +15,6 @@ import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
-import com.masselis.portfolio.ui.theme.DarkNavy
-import com.masselis.portfolio.ui.theme.LightGray
 
 @Composable
 internal fun ProjectsScreen(
@@ -35,7 +33,7 @@ private fun ProjectsHeaderSection(
 ) {
     Section(
         paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
-        backgroundColor = DarkNavy,
+        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Text(
             text = "MES R\u00C9ALISATIONS",
@@ -54,7 +52,7 @@ private fun ProjectsHeaderSection(
 
 @Composable
 private fun ProjectsListSection() {
-    Section(backgroundColor = LightGray) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         PortfolioData.projects.forEachIndexed { index, project ->
             ProjectCard(
                 title = project.title,

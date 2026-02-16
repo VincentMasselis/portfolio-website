@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.ui.theme.RepoCardBlue
 
 @Composable
 internal fun RepoCard(
@@ -31,7 +30,7 @@ internal fun RepoCard(
         modifier = modifier
             .width(220.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(RepoCardBlue)
+            .background(MaterialTheme.colorScheme.secondary)
             .padding(16.dp),
     ) {
         Text(

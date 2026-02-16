@@ -27,8 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,11 +44,7 @@ import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
-import com.masselis.portfolio.ui.theme.AccentGreen
-import com.masselis.portfolio.ui.theme.DarkNavy
-import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
-import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.cubeinstore
@@ -74,11 +74,26 @@ private fun HeroSection(
 ) {
     Section(
         paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
-        backgroundColor = DarkNavy,
+        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Spacer(Modifier.height(32.dp))
         Text(
-            text = "DÉVELOPPEUR SENIOR ANDROID\nKOTLIN MULTIPLATFORM\nSOFTWARE ARCHITECT",
+            text = buildAnnotatedString {
+                append("DÉVELOPPEUR ")
+                append(
+                    AnnotatedString(
+                        "ANDROID\nKOTLIN",
+                        SpanStyle(color = MaterialTheme.colorScheme.primary)
+                    )
+                )
+                append(" MULTIPLATFORM\nSOFTWARE ")
+                append(
+                    AnnotatedString(
+                        "ARCHITECT",
+                        SpanStyle(color = MaterialTheme.colorScheme.primary)
+                    )
+                )
+            },
             style = MaterialTheme.typography.displayMedium,
             color = Color.White,
             textAlign = TextAlign.Center,
@@ -88,7 +103,7 @@ private fun HeroSection(
         Text(
             text = "Architecte • Expert • Passionné",
             style = MaterialTheme.typography.bodyLarge,
-            color = TextWhite,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -175,7 +190,7 @@ private fun SeeMore(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .border(1.dp, AccentGreen, RoundedCornerShape(16.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
             .clickable(onClick = onClick)
             .padding(24.dp),
     ) {
@@ -184,13 +199,13 @@ private fun SeeMore(
                 Icons.AutoMirrored.Default.ArrowForward,
                 contentDescription = null,
                 modifier = Modifier.size(32.dp),
-                tint = AccentGreen,
+                tint = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 text = "Voir tous mes projets",
                 style = MaterialTheme.typography.titleMedium,
-                color = AccentGreen,
+                color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center,
             )
         }
@@ -204,6 +219,10 @@ private fun AboutPreviewSection() {
         if (windowSizeClass == WindowSizeClass.Compact) {
             MyselfImage(
                 modifier = Modifier
+                    .shadow(
+                        elevation = 8.dp,
+                        shape = RoundedCornerShape(16.dp),
+                    )
                     .clip(RoundedCornerShape(16.dp))
                     .size(180.dp)
                     .align(Alignment.CenterHorizontally),
@@ -217,6 +236,10 @@ private fun AboutPreviewSection() {
             ) {
                 MyselfImage(
                     modifier = Modifier
+                        .shadow(
+                            elevation = 8.dp,
+                            shape = RoundedCornerShape(16.dp),
+                        )
                         .clip(RoundedCornerShape(16.dp))
                         .size(220.dp)
                 )
@@ -273,7 +296,7 @@ private fun AboutText() {
 
 @Composable
 private fun GitHubSection() {
-    Section(backgroundColor = LightGray) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         Text(
             text = "GITHUB & OPEN SOURCE",
             style = MaterialTheme.typography.headlineLarge,

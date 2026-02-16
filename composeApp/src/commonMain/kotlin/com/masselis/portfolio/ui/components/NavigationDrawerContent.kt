@@ -23,8 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.navigation.Route
-import com.masselis.portfolio.ui.theme.AccentGreen
-import com.masselis.portfolio.ui.theme.DarkNavy
 
 @Composable
 internal fun NavigationDrawerContent(
@@ -36,7 +34,7 @@ internal fun NavigationDrawerContent(
         modifier = modifier
             .width(280.dp)
             .fillMaxHeight()
-            .background(DarkNavy)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(24.dp),
     ) {
         // Branding
@@ -44,7 +42,7 @@ internal fun NavigationDrawerContent(
             Icon(
                 imageVector = Icons.Default.PhoneAndroid,
                 contentDescription = null,
-                tint = AccentGreen,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(24.dp),
             )
             Spacer(Modifier.width(8.dp))
@@ -76,7 +74,7 @@ private fun DrawerNavItem(
     Text(
         text = label,
         style = MaterialTheme.typography.headlineMedium,
-        color = if (isActive) AccentGreen else Color.White,
+        color = if (isActive) MaterialTheme.colorScheme.primary else Color.White,
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onNavigate(route) }

@@ -32,10 +32,7 @@ import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SkillBar
 import com.masselis.portfolio.ui.components.TimelineItem
 import com.masselis.portfolio.ui.components.copy
-import com.masselis.portfolio.ui.theme.DarkNavy
-import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
-import com.masselis.portfolio.ui.theme.TextWhite
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @Composable
@@ -58,7 +55,7 @@ private fun AboutHeroSection(
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
         paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
-        backgroundColor = DarkNavy,
+        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         if (windowSizeClass == WindowSizeClass.Compact) {
             Box(
@@ -104,14 +101,14 @@ private fun AboutHeroText() {
                 "collabore avec des startups et des grandes entreprises pour cr\u00E9er des applications " +
                 "performantes et \u00E9volutives.",
         style = MaterialTheme.typography.bodyMedium,
-        color = TextWhite,
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
     )
 }
 
 @Composable
 private fun SkillsSection() {
     val windowSizeClass = LocalWindowSizeClass.current
-    Section(backgroundColor = LightGray) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         Text(
             text = "COMP\u00C9TENCES TECHNIQUES",
             style = MaterialTheme.typography.headlineLarge,
@@ -182,7 +179,7 @@ private fun ExpertiseItem(icon: ImageVector, text: String) {
 
 @Composable
 private fun CareerTimelineSection() {
-    Section(backgroundColor = LightGray) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         Text(
             text = "POINTS FORTS DE CARRI\u00C8RE",
             style = MaterialTheme.typography.headlineLarge,

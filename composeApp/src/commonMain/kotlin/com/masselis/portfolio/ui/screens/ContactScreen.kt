@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
-import com.masselis.portfolio.ui.theme.DarkNavy
-import com.masselis.portfolio.ui.theme.LightGray
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
@@ -55,7 +53,7 @@ private fun ContactHeaderSection(
 ) {
     Section(
         paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
-        backgroundColor = DarkNavy,
+        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Text(
             text = "Restons en Contact",
@@ -69,7 +67,7 @@ private fun ContactHeaderSection(
 private fun ContactGridSection() {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
-        backgroundColor = LightGray
+        backgroundColor = MaterialTheme.colorScheme.surfaceVariant
     ) {
         val contacts = PortfolioData.contacts
         val icons = listOf(
@@ -142,7 +140,7 @@ private fun ContactGridCard(
 ) {
     Column(
         modifier = modifier
-            .border(1.dp, DarkNavy.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -151,7 +149,7 @@ private fun ContactGridCard(
             imageVector = icon,
             contentDescription = label,
             modifier = Modifier.size(64.dp),
-            tint = DarkNavy,
+            tint = MaterialTheme.colorScheme.primaryContainer,
         )
         Spacer(Modifier.height(16.dp))
         Text(
@@ -222,7 +220,7 @@ private fun LocationSection() {
 private fun LocationCard(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .border(1.dp, DarkNavy.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -231,7 +229,7 @@ private fun LocationCard(modifier: Modifier = Modifier) {
             imageVector = Icons.Default.LocationOn,
             contentDescription = "Location",
             modifier = Modifier.size(64.dp),
-            tint = DarkNavy,
+            tint = MaterialTheme.colorScheme.primaryContainer,
         )
         Spacer(Modifier.height(12.dp))
         Text(

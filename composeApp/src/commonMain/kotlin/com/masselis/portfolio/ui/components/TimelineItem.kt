@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.ui.theme.AccentGreen
 
 @Composable
 internal fun TimelineItem(
@@ -50,14 +49,14 @@ internal fun TimelineItem(
                 modifier = Modifier
                     .size(12.dp)
                     .clip(CircleShape)
-                    .background(AccentGreen),
+                    .background(MaterialTheme.colorScheme.primary),
             )
             if (!isLast) {
                 Box(
                     modifier = Modifier
                         .width(2.dp)
                         .fillMaxHeight()
-                        .background(AccentGreen.copy(alpha = 0.4f)),
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)),
                 )
             }
         }

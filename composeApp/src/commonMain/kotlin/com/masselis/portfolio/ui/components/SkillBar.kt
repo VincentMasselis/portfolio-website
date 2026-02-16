@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.ui.theme.AccentGreen
 
 @Composable
 internal fun SkillBar(label: String, progress: Float, modifier: Modifier = Modifier) {
@@ -37,7 +36,7 @@ internal fun SkillBar(label: String, progress: Float, modifier: Modifier = Modif
                     .fillMaxWidth(progress)
                     .height(12.dp)
                     .clip(RoundedCornerShape(6.dp))
-                    .background(AccentGreen),
+                    .background(MaterialTheme.colorScheme.primary),
             )
         }
     }

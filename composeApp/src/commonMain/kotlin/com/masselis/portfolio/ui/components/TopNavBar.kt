@@ -24,8 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.navigation.Route
-import com.masselis.portfolio.ui.theme.AccentGreen
-import com.masselis.portfolio.ui.theme.DarkNavy
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +37,7 @@ internal fun TopNavBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = DarkNavy),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             if (windowSizeClass == WindowSizeClass.Compact) {
                 IconButton(onClick = onMenuClick) {
@@ -55,7 +53,7 @@ internal fun TopNavBar(
                     Icon(
                         imageVector = Icons.Default.PhoneAndroid,
                         contentDescription = null,
-                        tint = AccentGreen,
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp),
                     )
                 }
@@ -97,7 +95,7 @@ private fun NavLink(
     Text(
         text = label,
         style = MaterialTheme.typography.labelLarge,
-        color = if (isActive) AccentGreen else Color.White,
+        color = if (isActive) MaterialTheme.colorScheme.primary else Color.White,
         textDecoration = if (isActive) TextDecoration.Underline else TextDecoration.None,
         modifier = Modifier.clickable { onNavigate(route) },
     )

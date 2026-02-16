@@ -10,12 +10,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-internal val DarkNavy = Color(0xFF1C2E3F)
-internal val AccentGreen = Color(0xFF4CAF50)
-internal val LightGray = Color(0xFFF5F5F5)
-internal val RepoCardBlue = Color(0xFF4A90D9)
-internal val DarkNavyLight = Color(0xFF263D52)
-internal val TextWhite = Color(0xFFE0E0E0)
+private val DarkNavy = Color(0xFF1C2E3F)
+private val AccentGreen = Color(0xFF4CAF50)
+private val LightGray = Color(0xFFF5F5F5)
+private val RepoCardBlue = Color(0xFF4A90D9)
+private val TextWhite = Color(0xFFE0E0E0)
 
 private val PortfolioColorScheme = darkColorScheme(
     primary = AccentGreen,
