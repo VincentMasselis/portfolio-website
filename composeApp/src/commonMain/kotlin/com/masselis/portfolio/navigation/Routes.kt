@@ -1,22 +1,23 @@
 package com.masselis.portfolio.navigation
 
 import kotlinx.serialization.Serializable
+import kotlin.reflect.KClass
 
-internal sealed interface Route {
+public sealed interface Route {
     @Serializable
-    data object Home : Route
-
-    @Serializable
-    data object About : Route
+    public data object Home : Route
 
     @Serializable
-    data object Projects : Route
+    public data object About : Route
 
     @Serializable
-    data object Contact : Route
+    public data object Projects : Route
 
-    companion object {
-        val routes: List<Route> = listOf(Home, About, Projects, Contact)
-        val classes = routes.map { it::class }
+    @Serializable
+    public data object Contact : Route
+
+    public companion object {
+        public val routes: List<Route> = listOf(Home, About, Projects, Contact)
+        public val classes: List<KClass<out Route>> = routes.map { it::class }
     }
 }

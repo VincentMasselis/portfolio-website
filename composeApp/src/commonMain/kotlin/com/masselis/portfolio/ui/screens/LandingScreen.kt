@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.Phonelink
@@ -60,7 +61,7 @@ internal fun LandingScreen(
             scaffoldPadding = scaffoldPadding,
             showProjects = { navController.navigate(Route.Projects) }
         )
-        ProjectsPreviewSection()
+        ProjectsPreviewSection(onSeeMore = { navController.navigate(Route.Projects) })
         AboutPreviewSection()
         GitHubSection()
     }
@@ -92,25 +93,11 @@ private fun HeroSection(
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(32.dp))
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .border(1.dp, AccentGreen, RoundedCornerShape(24.dp))
-                .clickable(onClick = showProjects)
-                .padding(horizontal = 24.dp, vertical = 12.dp),
-        ) {
-            Text(
-                text = "Voir mes réalisations",
-                style = MaterialTheme.typography.labelLarge,
-                color = AccentGreen,
-            )
-        }
-        Spacer(Modifier.height(32.dp))
     }
 }
 
 @Composable
-private fun ProjectsPreviewSection() {
+private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
         backgroundColor = Color.Transparent,
@@ -127,13 +114,20 @@ private fun ProjectsPreviewSection() {
             CubeInStore()
             Spacer(Modifier.height(16.dp))
             Kadiska()
+            Spacer(Modifier.height(16.dp))
+            SeeMore(onClick = onSeeMore)
         } else {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Box(Modifier.weight(1f)) { CubeInStore() }
                 Box(Modifier.weight(1f)) { Kadiska() }
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.weight(0.3f)
+                ) { SeeMore(onClick = onSeeMore) }
             }
         }
     }
@@ -169,6 +163,38 @@ private fun Kadiska(
         ),
         Res.drawable.kadiska
     )
+}
+
+@Composable
+private fun SeeMore(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, AccentGreen, RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(24.dp),
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(
+                Icons.AutoMirrored.Default.ArrowForward,
+                contentDescription = null,
+                modifier = Modifier.size(32.dp),
+                tint = AccentGreen,
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = "Voir tous mes projets",
+                style = MaterialTheme.typography.titleMedium,
+                color = AccentGreen,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
 }
 
 @Composable

@@ -45,11 +45,12 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import kotlinx.coroutines.launch
 
-private val startDestination: Route = Route.Home
+internal val defaultStartRoute: Route = Route.Home
 
 @Composable
 public fun App(
     navController: NavHostController = rememberNavController(),
+    startRoute: Route = defaultStartRoute,
     onNavHostReady: () -> Unit = {},
 ) {
     PortfolioTheme {
@@ -61,7 +62,7 @@ public fun App(
                     .classes
                     .firstOrNull { clazz -> backStackEntry?.destination?.hasRoute(clazz) ?: false }
                     ?.let { clazz -> backStackEntry?.toRoute(clazz) }
-                    ?: startDestination
+                    ?: startRoute
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
 
@@ -115,7 +116,7 @@ public fun App(
                             ) {
                                 NavHost(
                                     navController,
-                                    startDestination = startDestination,
+                                    startDestination = startRoute,
                                     enterTransition = { fadeIn(tween(300)) },
                                     exitTransition = { fadeOut(snap(delayMillis = 300)) },
                                     popEnterTransition = { fadeIn(tween(300)) },
