@@ -2,7 +2,7 @@ package com.masselis.portfolio
 
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
-import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.screens.Route
 import org.w3c.dom.Location
 
 internal val Route.path: String

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -37,13 +36,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.masselis.portfolio.data.PortfolioData
-import com.masselis.portfolio.navigation.Route
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
+import com.masselis.portfolio.ui.components.label
+import com.masselis.portfolio.ui.components.stats
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 import portfolio.composeapp.generated.resources.Res
@@ -63,7 +62,7 @@ internal fun LandingScreen(
         )
         ProjectsPreviewSection(onSeeMore = { navController.navigate(Route.Projects) })
         AboutPreviewSection()
-        GitHubSection()
+        OSSSection()
     }
 }
 
@@ -295,32 +294,43 @@ private fun AboutText() {
 }
 
 @Composable
-private fun GitHubSection() {
+private fun OSSSection() {
     Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         Text(
-            text = "GITHUB & OPEN SOURCE",
+            text = "OPEN SOURCE",
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(12.dp))
         Icon(
             Icons.Default.Code,
             contentDescription = null,
             modifier = Modifier.size(48.dp).align(Alignment.CenterHorizontally),
             tint = MaterialTheme.colorScheme.onBackground,
         )
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(20.dp))
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items(PortfolioData.repos) { repo ->
+            item {
                 RepoCard(
-                    repoName = repo.name,
-                    stars = repo.stars,
-                    language = repo.language,
+                    "TPMS-advanced",
+                    stats("TPMS-advanced")
+                )
+            }
+            item {
+                RepoCard(
+                    "RxBluetoothKotlin",
+                    stats("RxBluetoothKotlin")
+                )
+            }
+            item {
+                RepoCard(
+                    "portfolio-website",
+                    label("Le code du site que vous visitez actuellement")
                 )
             }
         }

@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
 @OptIn(ExperimentalMaterial3Api::class)

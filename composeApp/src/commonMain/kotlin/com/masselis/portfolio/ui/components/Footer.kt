@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res

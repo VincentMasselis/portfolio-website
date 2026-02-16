@@ -3,7 +3,7 @@ package com.masselis.portfolio
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.rememberNavController
-import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.screens.Route
 import kotlinx.browser.window
 import kotlin.js.ExperimentalWasmJsInterop
 

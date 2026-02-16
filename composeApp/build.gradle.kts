@@ -7,11 +7,13 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.metro)
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 kotlin {
     explicitApi()
-    androidLibrary  {
+    androidLibrary {
         namespace = "com.masselis.portfolio"
         minSdk = libs.versions.android.minSdk.get().toInt()
         compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -22,7 +24,7 @@ kotlin {
             enable = true
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -32,22 +34,30 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     js {
         browser()
         binaries.executable()
     }
-    
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
         binaries.executable()
     }
-    
+
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-P=plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=com.masselis.portfolio.CommonParcelize",
+            "-Xexpect-actual-classes"
+        )
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -62,6 +72,19 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.navigation.compose)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.circuit.foundation)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.cio)
         }
     }
 }

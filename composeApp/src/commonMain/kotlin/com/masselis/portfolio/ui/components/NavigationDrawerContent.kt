@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.navigation.Route
+import com.masselis.portfolio.ui.screens.Route
 
 @Composable
 internal fun NavigationDrawerContent(

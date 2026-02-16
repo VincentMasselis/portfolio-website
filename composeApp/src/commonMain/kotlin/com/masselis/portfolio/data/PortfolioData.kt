@@ -97,10 +97,4 @@ internal object PortfolioData {
         ContactInfo("R\u00E9seau Social", "bsky.app/profile/rxvincent.bsky.s", "Bluesky"),
         ContactInfo("Contact Direct", "vincent@rxvincent.com", "Email"),
     )
-
-    val repos = listOf(
-        RepoInfo("RxVincent-Utils", "150", "Kotlin"),
-        RepoInfo("github-repo", "5.9", "JS"),
-        RepoInfo("rxvincent-repo", "5.0", "Kotlin"),
-    )
 }

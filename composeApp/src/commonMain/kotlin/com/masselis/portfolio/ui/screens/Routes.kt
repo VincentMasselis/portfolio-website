@@ -1,4 +1,4 @@
-package com.masselis.portfolio.navigation
+package com.masselis.portfolio.ui.screens
 
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
