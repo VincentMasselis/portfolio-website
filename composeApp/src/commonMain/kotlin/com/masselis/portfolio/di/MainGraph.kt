@@ -1,6 +1,6 @@
 package com.masselis.portfolio.di
 
-import com.masselis.portfolio.ui.components.RepoCardStatsViewModel
+import com.slack.circuit.foundation.Circuit
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.createGraph
@@ -9,9 +9,8 @@ import dev.zacsweers.metro.createGraph
     scope = AppScope::class,
     bindingContainers = [Bindings::class]
 )
-internal interface AppGraph {
+internal interface MainGraph {
+    val circuit: Circuit
 
-    val RepoCardStatsViewModel: RepoCardStatsViewModel.Factory
-
-    companion object : AppGraph by createGraph()
+    companion object : MainGraph by createGraph()
 }
