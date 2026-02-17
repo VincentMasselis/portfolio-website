@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
@@ -13,8 +12,6 @@ plugins {
     alias(libs.plugins.ksp)
     id("org.jetbrains.kotlin.plugin.parcelize")
 }
-
-ksp { arg("circuit.codegen.mode", "metro") }
 
 kotlin {
     explicitApi()
@@ -61,6 +58,9 @@ kotlin {
     sourceSets {
         commonMain {
             kotlin {
+                // KSP's metadata output directory isn't automatically added to the commonMain
+                // source set. This line tells the Kotlin compiler to also compile the generated
+                // factory files alongside your hand-written code.
                 srcDir("build/generated/ksp/metadata/commonMain/kotlin")
             }
         }
@@ -102,12 +102,14 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+    // The special kspCommonMainMetadata configuration (not ksp or kspCommonMain) because in KMP,
+    // KSP must run on the metadata compilation to produce code that works across all platforms.
     add("kspCommonMainMetadata", libs.circuit.codegen)
 }
 
+ksp { arg("circuit.codegen.mode", "metro") }
+
+// Ensure KSP generates the Circuit factories before any Kotlin compilation runs
 tasks.withType<KotlinCompilationTask<*>>().configureEach {
-    if (this is AbstractKotlinCompile<*>) {
-        incremental = false
-    }
     dependsOn("kspCommonMainKotlinMetadata")
 }
