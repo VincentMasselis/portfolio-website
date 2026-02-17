@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,12 +8,12 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.metro)
-    alias(libs.plugins.ksp)
     id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 kotlin {
     explicitApi()
+
     androidLibrary {
         namespace = "com.masselis.portfolio"
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -51,19 +50,11 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll(
             "-P=plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=com.masselis.portfolio.utils.CommonParcelize",
-            "-Xexpect-actual-classes"
+            "-Xexpect-actual-classes",
         )
     }
 
     sourceSets {
-        commonMain {
-            kotlin {
-                // KSP's metadata output directory isn't automatically added to the commonMain
-                // source set. This line tells the Kotlin compiler to also compile the generated
-                // factory files alongside your hand-written code.
-                srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-            }
-        }
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
@@ -85,8 +76,6 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.circuit.foundation)
-            implementation(libs.circuit.codegen.annotations)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -102,14 +91,4 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
-    // The special kspCommonMainMetadata configuration (not ksp or kspCommonMain) because in KMP,
-    // KSP must run on the metadata compilation to produce code that works across all platforms.
-    add("kspCommonMainMetadata", libs.circuit.codegen)
-}
-
-ksp { arg("circuit.codegen.mode", "metro") }
-
-// Ensure KSP generates the Circuit factories before any Kotlin compilation runs
-tasks.withType<KotlinCompilationTask<*>>().configureEach {
-    dependsOn("kspCommonMainKotlinMetadata")
 }
