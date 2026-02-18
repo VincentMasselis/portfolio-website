@@ -22,6 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.ui.screens.About
+import com.masselis.portfolio.ui.screens.Contact
+import com.masselis.portfolio.ui.screens.Landing
+import com.masselis.portfolio.ui.screens.Projects
 import com.masselis.portfolio.ui.screens.Route
 
 @Composable
@@ -56,10 +60,10 @@ internal fun NavigationDrawerContent(
 
         Spacer(Modifier.height(32.dp))
 
-        DrawerNavItem("Home", Route.Home, currentRoute, onNavigate)
-        DrawerNavItem("À propos", Route.About, currentRoute, onNavigate)
-        DrawerNavItem("Projets", Route.Projects, currentRoute, onNavigate)
-        DrawerNavItem("Contact", Route.Contact, currentRoute, onNavigate)
+        DrawerNavItem("Home", Landing, currentRoute, onNavigate)
+        DrawerNavItem("À propos", About, currentRoute, onNavigate)
+        DrawerNavItem("Projets", Projects, currentRoute, onNavigate)
+        DrawerNavItem("Contact", Contact, currentRoute, onNavigate)
     }
 }
 

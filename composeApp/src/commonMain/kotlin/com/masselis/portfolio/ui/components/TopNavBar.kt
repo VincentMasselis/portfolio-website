@@ -23,6 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.ui.screens.About
+import com.masselis.portfolio.ui.screens.Contact
+import com.masselis.portfolio.ui.screens.Landing
+import com.masselis.portfolio.ui.screens.Projects
 import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 
@@ -73,10 +77,10 @@ internal fun TopNavBar(
                     horizontalArrangement = Arrangement.spacedBy(24.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    NavLink("Home", Route.Home, currentRoute, onNavigate)
-                    NavLink("À propos", Route.About, currentRoute, onNavigate)
-                    NavLink("Projets", Route.Projects, currentRoute, onNavigate)
-                    NavLink("Contact", Route.Contact, currentRoute, onNavigate)
+                    NavLink("Home", Landing, currentRoute, onNavigate)
+                    NavLink("À propos", About, currentRoute, onNavigate)
+                    NavLink("Projets", Projects, currentRoute, onNavigate)
+                    NavLink("Contact", Contact, currentRoute, onNavigate)
                 }
                 Spacer(Modifier.width(16.dp))
             }

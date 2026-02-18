@@ -1,9 +1,5 @@
 package com.masselis.portfolio
 
-import androidx.compose.animation.core.snap
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,76 +16,46 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.masselis.portfolio.di.MainGraph
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.NavigationDrawerContent
 import com.masselis.portfolio.ui.components.TopNavBar
-import com.masselis.portfolio.ui.screens.AboutScreen
-import com.masselis.portfolio.ui.screens.ContactScreen
-import com.masselis.portfolio.ui.screens.LandingScreen
-import com.masselis.portfolio.ui.screens.ProjectsScreen
+import com.masselis.portfolio.ui.screens.Landing
 import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.PortfolioTheme
 import com.masselis.portfolio.ui.theme.WindowSizeClass
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
+import com.masselis.portfolio.utils.LocalScaffoldPadding
 import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.navstack.rememberSaveableNavStack
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.runtime.Navigator
+import com.slack.circuit.runtime.navigation.NavStack
 import kotlinx.coroutines.launch
 
-internal val defaultStartRoute: Route = Route.Home
+internal val defaultStartRoute: Route = Landing
 
 @Composable
 public fun App(
-    navController: NavHostController = rememberNavController(),
-    startRoute: Route = defaultStartRoute,
-    onNavHostReady: () -> Unit = {},
+    navStack: NavStack<out NavStack.Record> = rememberSaveableNavStack(defaultStartRoute),
+    navigator: Navigator = rememberCircuitNavigator(navStack) {},
 ) {
     PortfolioTheme {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             val windowSizeClass = rememberWindowSizeClass(maxWidth.value.toInt())
             CircuitCompositionLocals(MainGraph.circuit) {
                 CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
-                    val backStackEntry by navController.currentBackStackEntryAsState()
-                    val currentRoute = Route
-                        .classes
-                        .firstOrNull { clazz ->
-                            backStackEntry?.destination?.hasRoute(clazz) ?: false
-                        }
-                        ?.let { clazz -> backStackEntry?.toRoute(clazz) }
-                        ?: startRoute
+                    val currentRoute = navStack.currentRecord?.screen as? Route ?: defaultStartRoute
                     val drawerState = rememberDrawerState(DrawerValue.Closed)
                     val scope = rememberCoroutineScope()
 
                     val navigateTo: (Route) -> Unit = { route ->
                         scope.launch { drawerState.close() }
-                        when (route) {
-                            Route.Home -> navController.navigate(Route.Home) {
-                                popUpTo(Route.Home) { inclusive = true }
-                            }
-
-                            Route.About -> navController.navigate(Route.About) {
-                                popUpTo(Route.Home)
-                            }
-
-                            Route.Contact -> navController.navigate(Route.Contact) {
-                                popUpTo(Route.Home)
-                            }
-
-                            Route.Projects -> navController.navigate(Route.Projects) {
-                                popUpTo(Route.Home)
-                            }
-                        }
+                        navigator.goTo(route)
                     }
 
                     ModalNavigationDrawer(
@@ -114,35 +80,23 @@ public fun App(
                                 )
                             },
                             content = { padding ->
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .verticalScroll(rememberScrollState()),
-                                ) {
-                                    NavHost(
-                                        navController,
-                                        startDestination = startRoute,
-                                        enterTransition = { fadeIn(tween(300)) },
-                                        exitTransition = { fadeOut(snap(delayMillis = 300)) },
-                                        popEnterTransition = { fadeIn(tween(300)) },
-                                        popExitTransition = { fadeOut(snap(delayMillis = 300)) },
-                                        modifier = Modifier.consumeWindowInsets(WindowInsets.navigationBars)
+                                CompositionLocalProvider(LocalScaffoldPadding provides padding) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .verticalScroll(rememberScrollState()),
                                     ) {
-                                        composable<Route.Home> {
-                                            LandingScreen(navController, padding)
-                                        }
-                                        composable<Route.About> { AboutScreen(padding) }
-                                        composable<Route.Projects> { ProjectsScreen(padding) }
-                                        composable<Route.Contact> { ContactScreen(padding) }
-                                    }
-                                    Spacer(Modifier.weight(1f))
-                                    Footer(
-                                        currentRoute = currentRoute,
-                                        windowSizeClass = windowSizeClass,
-                                        onNavigate = navigateTo,
-                                    )
-                                    LaunchedEffect(navController) {
-                                        onNavHostReady()
+                                        NavigableCircuitContent(
+                                            navigator = navigator,
+                                            navStack = navStack,
+                                            modifier = Modifier.consumeWindowInsets(WindowInsets.navigationBars)
+                                        )
+                                        Spacer(Modifier.weight(1f))
+                                        Footer(
+                                            currentRoute = currentRoute,
+                                            windowSizeClass = windowSizeClass,
+                                            onNavigate = navigateTo,
+                                        )
                                     }
                                 }
                             },
