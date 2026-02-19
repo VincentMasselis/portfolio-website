@@ -2,7 +2,6 @@ package com.masselis.portfolio.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +27,7 @@ import portfolio.composeapp.generated.resources.ic_github
 @Composable
 internal fun RepoCard(
     name: String,
-    content: RepoCardContent,
+    content: @Composable (Modifier) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -62,21 +61,5 @@ internal fun RepoCard(
             color = Color.White,
         )
         content(Modifier.weight(1f).fillMaxWidth())
-    }
-}
-
-
-internal typealias RepoCardContent = @Composable (Modifier) -> Unit
-
-internal fun label(string: String): RepoCardContent = { modifier ->
-    Box(
-        contentAlignment = Alignment.CenterStart,
-        modifier = modifier,
-    ) {
-        Text(
-            text = string,
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.White.copy(alpha = 0.8f),
-        )
     }
 }

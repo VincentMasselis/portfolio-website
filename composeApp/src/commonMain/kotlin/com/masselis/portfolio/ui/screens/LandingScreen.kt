@@ -20,12 +20,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.Phonelink
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,19 +41,22 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation.Url
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
+import com.masselis.portfolio.ui.components.RepoCardStats
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
-import com.masselis.portfolio.ui.components.label
-import com.masselis.portfolio.ui.components.stats
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
@@ -296,7 +307,7 @@ private fun AboutText() {
     Text(
         text = "Vincent Masselis,\nDéveloppeur Senior",
         style = MaterialTheme.typography.headlineMedium,
-        fontWeight = FontWeight.Bold,
+        fontWeight = Bold,
         color = MaterialTheme.colorScheme.onBackground,
     )
     Spacer(Modifier.height(12.dp))
@@ -360,24 +371,94 @@ private fun OSSSection() {
             item {
                 RepoCard(
                     "TPMS-advanced",
-                    stats("TPMS-advanced")
+                    { RepoCardStats("TPMS-advanced") }
                 )
             }
             item {
                 RepoCard(
                     "RxBluetoothKotlin",
-                    stats("RxBluetoothKotlin")
+                    { RepoCardStats("RxBluetoothKotlin") }
                 )
             }
             item {
                 RepoCard(
                     "portfolio-website",
-                    label("Le code du site que vous visitez actuellement")
+                    content = {
+                        RepoCardPortfolioLabel()
+                    }
                 )
             }
             item {
                 Spacer(Modifier.width(PaddingValues.Section.calculateEndPadding(layoutDirection)))
             }
         }
+    }
+}
+
+@Composable
+private fun RepoCardPortfolioLabel(
+    modifier: Modifier = Modifier,
+) {
+    var showDialog by remember { mutableStateOf(false) }
+    val uriHandler = LocalUriHandler.current
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
+    ) {
+        Text(
+            text = "Le code du site que vous visitez actuellement",
+            style = MaterialTheme.typography.labelSmall,
+            color = Color.White.copy(alpha = 0.8f),
+            modifier = Modifier.weight(1f)
+        )
+        IconButton(
+            content = {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    tint = MaterialTheme.colorScheme.onSecondary,
+                    contentDescription = null
+                )
+            },
+            onClick = {
+                showDialog = true
+            }
+        )
+    }
+    if (showDialog) {
+        AlertDialog(
+            text = {
+                Text(
+                    buildAnnotatedString {
+                        append("Ce site web a été fabriqué en utilisant les dernières technologies de ")
+                        withLink(Url("https://kotlinlang.org/multiplatform")) {
+                            withStyle(style = SpanStyle(fontWeight = Bold)) {
+                                append("Kotlin Multiplatform")
+                            }
+                        }
+                        append(". Grâce à cela, ce site est capable de fonctionner ")
+                        withStyle(style = SpanStyle(fontWeight = Bold)) {
+                            append("avec le même code")
+                        }
+                        append(", nativement sur Android, Web et iOS.")
+                    }
+                )
+            },
+            onDismissRequest = { showDialog = false },
+            dismissButton = {
+                TextButton({
+                    uriHandler.openUri("https://github.com/VincentMasselis/portfolio-website")
+                    showDialog = false
+                }) {
+                    Text("Voir le code source")
+                }
+            },
+            confirmButton = {
+                TextButton({ showDialog = false }) {
+                    Text("OK")
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            textContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }

@@ -83,7 +83,7 @@ internal fun Footer(
                     Icon(
                         painter = painterResource(Res.drawable.ic_linkedin),
                         contentDescription = "LinkedIn",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.size(24.dp),
                     )
                 }
@@ -91,7 +91,7 @@ internal fun Footer(
                     Icon(
                         painter = painterResource(Res.drawable.ic_bluesky),
                         contentDescription = "Bluesky",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.size(24.dp),
                     )
                 }

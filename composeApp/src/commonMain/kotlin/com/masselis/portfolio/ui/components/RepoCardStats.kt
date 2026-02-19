@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.ForkRight
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Warning
@@ -14,6 +15,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,10 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.GitHubApi
 import com.masselis.portfolio.ui.components.RepoCardStatsScreen.State
-import com.masselis.portfolio.ui.components.RepoCardStatsScreen.State.Error.Event
+import com.masselis.portfolio.ui.utils.CommonIgnoredOnParcel
 import com.masselis.portfolio.ui.utils.CommonParcelable
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -42,7 +45,11 @@ import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 
-internal fun stats(repoName: String): RepoCardContent = { modifier ->
+@Composable
+internal fun RepoCardStats(
+    repoName: String,
+    modifier: Modifier = Modifier,
+) {
     CircuitContent(RepoCardStatsScreen(repoName), modifier)
 }
 
@@ -59,12 +66,17 @@ public data class RepoCardStatsScreen(
         public data class Stats(
             val stars: Int,
             val forks: Int,
-            val mainLanguage: String
-        ) : State
+            val mainLanguage: String,
+            @CommonIgnoredOnParcel val eventSink: (Event) -> Unit = { error("") }
+        ) : State {
+            public sealed interface Event : CircuitUiState {
+                public data object OpenInWebBrowser : Event
+            }
+        }
 
         @CommonParcelize
         public data class Error(
-            val eventSink: (Event) -> Unit,
+            @CommonIgnoredOnParcel val eventSink: (Event) -> Unit = { error("") }
         ) : State {
             public sealed interface Event : CircuitUiState {
                 public data object Retry : Event
@@ -109,7 +121,7 @@ internal fun RepoCardStats(
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onSecondary,
             ),
-            onClick = { state.eventSink(Event.Retry) },
+            onClick = { state.eventSink(State.Error.Event.Retry) },
             modifier = modifier,
         )
 
@@ -147,6 +159,19 @@ internal fun RepoCardStats(
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.White.copy(alpha = 0.8f),
                 )
+                Spacer(Modifier.weight(1f))
+                IconButton(
+                    content = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.OpenInNew,
+                            tint = MaterialTheme.colorScheme.onSecondary,
+                            contentDescription = null
+                        )
+                    },
+                    onClick = {
+                        state.eventSink(State.Stats.Event.OpenInWebBrowser)
+                    }
+                )
             }
         }
     }
@@ -166,25 +191,40 @@ public class RepoCardStatsPresenter(
 
     @Composable
     override fun present(): State {
+        val uriHandler = LocalUriHandler.current
         var state: State by rememberSaveable { mutableStateOf(State.Loading) }
-        LaunchedEffect(state) {
-            state = when (state) {
-                // Nothing to do return the same value than before
-                is State.Error, is State.Stats -> state
 
-                State.Loading -> runCatching {
-                    gitHubApi.fetchStats(
-                        "VincentMasselis",
-                        screen.repoName
-                    )
-                }.map { State.Stats(it.stargazersCount, it.forksCount, it.language ?: "Kotlin") }
-                    .getOrElse { _ ->
-                        State.Error { event ->
-                            when (event) {
-                                Event.Retry -> state = State.Loading
-                            }
+        fun handleErrorEvent(event: State.Error.Event) {
+            when (event) {
+                State.Error.Event.Retry -> state = State.Loading
+            }
+        }
+
+        fun handleStatsEvent(event: State.Stats.Event) {
+            when (event) {
+                State.Stats.Event.OpenInWebBrowser -> {
+                    uriHandler.openUri("https://github.com/VincentMasselis/${screen.repoName}")
+                }
+            }
+        }
+
+        LaunchedEffect(state) {
+            state = when (val state = state) {
+                is State.Error -> state.copy(eventSink = ::handleErrorEvent)
+
+                is State.Stats -> state.copy(eventSink = ::handleStatsEvent)
+
+                State.Loading ->
+                    runCatching { gitHubApi.fetchStats("VincentMasselis", screen.repoName) }
+                        .map {
+                            State.Stats(
+                                it.stargazersCount,
+                                it.forksCount,
+                                it.language ?: "Kotlin",
+                                eventSink = ::handleStatsEvent
+                            )
                         }
-                    }
+                        .getOrElse { _ -> State.Error(::handleErrorEvent) }
             }
         }
         return state

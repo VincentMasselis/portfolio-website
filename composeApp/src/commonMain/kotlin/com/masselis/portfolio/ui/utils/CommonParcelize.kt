@@ -5,3 +5,7 @@ package com.masselis.portfolio.ui.utils
 public expect annotation class CommonParcelize()
 
 public expect interface CommonParcelable
+
+@Target(AnnotationTarget.PROPERTY)
+@Retention(AnnotationRetention.SOURCE)
+public expect annotation class CommonIgnoredOnParcel()
