@@ -34,25 +34,31 @@ import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.runtime.screen.StaticScreen
+import dev.zacsweers.metro.AppScope
 
+@CommonParcelize
+public data object Contact : Route, StaticScreen
+
+@CircuitInject(Contact::class, AppScope::class)
 @Composable
 internal fun ContactScreen(
-    scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        ContactHeaderSection(scaffoldPadding)
+        ContactHeaderSection()
         ContactGridSection()
         LocationSection()
     }
 }
 
 @Composable
-private fun ContactHeaderSection(
-    scaffoldPadding: PaddingValues,
-) {
+private fun ContactHeaderSection() {
     Section(
-        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Text(
@@ -140,7 +146,11 @@ private fun ContactGridCard(
 ) {
     Column(
         modifier = modifier
-            .border(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+            .border(
+                1.dp,
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                RoundedCornerShape(12.dp)
+            )
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -220,7 +230,11 @@ private fun LocationSection() {
 private fun LocationCard(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
-            .border(1.dp, MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+            .border(
+                1.dp,
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                RoundedCornerShape(12.dp)
+            )
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

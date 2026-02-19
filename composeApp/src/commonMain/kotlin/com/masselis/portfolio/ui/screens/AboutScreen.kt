@@ -34,14 +34,22 @@ import com.masselis.portfolio.ui.components.TimelineItem
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.runtime.screen.StaticScreen
+import dev.zacsweers.metro.AppScope
 
+@CommonParcelize
+public data object About : Route, StaticScreen
+
+@CircuitInject(About::class, AppScope::class)
 @Composable
 internal fun AboutScreen(
-    scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        AboutHeroSection(scaffoldPadding)
+        AboutHeroSection()
         SkillsSection()
         ExpertiseSection()
         CareerTimelineSection()
@@ -49,12 +57,10 @@ internal fun AboutScreen(
 }
 
 @Composable
-private fun AboutHeroSection(
-    scaffoldPadding: PaddingValues,
-) {
+private fun AboutHeroSection() {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
-        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         if (windowSizeClass == WindowSizeClass.Compact) {

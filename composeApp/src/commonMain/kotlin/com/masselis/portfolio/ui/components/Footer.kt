@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
@@ -36,7 +37,7 @@ import portfolio.composeapp.generated.resources.ic_linkedin
 internal fun Footer(
     currentRoute: Route,
     windowSizeClass: WindowSizeClass,
-    onNavigate: (Route) -> Unit,
+    openRoute: (Route) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -47,7 +48,7 @@ internal fun Footer(
             .windowInsetsPadding(WindowInsets.navigationBars),
     ) {
         val uriHandler = LocalUriHandler.current
-        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
                     text = "Copyright© 2026 Vincent Masselis",
@@ -56,7 +57,7 @@ internal fun Footer(
                     color = Color.White,
                 )
                 Row(
-                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.clickable {
                         uriHandler.openUri("https://github.com/VincentMasselis/portfolio-website")
                     }

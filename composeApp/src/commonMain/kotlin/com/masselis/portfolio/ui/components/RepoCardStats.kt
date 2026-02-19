@@ -11,44 +11,61 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.masselis.portfolio.data.GitHubApi
-import com.masselis.portfolio.di.AppGraph.Companion.RepoCardStatsViewModel
-import com.masselis.portfolio.utils.CommonParcelable
-import com.masselis.portfolio.utils.CommonParcelize
+import com.masselis.portfolio.ui.components.RepoCardStatsScreen.State
+import com.masselis.portfolio.ui.utils.CommonParcelable
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.foundation.CircuitContent
+import com.slack.circuit.runtime.CircuitUiState
+import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.screen.Screen
+import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 internal fun stats(repoName: String): RepoCardContent = { modifier ->
-    RepoCardStats(repoName, modifier)
+    CircuitContent(RepoCardStatsScreen(repoName), modifier)
 }
 
+@CommonParcelize
+public data class RepoCardStatsScreen(
+    val repoName: String
+) : Screen {
+
+    public sealed interface State : CircuitUiState, CommonParcelable {
+        @CommonParcelize
+        public data object Loading : State
+
+        @CommonParcelize
+        public data class Stats(
+            val stars: Int,
+            val forks: Int,
+            val mainLanguage: String
+        ) : State
+
+        @CommonParcelize
+        public data object Error : State
+    }
+}
+
+@CircuitInject(RepoCardStatsScreen::class, AppScope::class)
 @Composable
 internal fun RepoCardStats(
-    repoName: String,
+    state: State,
     modifier: Modifier = Modifier,
-    viewModel: RepoCardStatsViewModel = viewModel(key = "RepoCardStatsViewModel_$repoName") {
-        RepoCardStatsViewModel(
-            repoName,
-            createSavedStateHandle()
-        )
-    }
 ) {
-    val state by viewModel.stateFlow.collectAsState()
-    val stats = state as? RepoCardStatsViewModel.State.Stats
+    val stats = state as? State.Stats
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
@@ -89,39 +106,26 @@ internal fun RepoCardStats(
 }
 
 @AssistedInject
-internal class RepoCardStatsViewModel(
+public class RepoCardStatsPresenter(
     private val gitHubApi: GitHubApi,
-    @Assisted private val repoName: String,
-    @Assisted ssh: SavedStateHandle,
-) : ViewModel() {
+    @Assisted private val screen: RepoCardStatsScreen,
+) : Presenter<State> {
 
+    @CircuitInject(RepoCardStatsScreen::class, AppScope::class)
     @AssistedFactory
-    interface Factory : (String, SavedStateHandle) -> RepoCardStatsViewModel
-
-    sealed interface State : CommonParcelable {
-        @CommonParcelize
-        data object Loading : State
-
-        @CommonParcelize
-        data class Stats(
-            val stars: Int,
-            val forks: Int,
-            val mainLanguage: String
-        ) : State
-
-        @CommonParcelize
-        data object Error : State
+    public interface Factory {
+        public fun create(screen: RepoCardStatsScreen): RepoCardStatsPresenter
     }
 
-    private val mutableStateFlow = ssh.getMutableStateFlow<State>("STATE", State.Loading)
-    val stateFlow = mutableStateFlow.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            mutableStateFlow.value =
-                runCatching { gitHubApi.fetchStats("VincentMasselis", repoName) }
+    @Composable
+    override fun present(): State {
+        var state: State by rememberSaveable { mutableStateOf(State.Loading) }
+        LaunchedEffect(screen.repoName) {
+            if (state is State.Loading)
+                state = runCatching { gitHubApi.fetchStats("VincentMasselis", screen.repoName) }
                     .map { State.Stats(it.stargazersCount, it.forksCount, it.language ?: "Kotlin") }
                     .getOrElse { _ -> State.Error }
         }
+        return state
     }
 }

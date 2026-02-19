@@ -35,7 +35,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
@@ -45,22 +44,55 @@ import com.masselis.portfolio.ui.components.label
 import com.masselis.portfolio.ui.components.stats
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.runtime.CircuitUiState
+import com.slack.circuit.runtime.Navigator
+import com.slack.circuit.runtime.presenter.Presenter
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.cubeinstore
 import portfolio.composeapp.generated.resources.kadiska
 
+
+@CommonParcelize
+public data object Landing : Route {
+    public data class State(
+        val onShowProjects: () -> Unit,
+    ) : CircuitUiState
+}
+
+@AssistedInject
+public class LandingPresenter(
+    @Assisted private val screen: Landing,
+    @Assisted private val navigator: Navigator,
+) : Presenter<Landing.State> {
+
+    @CircuitInject(Landing::class, AppScope::class)
+    @AssistedFactory
+    public interface Factory {
+        public fun create(screen: Landing, navigator: Navigator): LandingPresenter
+    }
+
+    @Composable
+    override fun present(): Landing.State = Landing.State(
+        onShowProjects = { navigator.goTo(Projects) }
+    )
+}
+
+@CircuitInject(Landing::class, AppScope::class)
 @Composable
 internal fun LandingScreen(
-    navController: NavController,
-    scaffoldPadding: PaddingValues,
+    state: Landing.State,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        HeroSection(
-            scaffoldPadding = scaffoldPadding,
-            showProjects = { navController.navigate(Route.Projects) }
-        )
-        ProjectsPreviewSection(onSeeMore = { navController.navigate(Route.Projects) })
+        HeroSection(showProjects = state.onShowProjects)
+        ProjectsPreviewSection(onSeeMore = state.onShowProjects)
         AboutPreviewSection()
         OSSSection()
     }
@@ -68,11 +100,10 @@ internal fun LandingScreen(
 
 @Composable
 private fun HeroSection(
-    scaffoldPadding: PaddingValues,
     showProjects: () -> Unit,
 ) {
     Section(
-        paddingValues = PaddingValues.Section.copy(top = scaffoldPadding.calculateTopPadding()),
+        paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Spacer(Modifier.height(32.dp))

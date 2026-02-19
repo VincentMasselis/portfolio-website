@@ -1,4 +1,4 @@
-package com.masselis.portfolio.utils
+package com.masselis.portfolio.ui.utils
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

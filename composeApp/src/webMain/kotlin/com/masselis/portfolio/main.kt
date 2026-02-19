@@ -1,41 +1,82 @@
 package com.masselis.portfolio
 
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
-import androidx.navigation.compose.rememberNavController
 import com.masselis.portfolio.ui.screens.Route
+import com.slack.circuit.foundation.navstack.rememberSaveableNavStack
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import kotlinx.browser.window
+import kotlinx.coroutines.flow.onStart
+import org.w3c.dom.PopStateEvent
+import org.w3c.dom.events.Event
 import kotlin.js.ExperimentalWasmJsInterop
+import kotlin.js.JsNumber
+import kotlin.js.toInt
+import kotlin.js.toJsNumber
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalWasmJsInterop::class,
-)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalWasmJsInterop::class)
 internal fun main() {
     ComposeViewport {
-        val navController = rememberNavController()
-        App(
-            navController = navController,
-            startRoute = window.location.asRoute() ?: defaultStartRoute,
-            onNavHostReady = {
-                var updatingFromPopState = false
+        val startRoute = rememberSaveable { window.location.asRoute() ?: defaultStartRoute }
+        val navStack = rememberSaveableNavStack(startRoute)
+        val navigator = rememberCircuitNavigator(
+            navStack = navStack,
+            enableBackHandler = false,
+            onRootPop = {},
+        )
 
-                // Sync browser back/forward to NavController
-                window.addEventListener("popstate") { _ ->
-                    updatingFromPopState = true
-                    navController.navigate(window.location.asRoute()!!) {
-                        popUpTo(Route.Home)
-                    }
-                    updatingFromPopState = false
-                }
+        App(navStack = navStack, navigator = navigator)
 
-                // Sync NavController changes to browser URL
-                navController.addOnDestinationChangedListener { _, destination, _ ->
-                    if (updatingFromPopState) return@addOnDestinationChangedListener
-                    window.history.pushState(null, "", destination.asRoute()!!.path)
+        // Sync browser back/forward to navigator
+        DisposableEffect(Unit) {
+            val listener: (Event) -> Unit = { event ->
+                val targetIndex = ((event as PopStateEvent).state as JsNumber).toInt()
+                val currentIndex = navStack
+                    .snapshot()!!
+                    .reversed()
+                    .indexOfFirst { it.key == navStack.currentRecord!!.key }
+                when (val delta = targetIndex - currentIndex) {
+                    in Int.MIN_VALUE..-1 -> repeat(-delta) { navigator.backward() }
+                    in 1..Int.MAX_VALUE -> repeat(delta) { navigator.forward() }
+                    0 -> Unit // Nothing to do, history state and currentRecord are synchronized
+                    else -> error("Unreachable case")
                 }
             }
-        )
+            window.addEventListener("popstate", listener)
+            onDispose { window.removeEventListener("popstate", listener) }
+        }
+
+        // Sync navigator changes to browser URL
+        LaunchedEffect(Unit) {
+            snapshotFlow { navStack.currentRecord!! }
+                .onStart {
+                    // Saves the number 0 for the first history entry
+                    window.history.replaceState(
+                        0.toJsNumber(),
+                        "",
+                        window.location.pathname
+                    )
+                }
+                .collect { record ->
+                    val path = (record.screen as Route).path
+                    if (path != window.location.pathname) {
+                        // Each time a screen is pushed through the navStack, the history is updated
+                        // to match this new screen
+                        window.history.pushState(
+                            navStack
+                                .snapshot()!!
+                                .reversed()
+                                .indexOfFirst { it.key == record.key }
+                                .toJsNumber(),
+                            "",
+                            path
+                        )
+                    }
+                }
+        }
     }
 }
-
