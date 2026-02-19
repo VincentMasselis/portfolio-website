@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -29,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -43,7 +47,7 @@ import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.components.label
 import com.masselis.portfolio.ui.components.stats
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
-import com.masselis.portfolio.ui.theme.WindowSizeClass
+import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -155,7 +159,7 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
             }
         }
     ) {
-        if (windowSizeClass == WindowSizeClass.Compact) {
+        if (windowSizeClass == Compact) {
             CubeInStore()
             Spacer(Modifier.height(16.dp))
             Kadiska()
@@ -246,7 +250,7 @@ private fun SeeMore(
 private fun AboutPreviewSection() {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(backgroundColor = Color.White) {
-        if (windowSizeClass == WindowSizeClass.Compact) {
+        if (windowSizeClass == Compact) {
             MyselfImage(
                 modifier = Modifier
                     .shadow(
@@ -326,7 +330,11 @@ private fun AboutText() {
 
 @Composable
 private fun OSSSection() {
-    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
+    val layoutDirection = LocalLayoutDirection.current
+    Section(
+        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+        paddingValues = PaddingValues.Section.copy(start = 0.dp, end = 0.dp)
+    ) {
         Text(
             text = "OPEN SOURCE",
             style = MaterialTheme.typography.headlineLarge,
@@ -347,6 +355,9 @@ private fun OSSSection() {
             modifier = Modifier.fillMaxWidth(),
         ) {
             item {
+                Spacer(Modifier.width(PaddingValues.Section.calculateStartPadding(layoutDirection)))
+            }
+            item {
                 RepoCard(
                     "TPMS-advanced",
                     stats("TPMS-advanced")
@@ -363,6 +374,9 @@ private fun OSSSection() {
                     "portfolio-website",
                     label("Le code du site que vous visitez actuellement")
                 )
+            }
+            item {
+                Spacer(Modifier.width(PaddingValues.Section.calculateEndPadding(layoutDirection)))
             }
         }
     }

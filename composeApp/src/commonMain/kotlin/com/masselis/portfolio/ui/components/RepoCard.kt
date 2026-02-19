@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -61,12 +61,12 @@ internal fun RepoCard(
             fontWeight = FontWeight.Bold,
             color = Color.White,
         )
-        content(Modifier.weight(1f))
+        content(Modifier.weight(1f).fillMaxWidth())
     }
 }
 
 
-internal typealias RepoCardContent = @Composable ColumnScope.(Modifier) -> Unit
+internal typealias RepoCardContent = @Composable (Modifier) -> Unit
 
 internal fun label(string: String): RepoCardContent = { modifier ->
     Box(
