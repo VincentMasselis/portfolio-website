@@ -1,4 +1,4 @@
-package com.masselis.portfolio.utils
+package com.masselis.portfolio.ui.utils
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.staticCompositionLocalOf

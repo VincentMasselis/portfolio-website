@@ -44,8 +44,8 @@ import com.masselis.portfolio.ui.components.label
 import com.masselis.portfolio.ui.components.stats
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
-import com.masselis.portfolio.utils.CommonParcelize
-import com.masselis.portfolio.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator

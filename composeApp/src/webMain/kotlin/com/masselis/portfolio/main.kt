@@ -23,7 +23,11 @@ internal fun main() {
     ComposeViewport {
         val startRoute = rememberSaveable { window.location.asRoute() ?: defaultStartRoute }
         val navStack = rememberSaveableNavStack(startRoute)
-        val navigator = rememberCircuitNavigator(navStack) {}
+        val navigator = rememberCircuitNavigator(
+            navStack = navStack,
+            enableBackHandler = false,
+            onRootPop = {},
+        )
 
         App(navStack = navStack, navigator = navigator)
 
@@ -38,7 +42,7 @@ internal fun main() {
                 when (val delta = targetIndex - currentIndex) {
                     in Int.MIN_VALUE..-1 -> repeat(-delta) { navigator.backward() }
                     in 1..Int.MAX_VALUE -> repeat(delta) { navigator.forward() }
-                    0 -> Unit // Nothing to do
+                    0 -> Unit // Nothing to do, history state and currentRecord are synchronized
                     else -> error("Unreachable case")
                 }
             }
@@ -50,6 +54,7 @@ internal fun main() {
         LaunchedEffect(Unit) {
             snapshotFlow { navStack.currentRecord!! }
                 .onStart {
+                    // Saves the number 0 for the first history entry
                     window.history.replaceState(
                         0.toJsNumber(),
                         "",
@@ -59,6 +64,8 @@ internal fun main() {
                 .collect { record ->
                     val path = (record.screen as Route).path
                     if (path != window.location.pathname) {
+                        // Each time a screen is pushed through the navStack, the history is updated
+                        // to match this new screen
                         window.history.pushState(
                             navStack
                                 .snapshot()!!

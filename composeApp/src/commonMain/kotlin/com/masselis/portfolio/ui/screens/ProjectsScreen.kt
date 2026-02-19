@@ -15,8 +15,8 @@ import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
-import com.masselis.portfolio.utils.CommonParcelize
-import com.masselis.portfolio.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.zacsweers.metro.AppScope

@@ -1,4 +1,4 @@
-package com.masselis.portfolio.utils
+package com.masselis.portfolio.ui.utils
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)

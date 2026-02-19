@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.GitHubApi
 import com.masselis.portfolio.ui.components.RepoCardStatsScreen.State
-import com.masselis.portfolio.utils.CommonParcelable
-import com.masselis.portfolio.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.CommonParcelable
+import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.runtime.CircuitUiState

@@ -34,8 +34,8 @@ import com.masselis.portfolio.ui.components.TimelineItem
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
-import com.masselis.portfolio.utils.CommonParcelize
-import com.masselis.portfolio.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.CommonParcelize
+import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.zacsweers.metro.AppScope

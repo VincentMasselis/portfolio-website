@@ -50,7 +50,7 @@ kotlin {
 
     compilerOptions {
         freeCompilerArgs.addAll(
-            "-P=plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=com.masselis.portfolio.utils.CommonParcelize",
+            "-P=plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=com.masselis.portfolio.ui.utils.CommonParcelize",
             "-Xexpect-actual-classes"
         )
     }
