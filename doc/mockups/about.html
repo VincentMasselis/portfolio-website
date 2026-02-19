@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RxVincent — About Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark-navy: #1C2E3F;
+    --dark-navy-light: #263D52;
+    --dark-navy-deep: #152435;
+    --accent-green: #4CAF50;
+    --accent-green-light: #66BB6A;
+    --accent-green-glow: rgba(76, 175, 80, 0.3);
+    --text-white: #E0E0E0;
+    --text-muted: #9EAAB6;
+    --bg-light: #EAEAEA;
+    --bg-card: #FFFFFF;
+    --font: 'JetBrains Mono', monospace;
+    --max-width: 1200px;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-light);
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  /* ========== SCROLL REVEAL ========== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ========== NAV ========== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--dark-navy);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 48px; height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text-white); font-weight: 700; font-size: 18px; text-decoration: none;
+  }
+  .nav-brand svg { width: 24px; height: 24px; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500;
+    position: relative; padding: 4px 0; transition: color 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent-green); }
+  .nav-links a.active::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 2px; background: var(--accent-green); border-radius: 1px;
+  }
+
+  /* ========== HERO ========== */
+  .about-hero {
+    background: linear-gradient(160deg, var(--dark-navy-deep) 0%, var(--dark-navy) 50%, var(--dark-navy-light) 100%);
+    padding: 120px 48px 80px;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    max-width: 100%;
+  }
+  .about-hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    width: 100%;
+  }
+
+  /* Profile photo with green accent ring */
+  .profile-photo {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .profile-photo img {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 4px solid var(--dark-navy);
+  }
+  .profile-photo::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-green);
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+  }
+  .profile-photo::after {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px solid rgba(76,175,80,0.2);
+  }
+
+  .hero-text h1 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  .hero-text h1 .green { color: var(--accent-green); }
+  .hero-bio {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 560px;
+  }
+  .hero-bio strong {
+    color: var(--text-white);
+    font-weight: 600;
+  }
+
+  /* ========== SECTIONS ========== */
+  .section {
+    padding: 80px 48px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+  .section-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 48px;
+  }
+  .section-alt {
+    background: #F0F0F0;
+    max-width: 100%;
+    padding: 80px 48px;
+  }
+  .section-alt .section-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+  .section-dark {
+    background: var(--dark-navy);
+    max-width: 100%;
+    padding: 80px 48px;
+  }
+  .section-dark .section-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  /* ========== SKILLS ========== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 64px;
+  }
+  .skill-item { }
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .skill-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-navy);
+  }
+  .skill-percent {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-green);
+  }
+  .skill-bar {
+    width: 100%;
+    height: 10px;
+    background: #DDD;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-green-light));
+    border-radius: 5px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .skill-fill.animated {
+    /* width set via inline style */
+  }
+
+  /* ========== EXPERTISE CARDS ========== */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .expertise-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+  .expertise-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-green);
+  }
+  .expertise-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .expertise-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark-navy);
+    margin-bottom: 8px;
+  }
+  .expertise-card p {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  /* ========== TIMELINE ========== */
+  .timeline {
+    position: relative;
+    padding-left: 180px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 160px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-green), rgba(76,175,80,0.2));
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 48px;
+    padding-left: 40px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-date {
+    position: absolute;
+    left: -180px;
+    top: 2px;
+    width: 140px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-green);
+    letter-spacing: 0.5px;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: -8px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    border: 3px solid var(--bg-light);
+    box-shadow: 0 0 0 2px var(--accent-green);
+    z-index: 2;
+  }
+  .timeline-item:first-child .timeline-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 2px var(--accent-green); }
+    50% { box-shadow: 0 0 0 6px rgba(76,175,80,0.3); }
+  }
+  .timeline-content h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark-navy);
+    margin-bottom: 4px;
+  }
+  .timeline-content .role {
+    font-size: 13px;
+    color: var(--accent-green);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .timeline-content p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.7;
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--dark-navy-deep);
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-left { font-size: 13px; color: var(--text-muted); }
+  .footer-left a { color: var(--accent-green); text-decoration: none; }
+  .footer-right { display: flex; gap: 16px; }
+  .footer-right a { color: var(--text-muted); transition: color 0.3s; }
+  .footer-right a:hover { color: var(--text-white); }
+  .footer-right svg { width: 22px; height: 22px; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .about-hero { padding: 100px 20px 48px; }
+    .about-hero-inner { flex-direction: column; text-align: center; gap: 32px; }
+    .profile-photo img { width: 180px; height: 180px; }
+    .hero-text h1 { font-size: 26px; }
+    .section, .section-alt, .section-dark { padding: 48px 20px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .timeline { padding-left: 40px; }
+    .timeline::before { left: 20px; }
+    .timeline-date {
+      position: relative;
+      left: 0;
+      width: auto;
+      text-align: left;
+      margin-bottom: 4px;
+    }
+    .timeline-dot { left: -28px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .about-hero-inner { animation: fadeInUp 0.8s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <a href="landing.html" class="nav-brand">
+    <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#4CAF50" stroke-width="2"/><path d="M8 7h8M8 11h8M8 15h4" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/></svg>
+    RxVincent
+  </a>
+  <div class="nav-links">
+    <a href="landing.html">Home</a>
+    <a href="#" class="active">A propos</a>
+    <a href="projects.html">Projets</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <div class="profile-photo">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" alt="Vincent Masselis">
+    </div>
+    <div class="hero-text">
+      <h1>A PROPOS DE<br><span class="green">VINCENT MASSELIS</span></h1>
+      <p class="hero-bio">
+        Vincent Masselis est un developpeur <strong>Android Senior</strong> avec plus de 10 ans d'experience, specialise dans l'architecture robuste (<strong>Clean Architecture, MVVM</strong>), la programmation reactive (<strong>RxJava, Kotlin Flow</strong>) et les interfaces modernes (<strong>Jetpack Compose</strong>). Il collabore avec des startups et des grandes entreprises pour creer des applications performantes et evolutives.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SKILLS ========== -->
+<section class="section">
+  <p class="section-title reveal">COMPETENCES TECHNIQUES</p>
+  <p class="section-subtitle reveal">Technologies maitrisees au quotidien</p>
+  <div class="skills-grid">
+    <div class="skill-item reveal reveal-delay-1">
+      <div class="skill-header">
+        <span class="skill-name">Kotlin</span>
+        <span class="skill-percent">90%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
+    </div>
+    <div class="skill-item reveal reveal-delay-1">
+      <div class="skill-header">
+        <span class="skill-name">Jetpack Compose</span>
+        <span class="skill-percent">85%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+    </div>
+    <div class="skill-item reveal reveal-delay-2">
+      <div class="skill-header">
+        <span class="skill-name">Android SDK</span>
+        <span class="skill-percent">90%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div>
+    </div>
+    <div class="skill-item reveal reveal-delay-2">
+      <div class="skill-header">
+        <span class="skill-name">Clean Architecture</span>
+        <span class="skill-percent">80%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
+    </div>
+    <div class="skill-item reveal reveal-delay-3">
+      <div class="skill-header">
+        <span class="skill-name">RxJava / Kotlin Flow</span>
+        <span class="skill-percent">85%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+    </div>
+    <div class="skill-item reveal reveal-delay-3">
+      <div class="skill-header">
+        <span class="skill-name">iOS / Swift</span>
+        <span class="skill-percent">40%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-width="40%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXPERTISE & PASSIONS ========== -->
+<div class="section-alt">
+  <div class="section-inner">
+    <p class="section-title reveal">EXPERTISE & PASSIONS</p>
+    <p class="section-subtitle reveal">Ce qui m'anime au quotidien</p>
+    <div class="expertise-grid">
+      <div class="expertise-card reveal reveal-delay-1">
+        <span class="expertise-icon">&#9749;</span>
+        <h4>Cafe et code propre</h4>
+        <p>Obsede par la lisibilite, les tests et les principes SOLID. Un bon cafe, un code sans dette technique.</p>
+      </div>
+      <div class="expertise-card reveal reveal-delay-2">
+        <span class="expertise-icon">&#127918;</span>
+        <h4>Gaming et nouvelles tech</h4>
+        <p>Curieux des nouvelles technologies, du gaming et de tout ce qui repousse les limites du possible.</p>
+      </div>
+      <div class="expertise-card reveal reveal-delay-3">
+        <span class="expertise-icon">&#9881;</span>
+        <h4>Architecture logicielle</h4>
+        <p>Conception de systemes modulaires, scalables et maintenables. Clean Architecture, MVVM, MVI.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CAREER TIMELINE ========== -->
+<section class="section">
+  <p class="section-title reveal">POINTS FORTS DE CARRIERE</p>
+  <p class="section-subtitle reveal">Mon parcours professionnel en developpement mobile</p>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <span class="timeline-date">2021 &mdash; Aujourd'hui</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h4>Developpeur Senior Freelance</h4>
+        <div class="role">Freelance &mdash; Clients grands comptes</div>
+        <p>Missions Kotlin Multiplatform et Jetpack Compose pour Decathlon, Kadiska et autres. Architecture robuste, CI/CD, code review et mentoring d'equipes.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <span class="timeline-date">2018 &mdash; 2021</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h4>Lead Android Developer</h4>
+        <div class="role">Startup Lilloise</div>
+        <p>Responsable de l'equipe Android, mise en place de l'architecture Clean, migration vers Kotlin et Jetpack Compose. Application deployee sur 5000 terminaux.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <span class="timeline-date">2015 &mdash; 2018</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h4>Developpeur Android</h4>
+        <div class="role">ESN &mdash; Lille</div>
+        <p>Developpement d'applications Android pour divers clients B2B. Specialisation en programmation reactive avec RxJava et architectures MVVM.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <span class="timeline-date">2010 &mdash; 2015</span>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h4>Developpeur Mobile Junior</h4>
+        <div class="role">Agence digitale</div>
+        <p>Premieres experiences en developpement Android. Apprentissage des fondamentaux, du SDK Android et des bonnes pratiques de developpement mobile.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-left">
+    &copy; 2026 Vincent Masselis &mdash; <a href="#">Built in Kotlin Multiplatform with Compose</a>
+  </div>
+  <div class="footer-right">
+    <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.5 14.5c-1.5 1-3.5 1.5-4.5 1.5s-3-0.5-4.5-1.5C6 15.5 5.5 14 6.5 12.5S9 10 12 8c3 2 4.5 3.5 5.5 4.5s1 3-1 4z"/></svg></a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Animate skill bars
+        const fills = entry.target.querySelectorAll('.skill-fill');
+        fills.forEach(fill => {
+          const width = fill.dataset.width;
+          setTimeout(() => { fill.style.width = width; }, 200);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
