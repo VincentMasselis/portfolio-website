@@ -1,5 +1,6 @@
 package com.masselis.portfolio.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,20 +21,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.Phonelink
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,17 +36,15 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.LinkAnnotation.Url
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
 import com.masselis.portfolio.ui.components.RepoCard
+import com.masselis.portfolio.ui.components.RepoCardPortfolioLabel
 import com.masselis.portfolio.ui.components.RepoCardStats
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.copy
@@ -69,8 +60,10 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
+import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.cubeinstore
+import portfolio.composeapp.generated.resources.ic_github
 import portfolio.composeapp.generated.resources.kadiska
 
 
@@ -383,10 +376,38 @@ private fun OSSSection() {
             item {
                 RepoCard(
                     "portfolio-website",
-                    content = {
-                        RepoCardPortfolioLabel()
-                    }
+                    { RepoCardPortfolioLabel() }
                 )
+            }
+            item {
+                val uriHandler = LocalUriHandler.current
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .width(240.dp)
+                        .height(100.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .border(
+                            1.dp,
+                            MaterialTheme.colorScheme.secondary,
+                            RoundedCornerShape(12.dp)
+                        )
+                        .clickable(onClick = { uriHandler.openUri("https://github.com/VincentMasselis") })
+                        .background(MaterialTheme.colorScheme.background)
+                        .padding(16.dp),
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_github),
+                        contentDescription = null,
+                        modifier = Modifier.size(28.dp),
+                        tint = MaterialTheme.colorScheme.secondary,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = "Voir mon profil Github",
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
             }
             item {
                 Spacer(Modifier.width(PaddingValues.Section.calculateEndPadding(layoutDirection)))
@@ -395,70 +416,3 @@ private fun OSSSection() {
     }
 }
 
-@Composable
-private fun RepoCardPortfolioLabel(
-    modifier: Modifier = Modifier,
-) {
-    var showDialog by remember { mutableStateOf(false) }
-    val uriHandler = LocalUriHandler.current
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier,
-    ) {
-        Text(
-            text = "Le code du site que vous visitez actuellement",
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.White.copy(alpha = 0.8f),
-            modifier = Modifier.weight(1f)
-        )
-        IconButton(
-            content = {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    tint = MaterialTheme.colorScheme.onSecondary,
-                    contentDescription = null
-                )
-            },
-            onClick = {
-                showDialog = true
-            }
-        )
-    }
-    if (showDialog) {
-        AlertDialog(
-            text = {
-                Text(
-                    buildAnnotatedString {
-                        append("Ce site web a été fabriqué en utilisant les dernières technologies de ")
-                        withLink(Url("https://kotlinlang.org/multiplatform")) {
-                            withStyle(style = SpanStyle(fontWeight = Bold)) {
-                                append("Kotlin Multiplatform")
-                            }
-                        }
-                        append(". Grâce à cela, ce site est capable de fonctionner ")
-                        withStyle(style = SpanStyle(fontWeight = Bold)) {
-                            append("avec le même code")
-                        }
-                        append(", nativement sur Android, Web et iOS.")
-                    }
-                )
-            },
-            onDismissRequest = { showDialog = false },
-            dismissButton = {
-                TextButton({
-                    uriHandler.openUri("https://github.com/VincentMasselis/portfolio-website")
-                    showDialog = false
-                }) {
-                    Text("Voir le code source")
-                }
-            },
-            confirmButton = {
-                TextButton({ showDialog = false }) {
-                    Text("OK")
-                }
-            },
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            textContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
-}
