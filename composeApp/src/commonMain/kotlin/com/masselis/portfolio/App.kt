@@ -1,5 +1,11 @@
 package com.masselis.portfolio
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,13 +32,16 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.masselis.portfolio.ui.utils.isStackableMainNav
+import com.slack.circuit.backstack.NavDecoration
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.navstack.rememberSaveableNavStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.InternalCircuitApi
 import com.slack.circuit.runtime.Navigator
+import com.slack.circuit.runtime.navigation.NavArgument
 import com.slack.circuit.runtime.navigation.NavStack
+import com.slack.circuit.runtime.navigation.NavStackList
 
 internal val defaultStartRoute: Route = Landing
 
@@ -82,7 +91,8 @@ public fun App(
                                             } else {
                                                 consumeWindowInsets(WindowInsets.navigationBars)
                                             }
-                                        }
+                                        },
+                                        decoration = FadeNavDecoration(),
                                     )
                                     if (windowSizeClass > Compact) {
                                         Spacer(Modifier.weight(1f))
@@ -107,6 +117,25 @@ public fun App(
                     )
                 }
             }
+        }
+    }
+}
+
+private class FadeNavDecoration : NavDecoration {
+    @Composable
+    override fun <T : NavArgument> DecoratedContent(
+        args: NavStackList<T>,
+        modifier: Modifier,
+        content: @Composable (T) -> Unit,
+    ) {
+        AnimatedContent(
+            targetState = args.active,
+            modifier = modifier,
+            transitionSpec = {
+                fadeIn(tween(300)) togetherWith fadeOut(snap(delayMillis = 300))
+            },
+        ) { record ->
+            content(record)
         }
     }
 }
