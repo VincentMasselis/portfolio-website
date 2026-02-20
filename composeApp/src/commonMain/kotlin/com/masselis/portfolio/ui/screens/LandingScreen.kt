@@ -1,5 +1,12 @@
 package com.masselis.portfolio.ui.screens
 
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.TwoWayConverter
+import androidx.compose.animation.core.animateValue
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,6 +25,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Code
@@ -27,6 +37,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,10 +47,13 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.ProjectPreviewCard
@@ -110,31 +124,72 @@ internal fun LandingScreen(
 private fun HeroSection(
     showProjects: () -> Unit,
 ) {
+    val infiniteTransition = rememberInfiniteTransition("blockCursor")
+    val showBlockCursor by infiniteTransition.animateValue(
+        initialValue = false,
+        targetValue = true,
+        typeConverter = TwoWayConverter(
+            convertToVector = { AnimationVector1D(if (it) 1f else 0f) },
+            convertFromVector = { it.value >= 0.5f }
+        ),
+        animationSpec = infiniteRepeatable(
+            animation = keyframes {
+
+                durationMillis = 1000
+                false at 0
+                false at 499
+                true at 500
+                true at 999
+            },
+            repeatMode = RepeatMode.Restart,
+        )
+    )
     Section(
         paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Spacer(Modifier.height(32.dp))
-        Text(
+        val cursorId = "cursor"
+        val style = MaterialTheme.typography.displayMedium
+        BasicText(
             text = buildAnnotatedString {
+                val primaryColorStyle = SpanStyle(color = MaterialTheme.colorScheme.primary)
                 append("DÉVELOPPEUR ")
-                append(
-                    AnnotatedString(
-                        "ANDROID\nKOTLIN",
-                        SpanStyle(color = MaterialTheme.colorScheme.primary)
-                    )
-                )
-                append(" MULTIPLATFORM\nSOFTWARE ")
+                withStyle(primaryColorStyle) { append("ANDROID") }
+                append(" & ")
+                withStyle(primaryColorStyle) { append("iOS\nKOTLIN") }
+                append(" & COMPOSE MULTIPLATFORM\nSOFTWARE ")
                 append(
                     AnnotatedString(
                         "ARCHITECT",
                         SpanStyle(color = MaterialTheme.colorScheme.primary)
                     )
                 )
+                appendInlineContent(cursorId)
             },
-            style = MaterialTheme.typography.displayMedium,
-            color = Color.White,
-            textAlign = TextAlign.Center,
+            style = style.copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                textAlign = TextAlign.Center
+            ),
+            inlineContent = mapOf(
+                cursorId to InlineTextContent(
+                    placeholder = Placeholder(
+                        width = style.fontSize * 0.6f,
+                        height = style.fontSize,
+                        placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter,
+                    ),
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(style.fontSize.value.dp)
+                            .background(
+                                if (showBlockCursor) MaterialTheme.colorScheme.primary
+                                else Color.Transparent
+                            )
+                    )
+                }
+            ),
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(16.dp))

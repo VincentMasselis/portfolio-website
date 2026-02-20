@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
@@ -54,14 +55,18 @@ internal fun ProjectPreviewCard(
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(8.dp))
-            bulletPoints.forEach { point ->
-                Text(
-                    text = "- $point",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(vertical = 2.dp),
-                )
-            }
+            Text(
+                text = buildAnnotatedString {
+                    withBulletList {
+                        bulletPoints.forEach { point ->
+                            withBulletListItem { append(" $point") }
+                        }
+                    }
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(vertical = 2.dp),
+            )
         }
     }
 }

@@ -25,14 +25,13 @@ internal fun RepositoryTechnologiesDialog(
                     append("Ce site web a été fabriqué en utilisant les dernières technologies de ")
                     withLink(Url("https://kotlinlang.org/multiplatform")) {
                         withStyle(style = SpanStyle(fontWeight = Bold)) {
-                            append("Kotlin Multiplatform")
+                            append("Kotlin et Compose Multiplatform")
                         }
                     }
-                    append(". Grâce à cela, ce site est capable de fonctionner ")
+                    append(". Grâce à cela, ce site est capable de fonctionner nativement sur Android, Web et iOS en utilisant")
                     withStyle(style = SpanStyle(fontWeight = Bold)) {
-                        append("avec le même code")
+                        append(" le même code source.")
                     }
-                    append(", nativement sur Android, Web et iOS.")
                 }
             )
         },
