@@ -7,22 +7,17 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.masselis.portfolio.di.MainGraph
 import com.masselis.portfolio.ui.components.BottomBar
-import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.TopNavBar
 import com.masselis.portfolio.ui.screens.Landing
 import com.masselis.portfolio.ui.screens.Route
@@ -77,32 +72,18 @@ public fun App(
                         },
                         content = { padding ->
                             CompositionLocalProvider(LocalScaffoldPadding provides padding) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .verticalScroll(rememberScrollState()),
-                                ) {
-                                    NavigableCircuitContent(
-                                        navigator = navigator,
-                                        navStack = navStack,
-                                        modifier = Modifier.run {
-                                            if (windowSizeClass == Compact) {
-                                                padding(bottom = padding.calculateBottomPadding())
-                                            } else {
-                                                consumeWindowInsets(WindowInsets.navigationBars)
-                                            }
-                                        },
-                                        decoration = FadeNavDecoration(),
-                                    )
-                                    if (windowSizeClass > Compact) {
-                                        Spacer(Modifier.weight(1f))
-                                        Footer(
-                                            currentRoute = currentRoute,
-                                            windowSizeClass = windowSizeClass,
-                                            openRoute = openRoute,
-                                        )
-                                    }
-                                }
+                                NavigableCircuitContent(
+                                    navigator = navigator,
+                                    navStack = navStack,
+                                    modifier = Modifier.run {
+                                        if (windowSizeClass == Compact) {
+                                            padding(bottom = padding.calculateBottomPadding())
+                                        } else {
+                                            consumeWindowInsets(WindowInsets.navigationBars)
+                                        }
+                                    },
+                                    decoration = FadeNavDecoration(),
+                                )
                             }
                         },
                         modifier = Modifier.fillMaxSize(),

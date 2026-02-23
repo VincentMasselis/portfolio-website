@@ -1,18 +1,19 @@
 package com.masselis.portfolio.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Coffee
 import androidx.compose.material.icons.filled.Settings
@@ -26,8 +27,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.masselis.portfolio.data.PortfolioData
+import com.masselis.portfolio.ui.components.Footer
+import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SkillBar
 import com.masselis.portfolio.ui.components.TimelineItem
@@ -48,11 +56,14 @@ public data object About : Route, StaticScreen
 internal fun AboutScreen(
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState())
+    ) {
         AboutHeroSection()
         SkillsSection()
         ExpertiseSection()
         CareerTimelineSection()
+        Footer()
     }
 }
 
@@ -64,12 +75,8 @@ private fun AboutHeroSection() {
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         if (windowSizeClass == WindowSizeClass.Compact) {
-            Box(
-                modifier = Modifier
-                    .size(180.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray.copy(alpha = 0.3f))
-                    .align(Alignment.CenterHorizontally),
+            MyselfImage(
+                Modifier.size(180.dp).clip(CircleShape).align(Alignment.CenterHorizontally)
             )
             Spacer(Modifier.height(24.dp))
             AboutHeroText()
@@ -78,37 +85,62 @@ private fun AboutHeroSection() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(40.dp),
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(220.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray.copy(alpha = 0.3f)),
+                MyselfImage(
+                    modifier = Modifier.size(220.dp).clip(CircleShape)
                 )
-                Column(modifier = Modifier.weight(1f)) {
-                    AboutHeroText()
-                }
+                AboutHeroText(Modifier.weight(1f))
             }
         }
     }
 }
 
 @Composable
-private fun AboutHeroText() {
-    Text(
-        text = "\u00C0 PROPOS DE\nVINCENT MASSELIS",
-        style = MaterialTheme.typography.displaySmall,
-        color = Color.White,
-    )
-    Spacer(Modifier.height(16.dp))
-    Text(
-        text = "Vincent Masselis est un d\u00E9veloppeur Android Senior avec plus de 10 ans d'exp\u00E9rience, " +
-                "sp\u00E9cialis\u00E9 dans l'architecture robuste (Clean Architecture, MVVM), la programmation " +
-                "r\u00E9active (RxJava, Kotlin Flow) et les interfaces modernes (Jetpack Compose). Il " +
-                "collabore avec des startups et des grandes entreprises pour cr\u00E9er des applications " +
-                "performantes et \u00E9volutives.",
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onPrimaryContainer,
-    )
+private fun AboutHeroText(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
+    ) {
+        Text(
+            text = "À propos de\nVincent MASSELIS",
+            style = MaterialTheme.typography.displaySmall,
+            color = Color.White,
+        )
+        Spacer(Modifier.height(16.dp))
+        Text(
+            buildAnnotatedString {
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("Senior avec 15+ ans d'expérience")
+                }
+                append(" je conçois des systèmes robustes fondés sur la ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("Clean Architecture et MVVM/MVI")
+                }
+                append(". Spécialiste ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("Android, iOS et Multiplatform")
+                }
+                append(", je construits vos projets en ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("Kotlin")
+                }
+                append(", Kotlin Multiplatform (KMP) et Compose Multiplatform, afin unifier l'UX, l'UI et la qualité sur tous les systèmes.\n")
+                append("Mon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("iOS")
+                }
+                append(" et une appétence naturelle à la découverte ainsi qu'à la remise en question des acquis. ")
+                append("Ceci me permet de garder un ")
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("haut niveau d'exigence")
+                }
+                append(" envers moi même et les produits que je délivre.")
+            },
+            style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 25.sp),
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+        )
+    }
 }
 
 @Composable

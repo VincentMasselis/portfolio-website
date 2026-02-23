@@ -25,6 +25,7 @@ import com.masselis.portfolio.ui.screens.About
 import com.masselis.portfolio.ui.screens.Contact
 import com.masselis.portfolio.ui.screens.Landing
 import com.masselis.portfolio.ui.screens.Projects
+import com.masselis.portfolio.ui.screens.Resume
 import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
@@ -68,6 +69,7 @@ internal fun TopNavBar(
                     NavLink("À propos", About, currentRoute, openRoute)
                     NavLink("Projets", Projects, currentRoute, openRoute)
                     NavLink("Contact", Contact, currentRoute, openRoute)
+                    NavLink("CV", Resume, currentRoute, openRoute)
                 }
                 Spacer(Modifier.width(16.dp))
             }

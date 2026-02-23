@@ -4,22 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Kotlin Multiplatform (KMP) portfolio website built with Compose Multiplatform. Targets Android, iOS, JavaScript (browser), and WebAssembly (browser). Content is in French.
+Kotlin Multiplatform (KMP) portfolio website built with Compose Multiplatform. Targets Android, iOS, and WebAssembly (browser). Content is in French.
 
 ## Build Commands
 
 ```bash
-# Web development servers
-./gradlew composeApp:jsBrowserDevelopmentRun          # JS dev server
+# Web development server
 ./gradlew composeApp:wasmJsBrowserDevelopmentRun      # Wasm dev server
 
-# Web production builds
-./gradlew composeApp:jsBrowserProductionWebpack       # JS production bundle
+# Web production build
 ./gradlew composeApp:wasmJsBrowserProductionWebpack   # Wasm production bundle
-./gradlew composeApp:composeCompatibilityBrowserDistribution  # Combined JS+Wasm with fallback
 
 # Tests
-./gradlew composeApp:jsBrowserTest                    # JS browser tests
 ./gradlew composeApp:wasmJsBrowserTest                # Wasm browser tests
 ./gradlew composeApp:allTests                         # All platform tests
 
@@ -27,7 +23,7 @@ Kotlin Multiplatform (KMP) portfolio website built with Compose Multiplatform. T
 ./gradlew androidApp:assembleDebug                    # Build Android debug APK
 ```
 
-Web build artifacts go to `composeApp/build/dist/`. The combined distribution (`composeWebCompatibility/productionExecutable/`) serves Wasm with JS fallback.
+Web build artifacts go to `composeApp/build/dist/`.
 
 ## Architecture
 
@@ -38,9 +34,9 @@ Web build artifacts go to `composeApp/build/dist/`. The combined distribution (`
 
 **Source sets in `composeApp/src/`:**
 - `commonMain` — All shared code: screens, components, theme, data, navigation
-- `webMain` — Web entry point (`main.kt` using `ComposeViewport`), `index.html`, `styles.css`. Handles URL hash-based routing
+- `wasmJsMain` — Web entry point (`main.kt` using `ComposeViewport`), `index.html`, `styles.css`. Handles URL hash-based routing
 - `iosMain` — `MainViewController` for SwiftUI integration
-- `androidMain`, `jsMain`, `wasmJsMain` — Currently empty (no platform-specific code needed)
+- `androidMain` — Currently empty (no platform-specific code needed)
 
 **Package structure (`com.masselis.portfolio`):**
 - `App.kt` — Root composable with navigation host, drawer, scaffold
@@ -53,7 +49,7 @@ Web build artifacts go to `composeApp/build/dist/`. The combined distribution (`
 **Key patterns:**
 - Navigation: Jetpack Navigation Compose with type-safe `@Serializable` routes and `kotlinx.serialization`
 - Responsive layout: `WindowSizeClass` enum (Compact < 600dp, Medium 600–1200dp, Expanded > 1200dp) provided via `LocalWindowSizeClass` CompositionLocal
-- Web routing: URL hash fragments (`#about`, `#projects`, `#contact`) synced with navigation state in `webMain/main.kt`
+- Web routing: URL hash fragments (`#about`, `#projects`, `#contact`) synced with navigation state in `wasmJsMain/main.kt`
 
 **Design references** are in `doc/designs/`.
 

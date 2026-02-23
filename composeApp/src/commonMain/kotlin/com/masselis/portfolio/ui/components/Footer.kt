@@ -30,20 +30,18 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.masselis.portfolio.ui.screens.Route
-import com.masselis.portfolio.ui.theme.WindowSizeClass
+import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
+import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.ic_bluesky
 import portfolio.composeapp.generated.resources.ic_linkedin
 
 @Composable
-internal fun Footer(
-    currentRoute: Route,
-    windowSizeClass: WindowSizeClass,
-    openRoute: (Route) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun Footer(modifier: Modifier = Modifier) {
+    if (LocalWindowSizeClass.current <= Compact) {
+        return
+    }
     Column(
         modifier = modifier
             .fillMaxWidth()

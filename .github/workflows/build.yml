@@ -8,8 +8,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-android-web:
-    name: Android & Web
+  build-android:
+    name: Android
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,8 +24,18 @@ jobs:
       - name: Build Android
         run: ./gradlew androidApp:assembleDebug
 
-      - name: Build JS
-        run: ./gradlew composeApp:jsBrowserProductionWebpack
+  build-web:
+    name: Web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
 
       - name: Build Wasm
         run: ./gradlew composeApp:wasmJsBrowserProductionWebpack
