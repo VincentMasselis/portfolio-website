@@ -1,5 +1,6 @@
 package com.masselis.portfolio
 
 import androidx.compose.ui.window.ComposeUIViewController
+import platform.UIKit.UIViewController
 
-internal fun MainViewController() = ComposeUIViewController { App() }
+public fun MainViewController(): UIViewController = ComposeUIViewController { App() }

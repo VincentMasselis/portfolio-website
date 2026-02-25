@@ -1,5 +1,6 @@
 package com.masselis.portfolio.ui.components
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,13 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.data.TimelineEntry
 
 @Composable
 internal fun TimelineItem(
-    dateRange: String,
-    title: String,
-    description: String,
+    timelineEntry: TimelineEntry,
     isLast: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -34,10 +36,14 @@ internal fun TimelineItem(
     ) {
         // Date column
         Text(
-            text = dateRange,
+            text = when (val time = timelineEntry.time) {
+                is TimelineEntry.Moment -> "${time.moment.year}"
+                is TimelineEntry.Range -> "${time.from.year}-${time.to.year}"
+                is TimelineEntry.Pending -> "${time.moment.year}-Maintenant"
+            },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            modifier = Modifier.width(120.dp).padding(top = 4.dp),
+            modifier = Modifier.width(80.dp).padding(top = 4.dp),
         )
 
         // Dot and line
@@ -51,12 +57,31 @@ internal fun TimelineItem(
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primary),
             )
-            if (!isLast) {
+            val lineColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+            if (isLast) {
+                Canvas(
+                    modifier = Modifier
+                        .width(2.dp)
+                        .fillMaxHeight()
+                ) {
+                    drawLine(
+                        color = lineColor,
+                        start = Offset(x = size.width / 2, y = 0f),
+                        end = Offset(x = size.width / 2, y = size.height),
+                        strokeWidth = size.width,
+                        pathEffect = PathEffect.dashPathEffect(
+                            intervals = floatArrayOf(6.dp.toPx(), 6.dp.toPx()), // dot size, gap size
+                            phase = 0f,
+                        ),
+                    )
+
+                }
+            } else {
                 Box(
                     modifier = Modifier
                         .width(2.dp)
                         .fillMaxHeight()
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)),
+                        .background(lineColor),
                 )
             }
         }
@@ -64,13 +89,13 @@ internal fun TimelineItem(
         // Content
         Column(modifier = Modifier.weight(1f).padding(bottom = 32.dp)) {
             Text(
-                text = title,
+                text = timelineEntry.title,
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = description,
+                text = timelineEntry.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             )

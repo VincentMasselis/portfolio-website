@@ -37,11 +37,6 @@ kotlin {
         }
     }
 
-    js {
-        browser()
-        binaries.executable()
-    }
-
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
@@ -61,7 +56,7 @@ kotlin {
                 // KSP's metadata output directory isn't automatically added to the commonMain
                 // source set. This line tells the Kotlin compiler to also compile the generated
                 // factory files alongside your hand-written code.
-                srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+                srcDir(layout.buildDirectory.dir("generated/ksp/metadata/commonMain/kotlin"))
             }
         }
         androidMain.dependencies {
@@ -70,16 +65,17 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            implementation(projects.core)
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
-            @Suppress("DEPRECATION")
-            implementation(compose.materialIconsExtended)
+            implementation(libs.compose.material.icons)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
@@ -87,14 +83,13 @@ kotlin {
             implementation(libs.circuit.foundation)
             implementation(libs.circuit.codegen.annotations)
         }
+        wasmJsMain {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-        }
-        jsMain.dependencies {
-            implementation(libs.ktor.client.js)
-        }
-        wasmJsMain.dependencies {
-            implementation(libs.ktor.client.cio)
         }
     }
 }
@@ -112,3 +107,18 @@ ksp { arg("circuit.codegen.mode", "metro") }
 tasks.withType<KotlinCompilationTask<*>>().configureEach {
     dependsOn("kspCommonMainKotlinMetadata")
 }
+
+// Build the :resume module's HTML+JS, inline the JS into the HTML, and generate a Kotlin source
+// file so composeApp can embed the resume in Android/iOS WebViews.
+val copyResumeFiles by tasks.registering(Copy::class) {
+    dependsOn(":resume:jsBrowserDistribution")
+    from(project(":resume").layout.buildDirectory.dir("dist/js/productionExecutable"))
+    include("index.html", "resume.js")
+    into(layout.projectDirectory.dir("src/commonMain/composeResources/files/resume"))
+}
+
+// KSP also reads the source sets, so it must wait for the resume HTML to be generated
+tasks.matching { it.name == "kspCommonMainKotlinMetadata" || it.name == "copyNonXmlValueResourcesForCommonMain" }
+    .configureEach {
+        dependsOn(copyResumeFiles)
+    }

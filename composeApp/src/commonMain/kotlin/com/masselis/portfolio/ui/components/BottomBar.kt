@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Computer
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material3.Icon
@@ -19,6 +20,7 @@ import com.masselis.portfolio.ui.screens.About
 import com.masselis.portfolio.ui.screens.Contact
 import com.masselis.portfolio.ui.screens.Landing
 import com.masselis.portfolio.ui.screens.Projects
+import com.masselis.portfolio.ui.screens.Resume
 import com.masselis.portfolio.ui.screens.Route
 
 @Composable
@@ -36,6 +38,7 @@ internal fun BottomBar(
         Item(About, currentRoute, openRoute, Icons.Default.Face, "À propos")
         Item(Projects, currentRoute, openRoute, Icons.Default.Computer, "Projets")
         Item(Contact, currentRoute, openRoute, Icons.Default.Mail, "Contact")
+        Item(Resume, currentRoute, openRoute, Icons.Default.Description, "CV")
     }
 }
 
