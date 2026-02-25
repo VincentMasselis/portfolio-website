@@ -69,12 +69,12 @@ private fun SkillsSection() {
             PortfolioData.skills.forEach { skill ->
                 Div({ classes("skill-item") }) {
                     Span({ classes("skill-label") }) {
-                        Text("${skill.name} \u2014 ${(skill.progress * 100).toInt()}%")
+                        Text("${skill.name} \u2014 ${(skill.level.fraction * 100).toInt()}%")
                     }
                     Div({ classes("skill-bar-bg") }) {
                         Div({
                             classes("skill-bar-fill")
-                            style { width((skill.progress * 100).percent) }
+                            style { width((skill.level.fraction * 100).percent) }
                         })
                     }
                 }
@@ -89,7 +89,7 @@ private fun TimelineSection() {
         H2 { Text("POINTS FORTS DE CARRI\u00C8RE") }
         PortfolioData.timelineEntries.forEach { entry ->
             Div({ classes("timeline-entry") }) {
-                Div({ classes("timeline-date") }) { Text(entry.dateRange) }
+                Div({ classes("timeline-date") }) { Text(entry.time.toString()) }
                 Div({ classes("timeline-title") }) { Text(entry.title) }
                 Div({ classes("timeline-desc") }) { Text(entry.description) }
             }

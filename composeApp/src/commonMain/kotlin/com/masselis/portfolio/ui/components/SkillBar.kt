@@ -13,10 +13,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.data.Skill
 
 @Composable
-internal fun SkillBar(label: String, progress: Float, modifier: Modifier = Modifier) {
+internal fun SkillBar(
+    label: String,
+    level: Skill.Level,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier.padding(vertical = 8.dp)) {
         Text(
             text = label,
@@ -33,10 +40,21 @@ internal fun SkillBar(label: String, progress: Float, modifier: Modifier = Modif
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(progress)
+                    .fillMaxWidth(level.fraction)
                     .height(12.dp)
                     .clip(RoundedCornerShape(6.dp))
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(
+                        Brush.horizontalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.secondary,
+                                lerp(
+                                    MaterialTheme.colorScheme.secondary,
+                                    MaterialTheme.colorScheme.primary,
+                                    level.fraction
+                                ),
+                            )
+                        )
+                    ),
             )
         }
     }

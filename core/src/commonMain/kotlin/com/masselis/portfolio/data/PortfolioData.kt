@@ -1,41 +1,82 @@
 package com.masselis.portfolio.data
 
+import com.masselis.portfolio.data.Skill.Level.Confirmed
+import com.masselis.portfolio.data.Skill.Level.Expert
+import com.masselis.portfolio.data.Skill.Level.Initiated
+import com.masselis.portfolio.data.Skill.Level.Mastery
+import com.masselis.portfolio.data.Tag.Android
+import com.masselis.portfolio.data.Tag.Architecture
+import com.masselis.portfolio.data.Tag.Compose
+import com.masselis.portfolio.data.Tag.Multiplatform
+import com.masselis.portfolio.data.Tag.Resume
+import com.masselis.portfolio.data.TimelineEntry.Moment
+import com.masselis.portfolio.data.TimelineEntry.Pending
+import com.masselis.portfolio.data.TimelineEntry.Range
+import kotlinx.datetime.YearMonth
+
 public object PortfolioData {
     public val skills: List<Skill> = listOf(
-        Skill("Kotlin", 0.90f),
-        Skill("Jetpack Compose", 0.85f),
-        Skill("Android SDK", 0.90f),
-        Skill("Clean Architecture", 0.80f),
-        Skill("RxJava", 0.85f),
-        Skill("iOS / Swift", 0.40f),
-        Skill("Node.js", 0.30f),
+        Skill("Kotlin", Mastery, Android, Multiplatform, Compose, Resume),
+        Skill("iOS / Swift", Expert, Multiplatform, Resume),
+        Skill("Coroutines/Flow", Mastery, Android, Multiplatform, Resume),
+        Skill("Jetpack Compose", Expert, Android, Multiplatform, Compose, Resume),
+        Skill("SwiftUI", Confirmed, Multiplatform, Resume),
+        Skill("Android SDK", Mastery, Android, Compose, Resume, Architecture),
+        Skill(
+            "Compose Multiplatform",
+            Expert,
+            Android,
+            Multiplatform,
+            Compose,
+            Resume,
+            Architecture
+        ),
+        Skill("Clean Architecture", Expert, Android, Multiplatform, Resume, Architecture),
+        Skill("ViewModel MVVM/MVI", Mastery, Android, Multiplatform, Resume, Architecture),
+        Skill("Gradle Framework", Expert, Android, Multiplatform, Resume, Architecture),
+        Skill("Dagger/Hilt/Koin/Metro", Mastery, Multiplatform, Resume),
+        Skill("CI/CD Bitrise/Actions", Confirmed, Android, Multiplatform, Resume, Architecture),
+        Skill("Testing Mockk/Mockito", Expert, Android, Multiplatform, Architecture),
+        Skill("Crash monitoring", Expert, Android, Resume, Architecture),
+        Skill("RxJava", Mastery, Android),
+        Skill("Objective-C", Confirmed),
+        Skill("Java", Confirmed, Android),
+        Skill("Rust", Initiated),
+        Skill("Go", Initiated),
+        Skill("Home Assistant", Expert),
     )
 
     public val timelineEntries: List<TimelineEntry> = listOf(
         TimelineEntry(
-            "1999 \u2013 2011",
-            "D\u00E9veloppement propre",
-            "Freelance Android developer avec l'architecture tools",
+            Moment(YearMonth(2009, 6)),
+            "Mon premier smartphone Android",
+            "Sans le savoir, j'ai acheté l'HTC Dream, le tout premier téléphone sous Android, qui tracera ma carrière pour les années à venir",
         ),
         TimelineEntry(
-            "2009 \u2013 2012",
-            "Vincent Masselis",
-            "D\u00E9veloppement Android dans Jetpack Compose.",
+            Moment(YearMonth(2010, 10)),
+            "Mes premiers developpements",
+            "Système domotique X10 en C++",
         ),
         TimelineEntry(
-            "2003 \u2013 2025",
-            "D\u00E9veloppement propre",
-            "Freelance Android developer avec architecture robuste",
+            Range(
+                YearMonth(2013, 7),
+                YearMonth(2016, 9)
+            ),
+            "Début de carrière professionnelle sous iOS et Android",
+            "Dès le début, les enjeux sont fort avec, entre autres, la refonte Android et iOS de l'application Chronodrive",
         ),
         TimelineEntry(
-            "2023 \u2013 2033",
-            "Vincent Masselis",
-            "D\u00E9veloppement des startups \u2013 Jetpack Compose.",
+            Range(
+                YearMonth(2016, 10),
+                YearMonth(2020, 11),
+            ),
+            "Ma première startup Equisense",
+            "Rejoint en early stage juste après leur levée de fond, j'ai conçu et développé from-scratch l'application iOS et Android, ensuite rejoint par 3 autres développeurs",
         ),
         TimelineEntry(
-            "2013 \u2013 2031",
-            "Vincent Masselis",
-            "Freelance Android modernes \u2013 Jetpack Compose.",
+            Pending(YearMonth(2020, 12)),
+            "Début du freelancing chez Decathlon",
+            "Après 10 ans développement et une solide expérience, je décide, un peu par hasard, d'entrer dans le monde du Freelancing chez Decatlon"
         ),
     )
 
