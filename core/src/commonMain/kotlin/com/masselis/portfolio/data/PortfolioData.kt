@@ -72,12 +72,12 @@ public object PortfolioData {
                 YearMonth(2020, 11),
             ),
             "Ma première startup Equisense",
-            "Rejoint en early stage juste après leur levée de fond, j'ai conçu et développé from-scratch l'application iOS et Android, ensuite rejoint par 3 autres développeurs",
+            "Rejoint en early stage juste après leur levée de fond, j'ai conçu et développé from-scratch l'application iOS et Android, ensuite rejoint par 3 autres développeurs. Pendant 4 ans j'ai vécu l'effervescence et l'implication hors normes que représente le travail pour une startup avec laquelle on partage tout",
         ),
         TimelineEntry(
             Pending(YearMonth(2020, 12)),
             "Début du freelancing chez Decathlon",
-            "Après 10 ans développement et une solide expérience, je décide, un peu par hasard, d'entrer dans le monde du Freelancing chez Decatlon"
+            "Après 10 ans développement et une solide expérience, je décide, un peu par hasard, d'entrer dans le monde du Freelancing en commençant chez Decatlon"
         ),
     )
 

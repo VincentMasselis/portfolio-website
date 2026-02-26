@@ -53,6 +53,12 @@ import com.masselis.portfolio.ui.utils.string
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.zacsweers.metro.AppScope
+import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
+import kotlinx.datetime.YearMonth
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.yearsUntil
+import kotlin.math.absoluteValue
+import kotlin.time.Clock
 
 @CommonParcelize
 public data object About : Route, StaticScreen
@@ -117,7 +123,11 @@ private fun AboutHeroText(
         Text(
             buildAnnotatedString {
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Senior avec 15+ ans d'expérience")
+                    Clock.System.now()
+                        .toLocalDateTime(currentSystemDefault())
+                        .let { YearMonth(it.year, it.month) }
+                        .yearsUntil(YearMonth(2010, 10))
+                        .also { elapsedYears -> append("Senior avec ${elapsedYears.absoluteValue} ans d'expérience") }
                 }
                 append(" je conçois des systèmes robustes fondés sur la ")
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {

@@ -32,10 +32,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
+import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.ic_bluesky
 import portfolio.composeapp.generated.resources.ic_linkedin
+import kotlin.time.Clock
 
 @Composable
 internal fun Footer(modifier: Modifier = Modifier) {
@@ -54,7 +57,11 @@ internal fun Footer(modifier: Modifier = Modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
-                    text = "Copyright© 2026 Vincent Masselis",
+                    text = "Copyright© ${
+                        Clock.System.now()
+                            .toLocalDateTime(currentSystemDefault())
+                            .year
+                    } Vincent Masselis",
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = Bold,
                     color = Color.White,
