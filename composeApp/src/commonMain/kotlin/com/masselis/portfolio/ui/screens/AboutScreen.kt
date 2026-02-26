@@ -235,7 +235,7 @@ private fun ExpertiseSection() {
         )
         Spacer(Modifier.height(24.dp))
         ExpertiseItem(Icons.Default.Coffee, "Café et code propre")
-        ExpertiseItem(Icons.Default.SportsMotorsports, "Sport mécaniques")
+        ExpertiseItem(Icons.Default.SportsMotorsports, "Sports mécaniques")
         ExpertiseItem(Icons.Default.Settings, "Architecture logicielle")
     }
 }

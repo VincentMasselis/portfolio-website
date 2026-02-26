@@ -32,6 +32,7 @@ public object PortfolioData {
             Architecture
         ),
         Skill("Clean Architecture", Expert, Android, Multiplatform, Resume, Architecture),
+        Skill("Fragment/XML", Expert, Android, Resume),
         Skill("ViewModel MVVM/MVI", Mastery, Android, Multiplatform, Resume, Architecture),
         Skill("Gradle Framework", Expert, Android, Multiplatform, Resume, Architecture),
         Skill("Dagger/Hilt/Koin/Metro", Mastery, Multiplatform, Resume),
@@ -50,7 +51,7 @@ public object PortfolioData {
         TimelineEntry(
             Moment(YearMonth(2009, 6)),
             "Mon premier smartphone Android",
-            "Sans le savoir, j'ai acheté l'HTC Dream, le tout premier téléphone sous Android, qui tracera ma carrière pour les années à venir",
+            "Sans le savoir, j'ai acheté l'HTC Dream, le tout premier téléphone commercialisé sous Android, qui tracera ma carrière pour les années à venir",
         ),
         TimelineEntry(
             Moment(YearMonth(2010, 10)),
