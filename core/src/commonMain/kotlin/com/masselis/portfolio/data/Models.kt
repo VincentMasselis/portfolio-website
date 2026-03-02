@@ -1,6 +1,7 @@
 package com.masselis.portfolio.data
 
 import kotlinx.datetime.YearMonth
+import org.jetbrains.compose.resources.DrawableResource
 import kotlin.jvm.JvmInline
 
 public enum class Tag {
@@ -47,10 +48,12 @@ public data class TimelineEntry(
 }
 
 public data class Project(
+    val logo: DrawableResource,
+    val image: DrawableResource,
     val title: String,
-    val description: String,
     val bulletPoints: List<String>,
-    val techStack: List<String>,
+    val fullDescription: String,
+    val skills: List<Skill>,
 )
 
 public data class ContactInfo(val label: String, val url: String, val iconName: String)

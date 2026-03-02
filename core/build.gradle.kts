@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
 }
 
 kotlin {
@@ -14,6 +16,9 @@ kotlin {
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         compilerOptions {
             jvmTarget.set(libs.versions.android.jvmTarget.map(JvmTarget::fromTarget))
+        }
+        androidResources {
+            enable = true
         }
     }
 
@@ -30,6 +35,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.datetime)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.components.resources)
         }
     }
 }

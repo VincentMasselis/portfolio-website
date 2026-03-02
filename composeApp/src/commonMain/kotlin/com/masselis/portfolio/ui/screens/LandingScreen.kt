@@ -41,6 +41,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,9 +59,10 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.MyselfImage
-import com.masselis.portfolio.ui.components.ProjectPreviewCard
+import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.RepoCardPortfolioLabel
 import com.masselis.portfolio.ui.components.RepoCardStats
@@ -80,9 +82,7 @@ import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res
-import portfolio.composeapp.generated.resources.cubeinstore
 import portfolio.composeapp.generated.resources.ic_github
-import portfolio.composeapp.generated.resources.kadiska
 
 
 @CommonParcelize
@@ -228,9 +228,9 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
         }
     ) {
         if (windowSizeClass == Compact) {
-            CubeInStore()
+            ProjectCard(remember { PortfolioData.projects.first { it.title == "CubeInStore" } })
             Spacer(Modifier.height(16.dp))
-            Kadiska()
+            ProjectCard(remember { PortfolioData.projects.first { it.title == "Kadiska Android" } })
             Spacer(Modifier.height(16.dp))
             SeeMore(onClick = onSeeMore)
         } else {
@@ -239,8 +239,8 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Box(Modifier.weight(1f)) { CubeInStore() }
-                Box(Modifier.weight(1f)) { Kadiska() }
+                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects.first { it.title == "CubeInStore" } }) }
+                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects.first { it.title == "Kadiska Android" } }) }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.weight(0.3f)
@@ -248,38 +248,6 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
             }
         }
     }
-}
-
-@Composable
-private fun CubeInStore(
-    modifier: Modifier = Modifier
-) {
-    ProjectPreviewCard(
-        "Decathlon CubeInStore",
-        listOf(
-            "100k utilisateurs mensuels",
-            "+600k lignes de code",
-            "+20 développeurs",
-            "+50 pays"
-        ),
-        Res.drawable.cubeinstore
-    )
-}
-
-@Composable
-private fun Kadiska(
-    modifier: Modifier = Modifier
-) {
-    ProjectPreviewCard(
-        "Kadiska Android",
-        listOf(
-            "B2B",
-            "Analyse réseau low-level",
-            "Services en arrière-plan complexes",
-            "Fort enjeux business"
-        ),
-        Res.drawable.kadiska
-    )
 }
 
 @Composable

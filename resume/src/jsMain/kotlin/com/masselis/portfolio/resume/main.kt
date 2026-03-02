@@ -104,15 +104,15 @@ private fun ProjectsSection() {
         PortfolioData.projects.forEach { project ->
             Div({ classes("project-card") }) {
                 H3 { Text(project.title) }
-                P { Text(project.description) }
+                P { Text(project.fullDescription.toString()) }
                 Ul {
                     project.bulletPoints.forEach { point ->
                         Li { Text(point) }
                     }
                 }
                 Div({ classes("tech-stack") }) {
-                    project.techStack.forEach { tech ->
-                        Span({ classes("tech-tag") }) { Text(tech) }
+                    project.skills.forEach { tech ->
+                        Span({ classes("tech-tag") }) { Text(tech.name) }
                     }
                 }
             }

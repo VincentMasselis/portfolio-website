@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.masselis.portfolio.data.Skill
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -30,7 +31,7 @@ internal fun ProjectCard(
     title: String,
     description: String,
     bulletPoints: List<String>,
-    techStack: List<String>,
+    skills: List<Skill>,
     image: DrawableResource,
     modifier: Modifier = Modifier,
 ) {
@@ -64,20 +65,18 @@ internal fun ProjectCard(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
             )
             Spacer(Modifier.height(12.dp))
-            bulletPoints.forEach { point ->
-                Text(
-                    text = "- $point",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(vertical = 2.dp),
-                )
-            }
+            Text(
+                text = bulletPoints.joinToString(separator = "\n") { "• $it" },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(vertical = 2.dp),
+            )
             Spacer(Modifier.height(16.dp))
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                techStack.forEach { tech ->
+                skills.forEach { tech ->
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(4.dp))
@@ -85,7 +84,7 @@ internal fun ProjectCard(
                             .padding(horizontal = 10.dp, vertical = 4.dp),
                     ) {
                         Text(
-                            text = tech,
+                            text = tech.name,
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                         )
