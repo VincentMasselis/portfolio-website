@@ -2,16 +2,21 @@ package com.masselis.portfolio.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.Badge
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -98,39 +103,67 @@ private fun DetailDialog(
             shape = AlertDialogDefaults.shape,
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = AlertDialogDefaults.TonalElevation,
+            modifier = Modifier.heightIn(max = 560.dp),
         ) {
-            Column(
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Image(
-                    painter = painterResource(project.image),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+            val scrollState = rememberScrollState()
+            Box {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                )
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text(
-                        text = project.title,
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = AlertDialogDefaults.titleContentColor,
+                        .verticalScroll(scrollState)
+                ) {
+                    Image(
+                        painter = painterResource(project.image),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
                     )
-                    Spacer(Modifier.height(16.dp))
-                    Text(
-                        text = project.fullDescription,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = AlertDialogDefaults.textContentColor,
-                    )
-                    Spacer(Modifier.height(24.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(onClick = onDismissRequest) { Text("OK") }
+                    Column(modifier = Modifier.padding(24.dp)) {
+                        Text(
+                            text = project.title,
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = AlertDialogDefaults.titleContentColor,
+                        )
+                        Spacer(Modifier.height(16.dp))
+                        Text(
+                            text = project.description,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = AlertDialogDefaults.textContentColor,
+                        )
+                        Spacer(Modifier.height(16.dp))
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(2.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            project.skills.forEach { skill ->
+                                Badge(
+                                    containerColor = MaterialTheme.colorScheme.secondary,
+                                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                                ) {
+                                    Text(
+                                        text = skill.name,
+                                        modifier = Modifier.padding(4.dp, 2.dp)
+                                    )
+                                }
+                                Spacer(Modifier.width(4.dp))
+                            }
+                        }
+                        Spacer(Modifier.height(24.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            TextButton(onClick = onDismissRequest) { Text("OK") }
+                        }
                     }
                 }
+                VerticalScrollbar(
+                    scrollState = scrollState,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .fillMaxHeight(),
+                )
             }
         }
     }

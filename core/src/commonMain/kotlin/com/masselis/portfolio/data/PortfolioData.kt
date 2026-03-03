@@ -1,5 +1,12 @@
 package com.masselis.portfolio.data
 
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation.Url
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import com.masselis.portfolio.data.Skill.Level.Confirmed
 import com.masselis.portfolio.data.Skill.Level.Expert
 import com.masselis.portfolio.data.Skill.Level.Initiated
@@ -14,12 +21,20 @@ import com.masselis.portfolio.data.TimelineEntry.Pending
 import com.masselis.portfolio.data.TimelineEntry.Range
 import kotlinx.datetime.YearMonth
 import portfolio.core.generated.resources.Res
+import portfolio.core.generated.resources.chronodrive_banner
+import portfolio.core.generated.resources.chronodrive_logo
 import portfolio.core.generated.resources.cubeinstore
 import portfolio.core.generated.resources.decathlon
 import portfolio.core.generated.resources.embipos
+import portfolio.core.generated.resources.equisense_banner
+import portfolio.core.generated.resources.equisense_logo
 import portfolio.core.generated.resources.kadiska_banner
 import portfolio.core.generated.resources.kadiska_logo
+import portfolio.core.generated.resources.tpms_advanced_banner
+import portfolio.core.generated.resources.tpms_advanced_logo
 import portfolio.core.generated.resources.vivawallet
+import portfolio.core.generated.resources.xee_banner
+import portfolio.core.generated.resources.xee_logo
 
 public object PortfolioData {
     public val skills: Set<Skill> = setOf(
@@ -100,37 +115,40 @@ public object PortfolioData {
                 "+20 développeurs",
                 "+50 pays"
             ),
-            fullDescription = "Conception, réalisation et maintenance de multiples sujets à haut niveau technique intégrés les équipes de développeurs(euses) au sein de la plus grosse application Android de Decathlon.\n" +
-                    "Dans l'équipe \"Platform\", j'ai travaillé sur des enjeux techniques transverses afin de répondre à des problématiques techniques complexe et/ou profondes.\n" +
-                    "\n" +
-                    "Éclatement d'une base de code unique en plusieurs répertoires associé à chaque équipe:\n" +
-                    " - Optimise le temps de compilation pour chaque développeur et pour la C.I.\n" +
-                    " - Redonne de l'ownership de code et de l'autonomie à chaque équipe\n" +
-                    " - Structure et normalise le code inter-équipe\n" +
-                    " - Création d'une application coquille scalable qui ne contient de base que le login, la home et les settings\n" +
-                    " - Normalisation des tests\n" +
-                    " - Normalisation de l'IOC Koin\n" +
-                    " - Normalisation du code avec, entre autres, des règles KtLint custom\n" +
-                    " - 100% Kotlin\n" +
-                    " - C.I. Bitrise puis Github Action\n" +
-                    " - Framework Gradle\n" +
-                    " - Google Artifact Registry\n" +
-                    "\n" +
-                    "Refonte du process d'authentification:\n" +
-                    " - 100% Kotlin\n" +
-                    " - 100% Coroutine + Flow\n" +
-                    " - Android Custom Tab\n" +
-                    " - Thread safe\n" +
-                    " - Énormément de tests pour simuler tous les cas de figure possible comme une application en background, une rotation, un changement d'app, plusieurs ouvertures en simultané, ouvertures en séquentiel, etc..\n" +
-                    "\n" +
-                    "Application et création d'un plugin pour contrôler l’offuscation de code avec R8:\n" +
-                    " - Framework Gradle\n" +
-                    " - Optimisation de la C.I. Bitrise\n" +
-                    " - Décompilation d'APK avec jadx\n" +
-                    "\n" +
-                    "Optimisation de la configuration Gradle:\n" +
-                    " - Publication et écriture des plugins\n" +
-                    " - Réécriture des scripts préexistants",
+            description = AnnotatedString(
+                "Conception, réalisation et maintenance de multiples sujets à haut niveau technique intégrés les équipes de développeurs(euses) au sein de la plus grosse application Android de Decathlon.\n" +
+                        "Dans l'équipe \"Platform\", j'ai travaillé sur des enjeux techniques transverses afin de répondre à des problématiques techniques complexe et/ou profondes.\n" +
+                        "\n" +
+                        "Éclatement d'une base de code unique en plusieurs répertoires associé à chaque équipe:\n" +
+                        " - Optimise le temps de compilation pour chaque développeur et pour la C.I.\n" +
+                        " - Redonne de l'ownership de code et de l'autonomie à chaque équipe\n" +
+                        " - Structure et normalise le code inter-équipe\n" +
+                        " - Création d'une application coquille scalable qui ne contient de base que le login, la home et les settings\n" +
+                        " - Normalisation des tests\n" +
+                        " - Normalisation de l'IOC Koin\n" +
+                        " - Normalisation du code avec, entre autres, des règles KtLint custom\n" +
+                        " - 100% Kotlin\n" +
+                        " - C.I. Bitrise puis Github Action\n" +
+                        " - Framework Gradle\n" +
+                        " - Google Artifact Registry\n" +
+                        " - Multi-modules\n" +
+                        "\n" +
+                        "Refonte du process d'authentification:\n" +
+                        " - 100% Kotlin\n" +
+                        " - 100% Coroutine + Flow\n" +
+                        " - Android Custom Tab\n" +
+                        " - Thread safe\n" +
+                        " - Énormément de tests pour simuler tous les cas de figure possible comme une application en background, une rotation, un changement d'app, plusieurs ouvertures en simultané, ouvertures en séquentiel, etc..\n" +
+                        "\n" +
+                        "Application et création d'un plugin pour contrôler l’offuscation de code avec R8:\n" +
+                        " - Framework Gradle\n" +
+                        " - Optimisation de la C.I. Bitrise\n" +
+                        " - Décompilation d'APK avec jadx\n" +
+                        "\n" +
+                        "Optimisation de la configuration Gradle:\n" +
+                        " - Publication et écriture des plugins\n" +
+                        " - Réécriture des scripts préexistants"
+            ),
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Coroutines/Flow"]!!,
@@ -145,6 +163,56 @@ public object PortfolioData {
             )
         ),
         Project(
+            logo = Res.drawable.tpms_advanced_logo,
+            image = Res.drawable.tpms_advanced_banner,
+            title = "TPMS Advanced",
+            bulletPoints = listOf(
+                "Application référence open-source",
+                "Sert de laboratoire personnel pour expérimenter les nouvelles technologies",
+                "Utilise toutes les stacks techniques modernes et performantes",
+            ),
+            description = buildAnnotatedString {
+                append(
+                    "Cette application sert d'application référence pour expériementer " +
+                            "chaque nouvel outil mis à disposition pour les développeurs. Au delà d'être une" +
+                            " application \"sandbox\", cette application est également publiée sur le "
+                )
+                withLink(Url("https://play.google.com/store/apps/details?id=com.masselis.tpmsadvanced")) {
+                    withStyle(style = SpanStyle(fontWeight = Bold)) {
+                        append("Play Store")
+                    }
+                }
+                append(
+                    " et est mis à disposition pour tout le monde avec 10k+ téléchargements.\n\n" +
+                            " - Laboratoire pour la veille technologique\n" +
+                            " - Volontairement over engineeré pour pousser les technologies à leur maximum\n" +
+                            " - Grosse automatisation de la CI/CD avec plugin Gradle maison gitflow, Github et Play Store\n"
+                )
+                withLink(Url("https://github.com/VincentMasselis/TPMS-advanced")) {
+                    withStyle(style = SpanStyle(fontWeight = Bold)) {
+                        append(" - Intégralement en open-source\n")
+                    }
+                }
+                append(
+                    " - DI de dernière génération avec Metro\n" +
+                            " - BDD innovante avec SQLDelight\n" +
+                            " - Multi-modules"
+                )
+            },
+            skills = listOf(
+                skillMap["Kotlin"]!!,
+                skillMap["Coroutines/Flow"]!!,
+                skillMap["Jetpack Compose"]!!,
+                skillMap["Android SDK"]!!,
+                skillMap["Clean Architecture"]!!,
+                skillMap["ViewModel MVVM/MVI"]!!,
+                skillMap["Gradle Framework"]!!,
+                skillMap["Dagger/Hilt/Koin/Metro"]!!,
+                skillMap["CI/CD Bitrise/Actions"]!!,
+                skillMap["Crash monitoring"]!!,
+            )
+        ),
+        Project(
             logo = Res.drawable.decathlon,
             image = Res.drawable.vivawallet,
             title = "Express Payment",
@@ -153,30 +221,32 @@ public object PortfolioData {
                 "Haute disponibilité et de qualité élevée",
                 "Taux de conversion supérieur à une caisse classique",
             ),
-            fullDescription = "Conception et mis en place une refonte majeure d'une fonctionnalité permettant au collaborateur Decathlon d'encaisser un client sans passer en caisse.\n" +
-                    "Cette fonctionnalité dispose de:\n" +
-                    " - Composition panier\n" +
-                    " - Identification client\n" +
-                    " - Paiement par carte bancaire.\n" +
-                    "Tout était pris en charge, le stock, la facture, les portiques de sécurités, la carte de fidélité et surtout le paiement avec une carte bancaire via NFC.\n" +
-                    "\n" +
-                    "Afin de garantir un haut niveau de disponibilité, l'intégralité de la transaction était synchronisé en temps réel sur Firebase. Chaque transaction peut être complété soit par le collaborateur, soit par le serveur, la fonctionnalité s'adapte aux nouvelles informations suivant le principe du 2-way binding.\n" +
-                    "\n" +
-                    "Enjeux:\n" +
-                    "- Haute résilience du traitement des paiements, qu'ils soient en échec ou pas, chaque transaction aboutissait sur un résultat concret et actionnable pour le collaborateur dans un contexte où de nombreux services sont appelés en simultanés\n" +
-                    "- Forte stabilité y compris dans des environnements difficiles comme une connexion internet très faible\n" +
-                    "- Simple d'utilisation, clair, concis et efficace. Le teammate était amené à réaliser ces opérations devant un client, il devait donc pouvoir utiliser la fonctionnalité d'une main avec une faible attention\n" +
-                    "\n" +
-                    "Cette fonctionnalité fait partie d'une plus grande application interne à Decatlon:\n" +
-                    "- 100% Clean architecture\n" +
-                    "- 100% Kotlin\n" +
-                    "- 100% Flow\n" +
-                    "- 100% Compose\n" +
-                    "- Dagger puis Koin\n" +
-                    "- Firebase Realtime Database pour le 2-way binding\n" +
-                    "- Usage du SDK VivaWallet pour la lecture des informations de la carte bancaire\n" +
-                    "- A/B Testing avec Firebase\n" +
-                    "- Crash report avec Crashlytics",
+            description = AnnotatedString(
+                "Conception et mis en place une refonte majeure d'une fonctionnalité permettant au collaborateur Decathlon d'encaisser un client sans passer en caisse.\n" +
+                        "Cette fonctionnalité dispose de:\n" +
+                        " - Composition panier\n" +
+                        " - Identification client\n" +
+                        " - Paiement par carte bancaire.\n" +
+                        "Tout était pris en charge, le stock, la facture, les portiques de sécurités, la carte de fidélité et surtout le paiement avec une carte bancaire via NFC.\n" +
+                        "\n" +
+                        "Afin de garantir un haut niveau de disponibilité, l'intégralité de la transaction était synchronisé en temps réel sur Firebase. Chaque transaction peut être complété soit par le collaborateur, soit par le serveur, la fonctionnalité s'adapte aux nouvelles informations suivant le principe du 2-way binding.\n" +
+                        "\n" +
+                        "Enjeux:\n" +
+                        "- Haute résilience du traitement des paiements, qu'ils soient en échec ou pas, chaque transaction aboutissait sur un résultat concret et actionnable pour le collaborateur dans un contexte où de nombreux services sont appelés en simultanés\n" +
+                        "- Forte stabilité y compris dans des environnements difficiles comme une connexion internet très faible\n" +
+                        "- Simple d'utilisation, clair, concis et efficace. Le teammate était amené à réaliser ces opérations devant un client, il devait donc pouvoir utiliser la fonctionnalité d'une main avec une faible attention\n" +
+                        "\n" +
+                        "Cette fonctionnalité fait partie d'une plus grande application interne à Decatlon:\n" +
+                        "- 100% Clean architecture\n" +
+                        "- 100% Kotlin\n" +
+                        "- 100% Flow\n" +
+                        "- 100% Compose\n" +
+                        "- Dagger puis Koin\n" +
+                        "- Firebase Realtime Database pour le 2-way binding\n" +
+                        "- Usage du SDK VivaWallet pour la lecture des informations de la carte bancaire\n" +
+                        "- A/B Testing avec Firebase\n" +
+                        "- Crash report avec Crashlytics"
+            ),
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Coroutines/Flow"]!!,
@@ -199,32 +269,42 @@ public object PortfolioData {
                 "Services en arrière-plan complexes",
                 "Fort enjeux business"
             ),
-            fullDescription = "Étude de la faisabilité du projet avec un PoC contenant 3 approches différentes\n" +
-                    "Définition de l’architecture\n" +
-                    "Force de proposition sur la valeur ajoutée des données orientées mobile\n" +
-                    "Identification et contournement des limitations systèmes\n" +
-                    "Mise au point de la machine d'intégration et de livraison continue\n" +
-                    "Étude et configuration d'un logiciel de gestion de parc de smartphone\n" +
-                    "Écriture de scripts de livraison avancés à destination de plusieurs Play Stores Entreprise\n" +
-                    "Monté en compétence des collaborateurs confirmés\n" +
-                    "Banc de test et benchmark de smartphones Android\n" +
-                    "\n" +
-                    "Application 100% background dédié à l'analyse réseau entre le smartphone et un serveur donné:\n" +
-                    "- 100% Clean architecture\n" +
-                    "- Multi-modules\n" +
-                    "- 100% Kotlin Coroutine + Flow\n" +
-                    "- IOC avec Dagger2\n" +
-                    "- Base de donnée avec SQLDelight\n" +
-                    "- Intégration, compilation et exécution de sources C/C++ basées sur Traceroute debian\n" +
-                    "- Analyse de trames réseau IMPC/UDP et ipv4/ipv6 extraites du smartphone\n" +
-                    "- Extraction des données de connexion du téléphone (Wifi, 4G, 5G, dBm, BSSID, ip)\n" +
-                    "- Configuration entreprise avec VMware Workspace One\n" +
-                    "- Intégration continue avec Github Actions\n" +
-                    "- Livraison automatique sur plusieurs Play Store Entreprise en simultané\n" +
-                    "\n" +
-                    "SDK minimaliste avec une empreinte mémoire réduite pour accompagner l'application:\n" +
-                    "- Code en JAVA au lieu du Kotlin\n" +
-                    "- Aucune librairie externe n'est utilisée",
+            description = buildAnnotatedString {
+                append("Kadiska a depuis été racheté par ")
+                withLink(Url("https://www.netskope.com")) {
+                    withStyle(style = SpanStyle(fontWeight = Bold)) {
+                        append("netskope\n\n")
+                    }
+                }
+                append(
+                    "Étude de la faisabilité du projet avec un PoC contenant 3 approches différentes\n" +
+                            "Définition de l’architecture\n" +
+                            "Force de proposition sur la valeur ajoutée des données orientées mobile\n" +
+                            "Identification et contournement des limitations systèmes\n" +
+                            "Mise au point de la machine d'intégration et de livraison continue\n" +
+                            "Étude et configuration d'un logiciel de gestion de parc de smartphone\n" +
+                            "Écriture de scripts de livraison avancés à destination de plusieurs Play Stores Entreprise\n" +
+                            "Monté en compétence des collaborateurs confirmés\n" +
+                            "Banc de test et benchmark de smartphones Android\n" +
+                            "\n" +
+                            "Application 100% background dédié à l'analyse réseau entre le smartphone et un serveur donné:\n" +
+                            "- 100% Clean architecture\n" +
+                            "- Multi-modules\n" +
+                            "- 100% Kotlin Coroutine + Flow\n" +
+                            "- IOC avec Dagger2\n" +
+                            "- Base de donnée avec SQLDelight\n" +
+                            "- Intégration, compilation et exécution de sources C/C++ basées sur Traceroute debian\n" +
+                            "- Analyse de trames réseau IMPC/UDP et ipv4/ipv6 extraites du smartphone\n" +
+                            "- Extraction des données de connexion du téléphone (Wifi, 4G, 5G, dBm, BSSID, ip)\n" +
+                            "- Configuration entreprise avec VMware Workspace One\n" +
+                            "- Intégration continue avec Github Actions\n" +
+                            "- Livraison automatique sur plusieurs Play Store Entreprise en simultané\n" +
+                            "\n" +
+                            "SDK minimaliste avec une empreinte mémoire réduite pour accompagner l'application:\n" +
+                            "- Code en JAVA au lieu du Kotlin\n" +
+                            "- Aucune librairie externe n'est utilisée"
+                )
+            },
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Java"]!!,
@@ -246,36 +326,129 @@ public object PortfolioData {
                 "Critique pour le business de Decathlon",
                 "Utilsé tous les jours par des milliers de collaborateurs",
             ),
-            fullDescription = "EmbiSDK: Prend en charge les lecteurs interne Decathlon (ex-embisphere). Ce SDK est livré avec une application Desktop et Android :\n" +
-                    "- 100% clean architecture\n" +
-                    "- Kotlin multiplatform à destination d'Android et du Desktop\n" +
-                    "- Compose Multiplaform pour créer, à partir d'un code unique, une interface Desktop et Android\n" +
-                    "- 100% Kotlin coroutine + flow\n" +
-                    "- Manipulation bas niveau de la mémoire pour parser et sérialiser un flux d'octets\n" +
-                    "- Génération de classes Kotlin à partir d'une spécification json\n" +
-                    "- IOC avec Koin\n" +
-                    "- Quality gate avec Sonarqube et Jacoco\n" +
-                    "- Documentation complète pour l'intégrateur du SDK avec javadoc\n" +
-                    "- Build et livraison automatique avec github actions sur un serveur maven\n\n" +
-                    "RfidLink: SDK unifié qui prend en charge plusieurs fabricants de lecteurs RFID:\n" +
-                    "- 100% clean architecture\n" +
-                    "- 4 adapters (coroutine, RxJava2, RxJava3 et callback)\n" +
-                    "- 100% Kotlin avec RxJava3\n" +
-                    "- IOC avec Dagger2\n" +
-                    "- Quality gate avec Sonarqube et Jacoco\n" +
-                    "- BDD avec Room\n" +
-                    "- Documentation complète pour l'intégrateur du SDK avec javadoc\n" +
-                    "- 3 applications en Kotlin et 1 application en Java \"sample\" pour guider les intégrateurs dans la bonne manière d'exploiter le SDK\n" +
-                    "- Build et livraison automatique avec Bitrise sur un serveur maven",
+            description = AnnotatedString(
+                "EmbiSDK: Prend en charge les lecteurs interne Decathlon (ex-embisphere). Ce SDK est livré avec une application Desktop et Android :\n" +
+                        "- 100% clean architecture\n" +
+                        "- Kotlin multiplatform à destination d'Android et du Desktop\n" +
+                        "- Compose Multiplaform pour créer, à partir d'un code unique, une interface Desktop et Android\n" +
+                        "- 100% Kotlin coroutine + flow\n" +
+                        "- Manipulation bas niveau de la mémoire pour parser et sérialiser un flux d'octets\n" +
+                        "- Génération de classes Kotlin à partir d'une spécification json\n" +
+                        "- IOC avec Koin\n" +
+                        "- Quality gate avec Sonarqube et Jacoco\n" +
+                        "- Documentation complète pour l'intégrateur du SDK avec javadoc\n" +
+                        "- Build et livraison automatique avec github actions sur un serveur maven\n\n" +
+                        "RfidLink: SDK unifié qui prend en charge plusieurs fabricants de lecteurs RFID:\n" +
+                        "- 100% clean architecture\n" +
+                        "- 4 adapters (coroutine, RxJava2, RxJava3 et callback)\n" +
+                        "- 100% Kotlin avec RxJava3\n" +
+                        "- IOC avec Dagger2\n" +
+                        "- Quality gate avec Sonarqube et Jacoco\n" +
+                        "- BDD avec Room\n" +
+                        "- Documentation complète pour l'intégrateur du SDK avec javadoc\n" +
+                        "- 3 applications en Kotlin et 1 application en Java \"sample\" pour guider les intégrateurs dans la bonne manière d'exploiter le SDK\n" +
+                        "- Build et livraison automatique avec Bitrise sur un serveur maven"
+            ),
             skills = listOf(
                 skillMap["Kotlin"]!!,
-                skillMap["Java"]!!,
                 skillMap["Coroutines/Flow"]!!,
+                skillMap["Jetpack Compose"]!!,
                 skillMap["Android SDK"]!!,
+                skillMap["Compose Multiplatform"]!!,
+                skillMap["Clean Architecture"]!!,
                 skillMap["Dagger/Hilt/Koin/Metro"]!!,
+                skillMap["RxJava"]!!,
+                skillMap["Java"]!!,
+            )
+        ),
+        Project(
+            logo = Res.drawable.equisense_logo,
+            image = Res.drawable.equisense_banner,
+            title = "Equisense",
+            bulletPoints = listOf(
+                "Mesures sportives lors de séances d'équitation",
+                "Conception et intégration from scratch",
+                "Stack technique moderne et innovante",
+                "Une expérience humaine grisante",
+            ),
+            description = AnnotatedString(
+                "Développement en reacting programming Swift (iOS) et Kotlin (Android) :\n" +
+                        " - Bluetooth Low Energy\n" +
+                        " - RxJava3 / RxSwift\n" +
+                        " - Création de SDK open-source et closed-source multi-platform (Android, iOS et backend avec ktor)\n" +
+                        " - Programmation Fonctionnelle\n" +
+                        " - Clean Architecture\n" +
+                        " - Injection de dépendance avec Dagger2\n" +
+                        " - Création de graphiques et de vues customs avec manipulation de canvas\n" +
+                        "\n" +
+                        "Maintenance, Qualité et SCRUM avec les outils JIRA et Firebase\n" +
+                        "Formation et montée en compétence des collaborateurs\n" +
+                        "Beta testing ouvert et fermé avec Beta by Crashlytics, TestFlight et Play Store\n" +
+                        "Intégration continue avec Bitrise\n" +
+                        "Review hebdomadaire de pull requests en Go pour le backend et Kotlin pour l'app Android\n" +
+                        "Publication sur les stores App Store et Play Store"
+            ),
+            skills = listOf(
+                skillMap["Kotlin"]!!,
+                skillMap["RxJava"]!!,
+                skillMap["iOS / Swift"]!!,
+                skillMap["Android SDK"]!!,
                 skillMap["Fragment/XML"]!!,
-                skillMap["CI/CD Bitrise/Actions"]!!,
-                skillMap["Rust"]!!,
+                skillMap["ViewModel MVVM/MVI"]!!,
+                skillMap["Dagger/Hilt/Koin/Metro"]!!,
+                skillMap["Crash monitoring"]!!,
+                skillMap["Go"]!!
+            )
+        ),
+        Project(
+            logo = Res.drawable.xee_logo,
+            image = Res.drawable.xee_banner,
+            title = "Xee app companion",
+            bulletPoints = listOf(
+                "Objet connecté pour automobile",
+                "Première expérience en autonomie totale",
+                "Monté en compétence des collaborateurs iOS",
+            ),
+            description = AnnotatedString(
+                "Développement Android en Reactive Programming (Java)\n" +
+                        "Développement de SDK iOS et Android avec communication Bluetooth 2.1\n" +
+                        "Formation et montée en compétence des collaborateurs sur les sujets mobiles\n" +
+                        "Maintenance Qualité avec les outils JIRA, Crashlytics et l'usine d'intégration continue Jenkins\n" +
+                        "Beta testing Android et iOS fermé avec Crashlytics\n" +
+                        "Publication sur les stores App Store et Play Store"
+            ),
+            skills = listOf(
+                skillMap["iOS / Swift"]!!,
+                skillMap["Objective-C"]!!,
+                skillMap["Java"]!!,
+                skillMap["Android SDK"]!!,
+                skillMap["Fragment/XML"]!!,
+            )
+        ),
+        Project(
+            logo = Res.drawable.chronodrive_logo,
+            image = Res.drawable.chronodrive_banner,
+            title = "Chronodrive Android et iOS",
+            bulletPoints = listOf(
+                "+100k clients mensuels",
+                "Des contraintes métier nombreuses",
+                "Réalisé à la fois sur Android et iOS",
+            ),
+            description = AnnotatedString(
+                "Il s'agit de mon premier projet profesionnel d'envergure, il a été développé" +
+                        " from scratch sur Android et en support pour iOS avec une équipe de 4" +
+                        " developpeurs au total (Android + iOS).\n" +
+                        "Malgré l'abscence de chef de projet et de référent technique, nous avons " +
+                        "réussi à nous organiser pour réussir à livrer le projet et apporter satistaction " +
+                        "au client.\nL'application Android a été, pour moi, ma première expérience" +
+                        " en tant que tech lead."
+            ),
+            skills = listOf(
+                skillMap["iOS / Swift"]!!,
+                skillMap["Objective-C"]!!,
+                skillMap["Java"]!!,
+                skillMap["Android SDK"]!!,
+                skillMap["Fragment/XML"]!!,
             )
         ),
     )

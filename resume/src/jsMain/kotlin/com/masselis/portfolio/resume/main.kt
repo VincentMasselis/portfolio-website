@@ -12,7 +12,6 @@ import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.H3
 import org.jetbrains.compose.web.dom.Li
-import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Section
 import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
@@ -104,7 +103,7 @@ private fun ProjectsSection() {
         PortfolioData.projects.forEach { project ->
             Div({ classes("project-card") }) {
                 H3 { Text(project.title) }
-                P { Text(project.fullDescription.toString()) }
+                //P { Text(project.description.toString()) }
                 Ul {
                     project.bulletPoints.forEach { point ->
                         Li { Text(point) }

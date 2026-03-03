@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,9 +18,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Coffee
+import androidx.compose.material.icons.filled.House
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SportsMotorsports
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,6 +47,7 @@ import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SkillBar
 import com.masselis.portfolio.ui.components.TimelineItem
+import com.masselis.portfolio.ui.components.VerticalScrollbar
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
@@ -68,14 +72,25 @@ public data object About : Route, StaticScreen
 internal fun AboutScreen(
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState())
-    ) {
-        AboutHeroSection()
-        SkillsSection()
-        ExpertiseSection()
-        CareerTimelineSection()
-        Footer()
+    val scrollState = rememberScrollState()
+    Box(modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            AboutHeroSection()
+            SkillsSection()
+            ExpertiseSection()
+            CareerTimelineSection()
+            Footer()
+        }
+        VerticalScrollbar(
+            scrollState = scrollState,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .fillMaxHeight(),
+        )
     }
 }
 
@@ -175,12 +190,20 @@ private fun SkillsSection() {
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 FilterChip(
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    ),
                     label = { Text("Tout") },
                     selected = selectedTags.isEmpty(),
                     onClick = { selectedTags.clear() }
                 )
                 Tag.entries.forEach { tag ->
                     FilterChip(
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        ),
                         label = { Text(tag.string()) },
                         selected = selectedTags.contains(tag),
                         onClick = {
@@ -247,6 +270,7 @@ private fun ExpertiseSection() {
         ExpertiseItem(Icons.Default.Coffee, "Café et code propre")
         ExpertiseItem(Icons.Default.SportsMotorsports, "Sports mécaniques")
         ExpertiseItem(Icons.Default.Settings, "Architecture logicielle")
+        ExpertiseItem(Icons.Default.House, "Maison connectée")
     }
 }
 

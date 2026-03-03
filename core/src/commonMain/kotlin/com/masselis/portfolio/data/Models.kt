@@ -1,5 +1,6 @@
 package com.masselis.portfolio.data
 
+import androidx.compose.ui.text.AnnotatedString
 import kotlinx.datetime.YearMonth
 import org.jetbrains.compose.resources.DrawableResource
 import kotlin.jvm.JvmInline
@@ -52,7 +53,7 @@ public data class Project(
     val image: DrawableResource,
     val title: String,
     val bulletPoints: List<String>,
-    val fullDescription: String,
+    val description: AnnotatedString,
     val skills: List<Skill>,
 )
 

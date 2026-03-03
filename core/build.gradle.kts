@@ -36,6 +36,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.datetime)
             implementation(libs.compose.runtime)
+            implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
         }
     }

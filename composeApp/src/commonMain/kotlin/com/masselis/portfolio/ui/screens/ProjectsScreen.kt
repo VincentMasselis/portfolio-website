@@ -57,7 +57,6 @@ internal fun ProjectsScreen(
             placeable.place(0, 0)
         }
     }
-
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(if (windowSizeClass == Compact) 1 else 2),
         contentPadding = PaddingValues(start = leftPadding, end = rightPadding),
@@ -65,7 +64,7 @@ internal fun ProjectsScreen(
         verticalItemSpacing = 24.dp,
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+            .fillMaxSize()
     ) {
         item(span = FullLine) {
             Box(fullLineModifier) { ProjectsHeaderSection() }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -67,6 +68,7 @@ import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.RepoCardPortfolioLabel
 import com.masselis.portfolio.ui.components.RepoCardStats
 import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.components.VerticalScrollbar
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
@@ -116,16 +118,25 @@ internal fun LandingScreen(
     state: Landing.State,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        HeroSection(showProjects = state.onShowProjects)
-        ProjectsPreviewSection(onSeeMore = state.onShowProjects)
-        AboutPreviewSection()
-        OSSSection()
-        Footer()
+    val scrollState = rememberScrollState()
+    Box(modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            HeroSection(showProjects = state.onShowProjects)
+            ProjectsPreviewSection(onSeeMore = state.onShowProjects)
+            AboutPreviewSection()
+            OSSSection()
+            Footer()
+        }
+        VerticalScrollbar(
+            scrollState = scrollState,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .fillMaxHeight(),
+        )
     }
 }
 

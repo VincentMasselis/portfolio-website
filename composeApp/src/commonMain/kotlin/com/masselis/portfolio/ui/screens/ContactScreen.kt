@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.components.VerticalScrollbar
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass
@@ -52,15 +54,25 @@ public data object Contact : Route, StaticScreen
 internal fun ContactScreen(
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        ContactHeaderSection()
-        ContactGridSection()
-        LocationSection()
-        Footer()
+
+    val scrollState = rememberScrollState()
+    Box(modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            ContactHeaderSection()
+            ContactGridSection()
+            LocationSection()
+            Footer()
+        }
+        VerticalScrollbar(
+            scrollState = scrollState,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .fillMaxHeight(),
+        )
     }
 }
 
