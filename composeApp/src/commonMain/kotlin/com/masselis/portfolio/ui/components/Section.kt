@@ -34,7 +34,7 @@ internal fun Section(
         val layoutDirection = LocalLayoutDirection.current
         Column(
             modifier = Modifier
-                .widthIn(max = 1200.dp)
+                .widthIn(max = SectionMaxWidth)
                 .fillMaxWidth()
                 .padding(
                     top = paddingValues.calculateTopPadding(),
@@ -46,6 +46,8 @@ internal fun Section(
         )
     }
 }
+
+internal val SectionMaxWidth = 1200.dp
 
 internal val PaddingValues.Companion.Section
     get() = PaddingValues(horizontal = 32.dp, vertical = 48.dp)

@@ -7,16 +7,19 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan.Companion.FullLine
 import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,6 +27,7 @@ import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.Section
+import com.masselis.portfolio.ui.components.SectionMaxWidth
 import com.masselis.portfolio.ui.components.copy
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
@@ -45,38 +49,57 @@ internal fun ProjectsScreen(
     val layoutDirection = LocalLayoutDirection.current
     val leftPadding = PaddingValues.Section.calculateLeftPadding(layoutDirection)
     val rightPadding = PaddingValues.Section.calculateRightPadding(layoutDirection)
-    // Full-line items (header/footer) must escape the grid's contentPadding inset so they
-    // render at full screen width, matching their own internal Section padding.
-    val fullLineModifier = Modifier.layout { measurable, constraints ->
-        val leftPx = leftPadding.roundToPx()
-        val rightPx = rightPadding.roundToPx()
-        val placeable = measurable.measure(
-            constraints.copy(maxWidth = constraints.maxWidth + leftPx + rightPx)
-        )
-        layout(placeable.width, placeable.height) {
-            placeable.place(0, 0)
-        }
-    }
+    val horizontalArrangement = Arrangement.spacedBy((leftPadding + rightPadding) / 2)
+    val gridState = rememberLazyStaggeredGridState()
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(if (windowSizeClass == Compact) 1 else 2),
-        contentPadding = PaddingValues(start = leftPadding, end = rightPadding),
-        horizontalArrangement = Arrangement.spacedBy((leftPadding + rightPadding) / 2),
+        state = gridState,
+        horizontalArrangement = horizontalArrangement,
         verticalItemSpacing = 24.dp,
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
         item(span = FullLine) {
-            Box(fullLineModifier) { ProjectsHeaderSection() }
+            ProjectsHeaderSection()
         }
         itemsIndexed(
             items = PortfolioData.projects,
-            itemContent = { _, project ->
-                ProjectCard(project = project)
+            itemContent = { projectIndex, project ->
+                Box {
+                    // 0 = left lane, 1 right lane, "null" means the screen only shows a single lane, like when running on mobile
+                    val lane = gridState
+                        .layoutInfo
+                        .visibleItemsInfo
+                        .firstOrNull { it.index == projectIndex + 1 }
+                        ?.lane
+                        ?.takeIf { windowSizeClass > Compact }
+                    ProjectCard(
+                        project = project,
+                        modifier = Modifier
+                            .align(
+                                when (lane) {
+                                    0 -> Alignment.CenterEnd
+                                    1 -> Alignment.CenterStart
+                                    null -> Alignment.Center
+                                    else -> error("Cannot handle more than 2 lanes")
+                                }
+                            )
+                            .widthIn(max = (SectionMaxWidth - horizontalArrangement.spacing) / 2)
+                            .run {
+                                when (lane) {
+                                    0 -> padding(start = leftPadding)
+                                    1 -> padding(end = rightPadding)
+                                    null -> padding(start = leftPadding, end = rightPadding)
+                                    else -> this
+                                }
+                            }
+                    )
+                }
             },
         )
         item(span = FullLine) {
-            Box(fullLineModifier) { Footer() }
+            Footer()
         }
     }
 }

@@ -178,7 +178,7 @@ private fun HeroSection(
                 withStyle(primaryColorStyle) { append("ANDROID") }
                 append(" & ")
                 withStyle(primaryColorStyle) { append("iOS\nKOTLIN") }
-                append(" & COMPOSE MULTIPLATFORM\nSOFTWARE ")
+                append(" & COMPOSE MULTIPLATFORM\nTECH LEAD & SOFTWARE ")
                 append(
                     AnnotatedString(
                         "ARCHITECT",
