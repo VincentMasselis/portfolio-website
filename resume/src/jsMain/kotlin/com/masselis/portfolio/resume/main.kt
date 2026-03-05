@@ -124,12 +124,12 @@ private fun ContactsSection() {
     Section({ classes("resume-section") }) {
         H2 { Text("CONTACT") }
         Div({ classes("contacts-grid") }) {
-            PortfolioData.contacts.forEach { contact ->
+            /*PortfolioData.contacts.forEach { contact ->
                 Div({ classes("contact-item") }) {
                     Span({ classes("label") }) { Text("${contact.iconName}: ") }
                     Text(contact.url)
                 }
-            }
+            }*/
         }
     }
 }

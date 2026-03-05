@@ -452,11 +452,4 @@ public object PortfolioData {
             )
         ),
     )
-
-    public val contacts: List<ContactInfo> = listOf(
-        ContactInfo("R\u00E9seau Professionnel", "linkedin.com/in/vincentmasselis", "LinkedIn"),
-        ContactInfo("Projets & Code", "github.com/RxVincent", "GitHub"),
-        ContactInfo("R\u00E9seau Social", "bsky.app/profile/rxvincent.bsky.s", "Bluesky"),
-        ContactInfo("Contact Direct", "vincent@rxvincent.com", "Email"),
-    )
 }
