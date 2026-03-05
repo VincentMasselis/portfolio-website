@@ -1,7 +1,9 @@
 package com.masselis.portfolio.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +30,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,14 +40,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.ui.components.Footer
+import com.masselis.portfolio.ui.components.Location
+import com.masselis.portfolio.ui.components.MapView
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SectionMaxWidth
 import com.masselis.portfolio.ui.components.copy
+import com.masselis.portfolio.ui.components.rememberMapController
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
-import com.masselis.portfolio.ui.theme.WindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
@@ -125,6 +136,13 @@ internal fun ContactScreen(
                 url = "vincent.masselis@gmail.com",
                 label = "Contact mail",
                 onClick = { uriHandler.openUri("mailto:vincent.masselis@gmail.com") },
+                horizontalArrangement = horizontalArrangement,
+                leftPadding = leftPadding,
+                rightPadding = rightPadding,
+            )
+        }
+        item(span = { GridItemSpan(if (windowSizeClass == Compact) 1 else 2) }) {
+            LocationGridCard(
                 horizontalArrangement = horizontalArrangement,
                 leftPadding = leftPadding,
                 rightPadding = rightPadding,
@@ -219,76 +237,84 @@ private fun ContactGridCard(
     }
 }
 
+private val locations = listOf(
+    Location("Lille", "France", 50.6292, 3.0573, 10),
+    Location("Paris", "France", 48.8566, 2.3522, 10),
+    Location("Bruxelles", "Belgique", 50.8503, 4.3517, 10)
+)
+
 @Composable
-private fun LocationSection() {
+private fun LocationGridCard(
+    horizontalArrangement: Arrangement.HorizontalOrVertical,
+    leftPadding: Dp,
+    rightPadding: Dp,
+    modifier: Modifier = Modifier,
+) {
     val windowSizeClass = LocalWindowSizeClass.current
-    Column(
-        modifier = Modifier.fillMaxWidth().background(Color.White),
-    ) {
-        if (windowSizeClass == WindowSizeClass.Compact) {
-            Box(
-                modifier = Modifier.fillMaxWidth().height(200.dp).clip(RoundedCornerShape(12.dp))
-                    .background(Color.Gray.copy(alpha = 0.2f)),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = "\uD83D\uDDFA\uFE0F Lille",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
-                )
-            }
-            Spacer(Modifier.height(12.dp))
-            LocationCard(Modifier.fillMaxWidth())
-        } else {
+    val mapController = rememberMapController()
+    Box(modifier) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            modifier = Modifier
+                .widthIn(max = SectionMaxWidth)
+                .padding(start = leftPadding, end = rightPadding)
+                .align(Alignment.Center)
+                .fillMaxWidth()
+        ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Box(
-                    modifier = Modifier.weight(1f).height(200.dp).clip(RoundedCornerShape(12.dp))
-                        .background(Color.Gray.copy(alpha = 0.2f)),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = "\uD83D\uDDFA\uFE0F Lille",
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
+                MapView(
+                    locations = locations,
+                    controller = mapController,
+                    modifier = Modifier
+                        .height(180.dp)
+                        .fillMaxWidth(0.5f)
+                        .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
+                )
+                if (windowSizeClass > Compact) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = null,
+                        modifier = Modifier.size(96.dp),
+                        tint = MaterialTheme.colorScheme.primaryContainer,
                     )
                 }
-                LocationCard(Modifier.weight(1f))
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    locations.forEach { location ->
+                        City(
+                            location = location,
+                            isHovered = { if (it) mapController.flyTo(location) },
+                        )
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-private fun LocationCard(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.border(
-            1.dp,
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
-            RoundedCornerShape(12.dp)
-        ).padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Icon(
-            imageVector = Icons.Default.LocationOn,
-            contentDescription = "Location",
-            modifier = Modifier.size(64.dp),
-            tint = MaterialTheme.colorScheme.primaryContainer,
-        )
-        Spacer(Modifier.height(12.dp))
-        Text(
-            text = "Lille, France",
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = "Localisation",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
-        )
+private fun City(
+    location: Location,
+    isHovered: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
+    Text(
+        text = buildAnnotatedString {
+            withStyle(SpanStyle(fontWeight = Bold)) { append(location.city) }
+            append(", ${location.country}")
+        },
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.onBackground,
+        modifier = Modifier.hoverable(interactionSource)
+    )
+    LaunchedEffect(isHovered) {
+        isHovered(isHovered)
     }
 }

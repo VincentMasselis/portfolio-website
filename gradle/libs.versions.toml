@@ -22,6 +22,7 @@ metro = "0.10.4"
 navigation-compose = "2.9.2"
 
 [libraries]
+android-desugar = "com.android.tools:desugar_jdk_libs:2.1.5"
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
