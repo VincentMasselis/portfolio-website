@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        /* Force the html and body to take up 100% of the viewport */
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents any accidental scrollbars */
+        }
+
+        /* Make the map fill its now-expanded parent */
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // Initialize the map (it stays gray until the first marker arrives)
+    var map = L.map('map');
+
+    // Add the map tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // 1. Create a FeatureGroup to hold all our markers and add it to the map
+    var markerGroup = L.featureGroup().addTo(map);
+
+    function placeMarker(lat, lng) {
+        // 2. Create the new marker and add it to the GROUP, not directly to the map
+        L.marker([lat, lng]).addTo(markerGroup);
+
+        // 3. Calculate the bounds that contain all the markers currently in the group
+        var bounds = markerGroup.getBounds();
+
+        // 4. Animate the camera to fit those bounds
+        map.fitBounds(bounds, {
+            // maxZoom prevents the camera from zooming in way too close
+            // when there is only 1 marker on the map
+            maxZoom: 14,
+
+            // padding adds some pixels of space around the edges so your
+            // markers don't get cut off by the edges of the screen
+            padding: [20, 20]
+        });
+    }
+</script>
+</body>
+</html>

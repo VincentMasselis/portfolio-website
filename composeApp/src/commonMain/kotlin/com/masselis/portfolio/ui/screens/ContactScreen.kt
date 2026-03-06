@@ -20,7 +20,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Mail
@@ -35,7 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -269,10 +268,14 @@ private fun LocationGridCard(
                 MapView(
                     locations = locations,
                     controller = mapController,
+                    // MaterialTheme.shapes.medium is the default value used by "Card()"s in Compose
+                    shape = MaterialTheme.shapes.medium.copy(
+                        topEnd = ZeroCornerSize,
+                        bottomEnd = ZeroCornerSize
+                    ),
                     modifier = Modifier
                         .height(180.dp)
                         .fillMaxWidth(0.5f)
-                        .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
                 )
                 if (windowSizeClass > Compact) {
                     Icon(
