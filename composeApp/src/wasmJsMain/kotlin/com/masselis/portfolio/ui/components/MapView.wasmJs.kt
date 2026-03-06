@@ -15,14 +15,6 @@ import org.w3c.dom.HTMLIFrameElement
 import portfolio.composeapp.generated.resources.Res
 
 @Suppress("OPT_IN_USAGE")
-@JsFun("(html) => URL.createObjectURL(new Blob([html], {type: 'text/html'}))")
-private external fun createBlobUrl(html: String): String
-
-@Suppress("OPT_IN_USAGE")
-@JsFun("(url) => URL.revokeObjectURL(url)")
-private external fun revokeBlobUrl(url: String)
-
-@Suppress("OPT_IN_USAGE")
 @JsFun("(iframe, script) => { if (iframe.contentWindow) iframe.contentWindow.eval(script); }")
 private external fun evaluateJavascript(iframe: HTMLIFrameElement, script: String)
 
@@ -35,19 +27,17 @@ internal actual fun MapView(
     modifier: Modifier
 ) {
 
-    val blobUrl by produceState<String?>(null, locations) {
-        value = Res.readBytes("files/map.html")
-            .decodeToString()
-            .let(::createBlobUrl)
-        awaitDispose { value?.also(::revokeBlobUrl) }
+    val html by produceState<String?>(null, locations) {
+        value = Res.readBytes("files/map.html").decodeToString()
+        awaitDispose {}
     }
     val borderRadiusTopStart = remember { shape?.topStart?.toPx(Unspecified, Density(1f)) }
     val borderRadiusBottomStart = remember { shape?.bottomStart?.toPx(Unspecified, Density(1f)) }
-    if (blobUrl != null) {
+    if (html != null) {
         HtmlElementView(
             factory = {
                 (document.createElement("iframe") as HTMLIFrameElement).apply {
-                    src = blobUrl!!
+                    srcdoc = html!!
                     style.border = "none"
                     style.width = "100%"
                     style.height = "100%"
