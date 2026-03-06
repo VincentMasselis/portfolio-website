@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Badge
@@ -120,17 +121,21 @@ private fun DetailDialog(
                             .height(200.dp)
                     )
                     Column(modifier = Modifier.padding(24.dp)) {
-                        Text(
-                            text = project.title,
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = AlertDialogDefaults.titleContentColor,
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = project.title,
+                                style = MaterialTheme.typography.headlineSmall,
+                                color = AlertDialogDefaults.titleContentColor,
+                            )
+                        }
                         Spacer(Modifier.height(16.dp))
-                        Text(
-                            text = project.description,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = AlertDialogDefaults.textContentColor,
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = project.description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = AlertDialogDefaults.textContentColor,
+                            )
+                        }
                         Spacer(Modifier.height(16.dp))
                         FlowRow(
                             horizontalArrangement = Arrangement.spacedBy(2.dp),

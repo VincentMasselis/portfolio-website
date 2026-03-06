@@ -31,6 +31,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -171,47 +172,49 @@ private fun HeroSection(
         Spacer(Modifier.height(32.dp))
         val cursorId = "cursor"
         val style = MaterialTheme.typography.displayMedium
-        BasicText(
-            text = buildAnnotatedString {
-                val primaryColorStyle = SpanStyle(color = MaterialTheme.colorScheme.primary)
-                append("DÉVELOPPEUR ")
-                withStyle(primaryColorStyle) { append("ANDROID") }
-                append(" & ")
-                withStyle(primaryColorStyle) { append("iOS\nKOTLIN") }
-                append(" & COMPOSE MULTIPLATFORM\nTECH LEAD & SOFTWARE ")
-                append(
-                    AnnotatedString(
-                        "ARCHITECT",
-                        SpanStyle(color = MaterialTheme.colorScheme.primary)
+        SelectionContainer {
+            BasicText(
+                text = buildAnnotatedString {
+                    val primaryColorStyle = SpanStyle(color = MaterialTheme.colorScheme.primary)
+                    append("DÉVELOPPEUR ")
+                    withStyle(primaryColorStyle) { append("ANDROID") }
+                    append(" & ")
+                    withStyle(primaryColorStyle) { append("iOS\nKOTLIN") }
+                    append(" & COMPOSE MULTIPLATFORM\nTECH LEAD & SOFTWARE ")
+                    append(
+                        AnnotatedString(
+                            "ARCHITECT",
+                            SpanStyle(color = MaterialTheme.colorScheme.primary)
+                        )
                     )
-                )
-                appendInlineContent(cursorId)
-            },
-            style = style.copy(
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                textAlign = TextAlign.Center
-            ),
-            inlineContent = mapOf(
-                cursorId to InlineTextContent(
-                    placeholder = Placeholder(
-                        width = style.fontSize * 0.6f,
-                        height = style.fontSize,
-                        placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter,
-                    ),
-                ) {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(style.fontSize.value.dp)
-                            .background(
-                                if (showBlockCursor) MaterialTheme.colorScheme.primary
-                                else Color.Transparent
-                            )
-                    )
-                }
-            ),
-            modifier = Modifier.fillMaxWidth(),
-        )
+                    appendInlineContent(cursorId)
+                },
+                style = style.copy(
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    textAlign = TextAlign.Center
+                ),
+                inlineContent = mapOf(
+                    cursorId to InlineTextContent(
+                        placeholder = Placeholder(
+                            width = style.fontSize * 0.6f,
+                            height = style.fontSize,
+                            placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter,
+                        ),
+                    ) {
+                        Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(style.fontSize.value.dp)
+                                .background(
+                                    if (showBlockCursor) MaterialTheme.colorScheme.primary
+                                    else Color.Transparent
+                                )
+                        )
+                    }
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
         Spacer(Modifier.height(16.dp))
         Text(
             text = "Architecte • Expert • Passionné",
@@ -340,18 +343,22 @@ private fun AboutText() {
         color = MaterialTheme.colorScheme.onBackground,
     )
     Spacer(Modifier.height(8.dp))
-    Text(
-        text = "Vincent Masselis,\nDéveloppeur Senior",
-        style = MaterialTheme.typography.headlineMedium,
-        fontWeight = Bold,
-        color = MaterialTheme.colorScheme.onBackground,
-    )
+    SelectionContainer {
+        Text(
+            text = "Vincent Masselis,\nDéveloppeur Senior",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = Bold,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+    }
     Spacer(Modifier.height(12.dp))
-    Text(
-        text = "Je convertis le café en code depuis 2010",
-        style = MaterialTheme.typography.bodyLarge,
-        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-    )
+    SelectionContainer {
+        Text(
+            text = "Je convertis le café en code depuis 2010",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        )
+    }
     Spacer(Modifier.height(12.dp))
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Icon(

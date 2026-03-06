@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,7 +71,11 @@ internal fun TimelineItem(
                         end = Offset(x = size.width / 2, y = size.height),
                         strokeWidth = size.width,
                         pathEffect = PathEffect.dashPathEffect(
-                            intervals = floatArrayOf(6.dp.toPx(), 6.dp.toPx()), // dot size, gap size
+                            // dot size, gap size
+                            intervals = floatArrayOf(
+                                6.dp.toPx(),
+                                6.dp.toPx()
+                            ),
                             phase = 0f,
                         ),
                     )
@@ -88,17 +93,21 @@ internal fun TimelineItem(
 
         // Content
         Column(modifier = Modifier.weight(1f).padding(bottom = 32.dp)) {
-            Text(
-                text = timelineEntry.title,
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+            SelectionContainer {
+                Text(
+                    text = timelineEntry.title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
             Spacer(Modifier.height(4.dp))
-            Text(
-                text = timelineEntry.description,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            )
+            SelectionContainer {
+                Text(
+                    text = timelineEntry.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                )
+            }
         }
     }
 }

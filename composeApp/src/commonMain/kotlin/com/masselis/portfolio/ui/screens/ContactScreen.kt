@@ -221,13 +221,13 @@ private fun ContactGridCard(
                 Column {
                     Text(
                         text = url,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground,
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
                         text = label,
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                     )
                 }

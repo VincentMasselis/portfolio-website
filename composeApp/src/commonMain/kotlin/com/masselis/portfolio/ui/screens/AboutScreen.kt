@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Coffee
@@ -129,48 +130,52 @@ private fun AboutHeroText(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
-        Text(
-            text = "À propos de\nVincent MASSELIS",
-            style = MaterialTheme.typography.displaySmall,
-            color = Color.White,
-        )
+        SelectionContainer {
+            Text(
+                text = "À propos de\nVincent MASSELIS",
+                style = MaterialTheme.typography.displaySmall,
+                color = Color.White,
+            )
+        }
         Spacer(Modifier.height(16.dp))
-        Text(
-            buildAnnotatedString {
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    Clock.System.now()
-                        .toLocalDateTime(currentSystemDefault())
-                        .let { YearMonth(it.year, it.month) }
-                        .yearsUntil(YearMonth(2010, 10))
-                        .also { elapsedYears -> append("Senior avec ${elapsedYears.absoluteValue} ans d'expérience") }
-                }
-                append(" je conçois des systèmes robustes fondés sur la ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Clean Architecture et MVVM/MVI")
-                }
-                append(". Spécialiste ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Android, iOS et Multiplatform")
-                }
-                append(", je sais construire vos projets en ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("Kotlin")
-                }
-                append(", Kotlin Multiplatform (KMP) et Compose Multiplatform, afin unifier l'UX, l'UI et la qualité sur tous les systèmes.\n")
-                append("Mon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("iOS")
-                }
-                append(" et une appétence naturelle à la découverte ainsi qu'à la remise en question des acquis. ")
-                append("Ceci me permet de garder un ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("haut niveau d'exigence")
-                }
-                append(" envers moi même et les produits que je délivre.")
-            },
-            style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 25.sp),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-        )
+        SelectionContainer {
+            Text(
+                buildAnnotatedString {
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        Clock.System.now()
+                            .toLocalDateTime(currentSystemDefault())
+                            .let { YearMonth(it.year, it.month) }
+                            .yearsUntil(YearMonth(2010, 10))
+                            .also { elapsedYears -> append("Senior avec ${elapsedYears.absoluteValue} ans d'expérience") }
+                    }
+                    append(" je conçois des systèmes robustes fondés sur la ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("Clean Architecture et MVVM/MVI")
+                    }
+                    append(". Spécialiste ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("Android, iOS et Multiplatform")
+                    }
+                    append(", je sais construire vos projets en ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("Kotlin")
+                    }
+                    append(", Kotlin Multiplatform (KMP) et Compose Multiplatform, afin unifier l'UX, l'UI et la qualité sur tous les systèmes.\n")
+                    append("Mon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("iOS")
+                    }
+                    append(" et une appétence naturelle à la découverte ainsi qu'à la remise en question des acquis. ")
+                    append("Ceci me permet de garder un ")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("haut niveau d'exigence")
+                    }
+                    append(" envers moi même et les produits que je délivre.")
+                },
+                style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 25.sp),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        }
     }
 }
 
@@ -287,11 +292,13 @@ private fun ExpertiseItem(icon: ImageVector, text: String) {
             tint = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(Modifier.width(16.dp))
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
+        SelectionContainer {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
     }
 }
 
