@@ -28,10 +28,11 @@ import portfolio.core.generated.resources.decathlon
 import portfolio.core.generated.resources.embipos
 import portfolio.core.generated.resources.equisense_banner
 import portfolio.core.generated.resources.equisense_logo
+import portfolio.core.generated.resources.home_assistant_banner
 import portfolio.core.generated.resources.kadiska_banner
 import portfolio.core.generated.resources.kadiska_logo
+import portfolio.core.generated.resources.rxvincent_logo
 import portfolio.core.generated.resources.tpms_advanced_banner
-import portfolio.core.generated.resources.tpms_advanced_logo
 import portfolio.core.generated.resources.vivawallet
 import portfolio.core.generated.resources.xee_banner
 import portfolio.core.generated.resources.xee_logo
@@ -67,6 +68,8 @@ public object PortfolioData {
         Skill("Rust", Initiated),
         Skill("Go", Initiated),
         Skill("Home Assistant", Expert),
+        Skill("Python", Initiated),
+        Skill("Système embarqués", Confirmed),
     )
 
     public val timelineEntries: List<TimelineEntry> = listOf(
@@ -163,7 +166,7 @@ public object PortfolioData {
             )
         ),
         Project(
-            logo = Res.drawable.tpms_advanced_logo,
+            logo = Res.drawable.rxvincent_logo,
             image = Res.drawable.tpms_advanced_banner,
             title = "TPMS Advanced",
             bulletPoints = listOf(
@@ -317,6 +320,47 @@ public object PortfolioData {
             )
         ),
         Project(
+            logo = Res.drawable.rxvincent_logo,
+            image = Res.drawable.home_assistant_banner,
+            title = "Maison connectée avec Home Assistant",
+            bulletPoints = listOf(
+                "100 périphériques connectés",
+                "Voiture, fenêtres, chauffe-eau, pompe à chaleur, etc.",
+                "Une maison presque entièrement connectée, + sécurisée, + autonome, - moins chère",
+            ),
+            description = buildAnnotatedString {
+                append(
+                    "Bien qu'il ne s'agisse pas d'un projet profesionnel, je tiens à intégrer " +
+                            "dans mes projets qui font ma fierté celui de ma propre maison "
+                )
+                withStyle(style = SpanStyle(fontWeight = Bold)) {
+                    append("intégralement connectée")
+                }
+                append(
+                    ". Construit sur la solution open-source Home Assistant (plus gros projet" +
+                            " par contributeur open-source en 2024 sur GitHub), j'utilise mes" +
+                            " compétences techniques pour améliorer mon quotidien en scriptant et" +
+                            " en rendant intelligent tout ce qui peut améliorer mon confort et me" +
+                            " permettre de faire des économies. Même un vieux pôele à granulé de 15" +
+                            " ans peut être connecté à condition de trouver le contact sec sur le" +
+                            " circuit imprimé.\n\nAu delà du confort que cela m'apporte, construire" +
+                            " cette solution m'a aussi permit de decouvrir quelques briques en" +
+                            " Python afin d'extraire de Home Assistant le comportement exact que je" +
+                            " souhaite pour chacun de mes objets connectés. J'ai également découvert" +
+                            " quelques technologies de systèmes embarqués et bas niveau pour créer" +
+                            " mon propre frimware pour puce ESP32/ESP8266 à la base de nombreux" +
+                            " objets connectés en WiFi.\n\nHome Assistant est une solution très," +
+                            " très riche et complète, apprendre à l'utiliser à son plein potentiel" +
+                            " est un challenge particulièrement enrichissant."
+                )
+            },
+            skills = listOf(
+                skillMap["Home Assistant"]!!,
+                skillMap["Python"]!!,
+                skillMap["Système embarqués"]!!,
+            )
+        ),
+        Project(
             logo = Res.drawable.decathlon,
             image = Res.drawable.embipos,
             title = "EmbiSDK et RfidLink",
@@ -397,7 +441,8 @@ public object PortfolioData {
                 skillMap["ViewModel MVVM/MVI"]!!,
                 skillMap["Dagger/Hilt/Koin/Metro"]!!,
                 skillMap["Crash monitoring"]!!,
-                skillMap["Go"]!!
+                skillMap["Go"]!!,
+                skillMap["Système embarqués"]!!,
             )
         ),
         Project(
@@ -423,6 +468,7 @@ public object PortfolioData {
                 skillMap["Java"]!!,
                 skillMap["Android SDK"]!!,
                 skillMap["Fragment/XML"]!!,
+                skillMap["Système embarqués"]!!,
             )
         ),
         Project(
