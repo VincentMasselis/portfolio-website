@@ -3,6 +3,7 @@ package com.masselis.portfolio.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -35,6 +36,7 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 internal fun TopNavBar(
     currentRoute: Route,
     openRoute: (Route) -> Unit,
+    additionalActions: @Composable RowScope.() -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -70,6 +72,7 @@ internal fun TopNavBar(
                     NavLink("Projets", Projects, currentRoute, openRoute)
                     NavLink("Contact", Contact, currentRoute, openRoute)
                     NavLink("CV", Resume, currentRoute, openRoute)
+                    additionalActions()
                 }
                 Spacer(Modifier.width(16.dp))
             }

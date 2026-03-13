@@ -84,8 +84,10 @@ import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.ic_github
+import portfolio.composeapp.generated.resources.landing_about_section
 
 
 @CommonParcelize
@@ -338,7 +340,7 @@ private fun AboutPreviewSection() {
 @Composable
 private fun AboutText() {
     Text(
-        text = "\u00C0 PROPOS",
+        text = stringResource(Res.string.landing_about_section),
         style = MaterialTheme.typography.headlineLarge,
         color = MaterialTheme.colorScheme.onBackground,
     )
