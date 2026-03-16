@@ -87,7 +87,13 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.ic_github
+import portfolio.composeapp.generated.resources.landing_about_name
 import portfolio.composeapp.generated.resources.landing_about_section
+import portfolio.composeapp.generated.resources.landing_about_tagline
+import portfolio.composeapp.generated.resources.landing_github_profile
+import portfolio.composeapp.generated.resources.landing_hero_subtitle
+import portfolio.composeapp.generated.resources.landing_oss_title
+import portfolio.composeapp.generated.resources.landing_see_more
 
 
 @CommonParcelize
@@ -219,7 +225,7 @@ private fun HeroSection(
         }
         Spacer(Modifier.height(16.dp))
         Text(
-            text = "Architecte • Expert • Passionné",
+            text = stringResource(Res.string.landing_hero_subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             textAlign = TextAlign.Center,
@@ -244,9 +250,9 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
         }
     ) {
         if (windowSizeClass == Compact) {
-            ProjectCard(remember { PortfolioData.projects.first { it.title == "CubeInStore" } })
+            ProjectCard(remember { PortfolioData.projects.first() })
             Spacer(Modifier.height(16.dp))
-            ProjectCard(remember { PortfolioData.projects.first { it.title == "Kadiska Android" } })
+            ProjectCard(remember { PortfolioData.projects[3] })
             Spacer(Modifier.height(16.dp))
             SeeMore(onClick = onSeeMore)
         } else {
@@ -255,8 +261,8 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects.first { it.title == "CubeInStore" } }) }
-                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects.first { it.title == "Kadiska Android" } }) }
+                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects.first() }) }
+                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects[3] }) }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.weight(0.3f)
@@ -289,7 +295,7 @@ private fun SeeMore(
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Voir tous mes projets",
+                text = stringResource(Res.string.landing_see_more),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center,
@@ -347,7 +353,7 @@ private fun AboutText() {
     Spacer(Modifier.height(8.dp))
     SelectionContainer {
         Text(
-            text = "Vincent Masselis,\nDéveloppeur Senior",
+            text = stringResource(Res.string.landing_about_name),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = Bold,
             color = MaterialTheme.colorScheme.onBackground,
@@ -356,7 +362,7 @@ private fun AboutText() {
     Spacer(Modifier.height(12.dp))
     SelectionContainer {
         Text(
-            text = "Je convertis le café en code depuis 2010",
+            text = stringResource(Res.string.landing_about_tagline),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
         )
@@ -392,7 +398,7 @@ private fun OSSSection() {
         paddingValues = PaddingValues.Section.copy(start = 0.dp, end = 0.dp)
     ) {
         Text(
-            text = "OPEN SOURCE",
+            text = stringResource(Res.string.landing_oss_title),
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
@@ -456,7 +462,7 @@ private fun OSSSection() {
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        text = "Voir mon profil Github",
+                        text = stringResource(Res.string.landing_github_profile),
                         color = MaterialTheme.colorScheme.secondary,
                     )
                 }

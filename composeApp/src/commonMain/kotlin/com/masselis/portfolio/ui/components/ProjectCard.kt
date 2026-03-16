@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.Project
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ProjectCard(
@@ -52,7 +53,7 @@ internal fun ProjectCard(
     ) {
         Image(
             painter = painterResource(project.image),
-            contentDescription = project.title,
+            contentDescription = stringResource(project.title),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
@@ -64,12 +65,12 @@ internal fun ProjectCard(
             ) {
                 Image(
                     painter = painterResource(project.logo),
-                    contentDescription = project.title,
+                    contentDescription = stringResource(project.title),
                     modifier = Modifier.height(20.dp),
                 )
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    text = project.title,
+                    text = stringResource(project.title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -77,7 +78,9 @@ internal fun ProjectCard(
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                text = project.bulletPoints.joinToString(separator = "\n") { "• $it" },
+                text = project.bulletPoints
+                    .map { stringResource(it) }
+                    .joinToString(separator = "\n") { "• $it" },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(vertical = 2.dp),
@@ -123,17 +126,15 @@ private fun DetailDialog(
                     Column(modifier = Modifier.padding(24.dp)) {
                         SelectionContainer {
                             Text(
-                                text = project.title,
+                                text = stringResource(project.title),
                                 style = MaterialTheme.typography.headlineSmall,
                                 color = AlertDialogDefaults.titleContentColor,
                             )
                         }
                         Spacer(Modifier.height(16.dp))
                         SelectionContainer {
-                            Text(
-                                text = project.description,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = AlertDialogDefaults.textContentColor,
+                            PortfolioMarkdown(
+                                text = stringResource(project.descriptionMd),
                             )
                         }
                         Spacer(Modifier.height(16.dp))

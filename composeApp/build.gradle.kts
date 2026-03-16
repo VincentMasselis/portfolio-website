@@ -82,6 +82,7 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.circuit.foundation)
             implementation(libs.circuit.codegen.annotations)
+            implementation(libs.markdown.renderer)
         }
         wasmJsMain {
             dependencies {

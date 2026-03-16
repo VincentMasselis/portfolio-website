@@ -1,3 +1,22 @@
 <resources>
     <string name="landing_about_section">À PROPOS</string>
+    <string name="landing_hero_subtitle">Architecte • Expert • Passionné</string>
+    <string name="landing_about_name">Vincent Masselis,\nDéveloppeur Senior</string>
+    <string name="landing_about_tagline">Je convertis le café en code depuis 2010</string>
+    <string name="landing_see_more">Voir tous mes projets</string>
+    <string name="landing_oss_title">OPEN SOURCE</string>
+    <string name="landing_github_profile">Voir mon profil Github</string>
+    <string name="about_hero_title">À propos de\nVincent MASSELIS</string>
+    <string name="about_hero_body_md">**Senior avec %1$d ans d\'expérience**, je conçois des systèmes robustes fondés sur la **Clean Architecture et MVVM/MVI**. Spécialiste **Android, iOS et Multiplatform**, je sais construire vos projets en **Kotlin**, Kotlin Multiplatform (KMP) et Compose Multiplatform, afin d\'unifier l\'UX, l\'UI et la qualité sur tous les systèmes.\n\nMon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en **iOS** et une appétence naturelle à la découverte ainsi qu\'à la remise en question des acquis. Ceci me permet de garder un **haut niveau d\'exigence** envers moi même et les produits que je délivre.</string>
+    <string name="about_skills_title">COMPÉTENCES TECHNIQUES</string>
+    <string name="about_filter_all">Tout</string>
+    <string name="about_expertise_title">EXPERTISE &amp; PASSIONS</string>
+    <string name="about_expertise_coffee">Café et code propre</string>
+    <string name="about_expertise_motorsports">Sports mécaniques</string>
+    <string name="about_expertise_software_architecture">Architecture logicielle</string>
+    <string name="about_expertise_connected_home">Maison connectée</string>
+    <string name="about_timeline_title">MOMENTS MARQUANTS DE MA CARRIÈRE</string>
+    <string name="about_timeline_subtitle">De junior en ESN à créateur d\'entreprise</string>
+    <string name="projects_header_title">MES RÉALISATIONS</string>
+    <string name="projects_header_subtitle">Découvrez tous mes projets</string>
 </resources>

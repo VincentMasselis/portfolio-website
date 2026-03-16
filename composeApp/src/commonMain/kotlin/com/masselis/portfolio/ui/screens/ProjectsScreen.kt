@@ -36,6 +36,10 @@ import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.zacsweers.metro.AppScope
+import org.jetbrains.compose.resources.stringResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.projects_header_subtitle
+import portfolio.composeapp.generated.resources.projects_header_title
 
 @CommonParcelize
 public data object Projects : Route, StaticScreen
@@ -111,14 +115,14 @@ private fun ProjectsHeaderSection() {
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Text(
-            text = "MES RÉALISATIONS",
+            text = stringResource(Res.string.projects_header_title),
             style = MaterialTheme.typography.displaySmall,
             color = Color.White,
             textAlign = TextAlign.Center,
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Découvrez tous mes projets",
+            text = stringResource(Res.string.projects_header_subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = Color.White.copy(alpha = 0.7f),
         )
