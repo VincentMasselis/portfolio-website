@@ -59,8 +59,14 @@ import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.zacsweers.metro.AppScope
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.contact_bluesky_label
+import portfolio.composeapp.generated.resources.contact_github_label
+import portfolio.composeapp.generated.resources.contact_header_title
+import portfolio.composeapp.generated.resources.contact_linkedin_label
+import portfolio.composeapp.generated.resources.contact_mail_label
 import portfolio.composeapp.generated.resources.ic_bluesky
 import portfolio.composeapp.generated.resources.ic_github
 import portfolio.composeapp.generated.resources.ic_linkedin
@@ -97,7 +103,7 @@ internal fun ContactScreen(
                 lane = 0,
                 icon = vectorResource(Res.drawable.ic_linkedin),
                 url = "linkedin.com/in/vincentmasselis",
-                label = "Réseau professionel",
+                label = stringResource(Res.string.contact_linkedin_label),
                 onClick = { uriHandler.openUri("https://linkedin.com/in/vincentmasselis") },
                 horizontalArrangement = horizontalArrangement,
                 leftPadding = leftPadding,
@@ -109,7 +115,7 @@ internal fun ContactScreen(
                 lane = 1,
                 icon = vectorResource(Res.drawable.ic_github),
                 url = "github.com/VincentMasselis",
-                label = "Projets open-source",
+                label = stringResource(Res.string.contact_github_label),
                 onClick = { uriHandler.openUri("https://github.com/VincentMasselis") },
                 horizontalArrangement = horizontalArrangement,
                 leftPadding = leftPadding,
@@ -121,7 +127,7 @@ internal fun ContactScreen(
                 lane = 0,
                 icon = vectorResource(Res.drawable.ic_bluesky),
                 url = "bsky.app/profile/rxvincent.masselis.com",
-                label = "Réseau social",
+                label = stringResource(Res.string.contact_bluesky_label),
                 onClick = { uriHandler.openUri("https://bsky.app/profile/rxvincent.masselis.com") },
                 horizontalArrangement = horizontalArrangement,
                 leftPadding = leftPadding,
@@ -133,7 +139,7 @@ internal fun ContactScreen(
                 lane = 1,
                 icon = Icons.Default.Mail,
                 url = "vincent.masselis@gmail.com",
-                label = "Contact mail",
+                label = stringResource(Res.string.contact_mail_label),
                 onClick = { uriHandler.openUri("mailto:vincent.masselis@gmail.com") },
                 horizontalArrangement = horizontalArrangement,
                 leftPadding = leftPadding,
@@ -160,7 +166,7 @@ private fun ContactHeaderSection() {
         backgroundColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
         Text(
-            text = "Restons en Contact",
+            text = stringResource(Res.string.contact_header_title),
             style = MaterialTheme.typography.displaySmall,
             color = Color.White,
         )

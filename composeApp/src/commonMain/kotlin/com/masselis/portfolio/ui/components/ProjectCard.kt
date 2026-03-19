@@ -39,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.Project
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.dialog_ok
 
 @Composable
 internal fun ProjectCard(
@@ -160,7 +162,7 @@ private fun DetailDialog(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
                         ) {
-                            TextButton(onClick = onDismissRequest) { Text("OK") }
+                            TextButton(onClick = onDismissRequest) { Text(stringResource(Res.string.dialog_ok)) }
                         }
                     }
                 }

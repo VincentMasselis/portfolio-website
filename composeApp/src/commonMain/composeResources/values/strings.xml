@@ -1,11 +1,15 @@
 <resources>
-    <string name="landing_about_section">ABOUT</string>
+    <!-- Landing -->
+    <string name="landing_hero_title_md">[primaryColor](ANDROID) &amp; [primaryColor](iOS) DEVELOPER\n\n[primaryColor](KOTLIN) &amp; COMPOSE MULTIPLATFORM\n\nTECH LEAD &amp; SOFTWARE [primaryColor](ARCHITECT)%1$s</string>
     <string name="landing_hero_subtitle">Architect • Expert • Passionate</string>
+    <string name="landing_about_section">ABOUT</string>
     <string name="landing_about_name">Vincent Masselis,\nSenior Developer</string>
     <string name="landing_about_tagline">Converting coffee into code since 2010</string>
     <string name="landing_see_more">See all my projects</string>
     <string name="landing_oss_title">OPEN SOURCE</string>
     <string name="landing_github_profile">View my GitHub profile</string>
+
+    <!-- About -->
     <string name="about_hero_title">About\nVincent MASSELIS</string>
     <string name="about_hero_body_md">**Senior with %1$d years of experience**, I design robust systems based on **Clean Architecture and MVVM/MVI**. Specialist in **Android, iOS and Multiplatform**, I build projects in **Kotlin**, Kotlin Multiplatform (KMP) and Compose Multiplatform, to unify UX, UI and quality across all platforms.\n\nMy experience extends beyond Kotlin and Android — I also have a solid background in **iOS** and a natural drive for discovery and challenging my knowledge. This allows me to maintain a **high standard of excellence** in myself and the products I deliver.</string>
     <string name="about_skills_title">TECHNICAL SKILLS</string>
@@ -17,6 +21,35 @@
     <string name="about_expertise_connected_home">Connected home</string>
     <string name="about_timeline_title">CAREER HIGHLIGHTS</string>
     <string name="about_timeline_subtitle">From junior at a consulting firm to company founder</string>
+
+    <!-- Projects -->
     <string name="projects_header_title">MY PROJECTS</string>
     <string name="projects_header_subtitle">Discover all my projects</string>
+
+    <!-- Contact -->
+    <string name="contact_header_title">Let\'s Stay in Touch</string>
+    <string name="contact_linkedin_label">Professional network</string>
+    <string name="contact_github_label">Open-source projects</string>
+    <string name="contact_bluesky_label">Social network</string>
+    <string name="contact_mail_label">Email contact</string>
+
+    <!-- Shared -->
+    <string name="nav_home">Home</string>
+    <string name="nav_about">About</string>
+    <string name="nav_projects">Projects</string>
+    <string name="nav_contact">Contact</string>
+    <string name="nav_resume">Resume</string>
+    <string name="footer_copyright">Copyright© %1$d Vincent Masselis</string>
+    <string name="footer_made_with">Made with Kotlin Multiplatform and Compose</string>
+    <string name="footer_linkedin_cd">LinkedIn</string>
+    <string name="footer_bluesky_cd">Bluesky</string>
+    <string name="repo_card_source">Github</string>
+    <string name="repo_card_portfolio_label">The code of the website you\'re currently visiting</string>
+    <string name="repo_dialog_intro">This website was built using the latest technologies of </string>
+    <string name="repo_dialog_kmp_link">Kotlin and Compose Multiplatform</string>
+    <string name="repo_dialog_middle">. Thanks to this, this site can run natively on Android, Web and iOS using</string>
+    <string name="repo_dialog_same_source"> the same source code.</string>
+    <string name="repo_dialog_see_source">View source code</string>
+    <string name="dialog_ok">OK</string>
+    <string name="timeline_now">Now</string>
 </resources>

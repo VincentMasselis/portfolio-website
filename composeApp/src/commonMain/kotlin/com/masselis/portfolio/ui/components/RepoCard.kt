@@ -21,8 +21,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.ic_github
+import portfolio.composeapp.generated.resources.repo_card_source
 
 @Composable
 internal fun RepoCard(
@@ -49,7 +51,7 @@ internal fun RepoCard(
                 tint = MaterialTheme.colorScheme.onSecondary,
             )
             Text(
-                text = "Github",
+                text = stringResource(Res.string.repo_card_source),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.8f),
             )

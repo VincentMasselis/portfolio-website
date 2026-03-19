@@ -28,9 +28,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.InlineTextContent
-import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -52,18 +50,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.MyselfImage
+import com.masselis.portfolio.ui.components.PortfolioMarkdown
 import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.RepoCardPortfolioLabel
@@ -75,6 +70,7 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.mikepenz.markdown.model.markdownInlineContent
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -92,6 +88,7 @@ import portfolio.composeapp.generated.resources.landing_about_section
 import portfolio.composeapp.generated.resources.landing_about_tagline
 import portfolio.composeapp.generated.resources.landing_github_profile
 import portfolio.composeapp.generated.resources.landing_hero_subtitle
+import portfolio.composeapp.generated.resources.landing_hero_title_md
 import portfolio.composeapp.generated.resources.landing_oss_title
 import portfolio.composeapp.generated.resources.landing_see_more
 
@@ -163,7 +160,6 @@ private fun HeroSection(
         ),
         animationSpec = infiniteRepeatable(
             animation = keyframes {
-
                 durationMillis = 1000
                 false at 0
                 false at 499
@@ -181,44 +177,32 @@ private fun HeroSection(
         val cursorId = "cursor"
         val style = MaterialTheme.typography.displayMedium
         SelectionContainer {
-            BasicText(
-                text = buildAnnotatedString {
-                    val primaryColorStyle = SpanStyle(color = MaterialTheme.colorScheme.primary)
-                    append("DÉVELOPPEUR ")
-                    withStyle(primaryColorStyle) { append("ANDROID") }
-                    append(" & ")
-                    withStyle(primaryColorStyle) { append("iOS\nKOTLIN") }
-                    append(" & COMPOSE MULTIPLATFORM\nTECH LEAD & SOFTWARE ")
-                    append(
-                        AnnotatedString(
-                            "ARCHITECT",
-                            SpanStyle(color = MaterialTheme.colorScheme.primary)
-                        )
-                    )
-                    appendInlineContent(cursorId)
-                },
-                style = style.copy(
+            PortfolioMarkdown(
+                text = stringResource(Res.string.landing_hero_title_md, "[inline]($cursorId)"),
+                paragraphTypography = style.copy(
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     textAlign = TextAlign.Center
                 ),
-                inlineContent = mapOf(
-                    cursorId to InlineTextContent(
-                        placeholder = Placeholder(
-                            width = style.fontSize * 0.6f,
-                            height = style.fontSize,
-                            placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter,
-                        ),
-                    ) {
-                        Box(
-                            Modifier
-                                .fillMaxWidth()
-                                .height(style.fontSize.value.dp)
-                                .background(
-                                    if (showBlockCursor) MaterialTheme.colorScheme.primary
-                                    else Color.Transparent
-                                )
-                        )
-                    }
+                inlineContent = markdownInlineContent(
+                    mapOf(
+                        cursorId to InlineTextContent(
+                            placeholder = Placeholder(
+                                width = style.fontSize * 0.6f,
+                                height = style.fontSize,
+                                placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter,
+                            ),
+                        ) {
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(style.fontSize.value.dp)
+                                    .background(
+                                        if (showBlockCursor) MaterialTheme.colorScheme.primary
+                                        else Color.Transparent
+                                    )
+                            )
+                        }
+                    )
                 ),
                 modifier = Modifier.fillMaxWidth(),
             )

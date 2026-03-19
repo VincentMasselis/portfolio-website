@@ -28,7 +28,7 @@
     <string name="timeline_equisense_title">My first startup: Equisense</string>
     <string name="timeline_equisense_description">Joined at early stage right after their fundraising round, I designed and built the iOS and Android application from scratch, later joined by 3 other developers. For 4 years I experienced the excitement and extraordinary commitment that comes with working for a startup you share everything with</string>
     <string name="timeline_decathlon_freelance_title">Start of freelancing at Decathlon</string>
-    <string name="timeline_decathlon_freelance_description">After 10 years of development and solid experience, I decided, somewhat by chance, to enter the world of freelancing — starting at Decathlon</string>
+    <string name="timeline_decathlon_freelance_description">After 10 years of development and solid experience, I decided, somewhat by chance, to enter the world of freelancing — starting with Decathlon</string>
     <!-- Project bullet points -->
     <string name="project_cubeinstore_bullet_1">100k monthly users</string>
     <string name="project_cubeinstore_bullet_2">600k+ lines of code</string>
