@@ -1,23 +1,34 @@
 package com.masselis.portfolio
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
 import com.masselis.portfolio.ui.screens.Resume
 import com.masselis.portfolio.ui.screens.Route
+import com.masselis.portfolio.ui.utils.OverrideLocale
+import com.masselis.portfolio.ui.utils.displayedLocale
 import com.slack.circuit.foundation.navstack.rememberSaveableNavStack
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import kotlinx.browser.window
 import kotlinx.coroutines.flow.onStart
+import org.jetbrains.compose.resources.Font
 import org.w3c.dom.PopStateEvent
 import org.w3c.dom.events.Event
-import kotlin.js.ExperimentalWasmJsInterop
-import kotlin.js.JsNumber
-import kotlin.js.toInt
-import kotlin.js.toJsNumber
+import portfolio.composeapp.generated.resources.NotoColorEmoji
+import portfolio.composeapp.generated.resources.Res
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalWasmJsInterop::class)
 internal fun main() {
@@ -29,8 +40,48 @@ internal fun main() {
             enableBackHandler = false,
             onRootPop = {},
         )
-
-        App(navStack = navStack, navigator = navigator)
+        OverrideLocale.CompositionProvider {
+            App(
+                navStack = navStack,
+                navigator = navigator,
+                additionalActions = {
+                    SingleChoiceSegmentedButtonRow {
+                        SegmentedButton(
+                            selected = Locale.displayedLocale == fr,
+                            onClick = { OverrideLocale.set(fr) },
+                            shape = RoundedCornerShape(4.dp),
+                            colors = SegmentedButtonDefaults.colors(
+                                activeContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = .2f),
+                                activeBorderColor = MaterialTheme.colorScheme.primary,
+                            ),
+                            contentPadding = PaddingValues(horizontal = 3.dp, vertical = 0.dp),
+                            label = {
+                                Text(
+                                    "🇫🇷",
+                                    fontFamily = FontFamily(Font(Res.font.NotoColorEmoji))
+                                )
+                            },
+                        )
+                        SegmentedButton(
+                            selected = Locale.displayedLocale == en,
+                            onClick = { OverrideLocale.set(en) },
+                            shape = RoundedCornerShape(4.dp),
+                            colors = SegmentedButtonDefaults.colors(
+                                activeContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = .2f),
+                                activeBorderColor = MaterialTheme.colorScheme.primary,
+                            ),
+                            contentPadding = PaddingValues(horizontal = 3.dp, vertical = 0.dp),
+                            label = {
+                                Text(
+                                    "🇬🇧",
+                                    fontFamily = FontFamily(Font(Res.font.NotoColorEmoji))
+                                )
+                            },
+                        )
+                    }
+                }
+            )
+        }
 
         // Sync browser back/forward to navigator
         DisposableEffect(Unit) {
@@ -90,3 +141,6 @@ internal fun main() {
         }
     }
 }
+
+private val en = Locale("en")
+private val fr = Locale("fr")

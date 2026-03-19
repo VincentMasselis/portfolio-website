@@ -3,6 +3,7 @@ package com.masselis.portfolio.ui.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -29,12 +30,20 @@ import com.masselis.portfolio.ui.screens.Resume
 import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
+import org.jetbrains.compose.resources.stringResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.nav_about
+import portfolio.composeapp.generated.resources.nav_contact
+import portfolio.composeapp.generated.resources.nav_home
+import portfolio.composeapp.generated.resources.nav_projects
+import portfolio.composeapp.generated.resources.nav_resume
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TopNavBar(
     currentRoute: Route,
     openRoute: (Route) -> Unit,
+    additionalActions: @Composable RowScope.() -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -60,19 +69,45 @@ internal fun TopNavBar(
             )
         },
         actions = {
-            if (LocalWindowSizeClass.current > Compact) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(24.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    NavLink("Home", Landing, currentRoute, openRoute)
-                    NavLink("À propos", About, currentRoute, openRoute)
-                    NavLink("Projets", Projects, currentRoute, openRoute)
-                    NavLink("Contact", Contact, currentRoute, openRoute)
-                    NavLink("CV", Resume, currentRoute, openRoute)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(24.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (LocalWindowSizeClass.current > Compact) {
+                    NavLink(
+                        stringResource(Res.string.nav_home),
+                        Landing,
+                        currentRoute,
+                        openRoute
+                    )
+                    NavLink(
+                        stringResource(Res.string.nav_about),
+                        About,
+                        currentRoute,
+                        openRoute
+                    )
+                    NavLink(
+                        stringResource(Res.string.nav_projects),
+                        Projects,
+                        currentRoute,
+                        openRoute
+                    )
+                    NavLink(
+                        stringResource(Res.string.nav_contact),
+                        Contact,
+                        currentRoute,
+                        openRoute
+                    )
+                    NavLink(
+                        stringResource(Res.string.nav_resume),
+                        Resume,
+                        currentRoute,
+                        openRoute
+                    )
                 }
-                Spacer(Modifier.width(16.dp))
+                additionalActions()
             }
+            Spacer(Modifier.width(16.dp))
         },
     )
 }

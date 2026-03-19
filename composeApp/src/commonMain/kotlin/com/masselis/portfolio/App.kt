@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.intl.Locale
 import com.masselis.portfolio.di.MainGraph
 import com.masselis.portfolio.ui.components.BottomBar
 import com.masselis.portfolio.ui.components.TopNavBar
@@ -49,6 +51,7 @@ public fun App(
         enableBackHandler = true,
         onRootPop = {}
     ),
+    additionalActions: @Composable RowScope.() -> Unit = {},
 ) {
     PortfolioTheme {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -68,6 +71,7 @@ public fun App(
                             TopNavBar(
                                 currentRoute = currentRoute,
                                 openRoute = openRoute,
+                                additionalActions = additionalActions,
                             )
                         },
                         content = { padding ->

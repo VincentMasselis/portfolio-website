@@ -24,6 +24,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.TimelineEntry
+import org.jetbrains.compose.resources.stringResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.timeline_now
 
 @Composable
 internal fun TimelineItem(
@@ -40,7 +43,7 @@ internal fun TimelineItem(
             text = when (val time = timelineEntry.time) {
                 is TimelineEntry.Moment -> "${time.moment.year}"
                 is TimelineEntry.Range -> "${time.from.year}-${time.to.year}"
-                is TimelineEntry.Pending -> "${time.moment.year}-Maintenant"
+                is TimelineEntry.Pending -> "${time.moment.year}-${stringResource(Res.string.timeline_now)}"
             },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
@@ -95,7 +98,7 @@ internal fun TimelineItem(
         Column(modifier = Modifier.weight(1f).padding(bottom = 32.dp)) {
             SelectionContainer {
                 Text(
-                    text = timelineEntry.title,
+                    text = stringResource(timelineEntry.title),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
@@ -103,7 +106,7 @@ internal fun TimelineItem(
             Spacer(Modifier.height(4.dp))
             SelectionContainer {
                 Text(
-                    text = timelineEntry.description,
+                    text = stringResource(timelineEntry.description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
                 )

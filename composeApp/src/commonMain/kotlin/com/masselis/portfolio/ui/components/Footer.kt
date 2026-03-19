@@ -35,7 +35,12 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.footer_bluesky_cd
+import portfolio.composeapp.generated.resources.footer_copyright
+import portfolio.composeapp.generated.resources.footer_linkedin_cd
+import portfolio.composeapp.generated.resources.footer_made_with
 import portfolio.composeapp.generated.resources.ic_bluesky
 import portfolio.composeapp.generated.resources.ic_linkedin
 import kotlin.time.Clock
@@ -57,11 +62,10 @@ internal fun Footer(modifier: Modifier = Modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
-                    text = "Copyright© ${
-                        Clock.System.now()
-                            .toLocalDateTime(currentSystemDefault())
-                            .year
-                    } Vincent Masselis",
+                    text = stringResource(
+                        Res.string.footer_copyright,
+                        Clock.System.now().toLocalDateTime(currentSystemDefault()).year
+                    ),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = Bold,
                     color = Color.White,
@@ -71,7 +75,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
                     modifier = Modifier.clickable { showDialog = true }
                 ) {
                     Text(
-                        text = "Fabriqué en Kotlin Multiplatform avec Compose",
+                        text = stringResource(Res.string.footer_made_with),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = Bold,
                         textDecoration = TextDecoration.Underline,
@@ -92,7 +96,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
                 IconButton(onClick = { uriHandler.openUri("https://linkedin.com/in/vincentmasselis") }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_linkedin),
-                        contentDescription = "LinkedIn",
+                        contentDescription = stringResource(Res.string.footer_linkedin_cd),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.size(24.dp),
                     )
@@ -100,7 +104,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
                 IconButton(onClick = { uriHandler.openUri("https://bsky.app/profile/rxvincent.masselis.com") }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_bluesky),
-                        contentDescription = "Bluesky",
+                        contentDescription = stringResource(Res.string.footer_bluesky_cd),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.size(24.dp),
                     )

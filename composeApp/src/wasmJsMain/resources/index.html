@@ -15,6 +15,23 @@
                           repeatCount="indefinite"/>
     </circle>
 </svg>
+<script>
+    // Mock navigator.languages (Array)
+    var currentLanguages = Object.getOwnPropertyDescriptor(Navigator.prototype, "languages");
+    Object.defineProperty(Navigator.prototype, "languages", Object.assign({}, currentLanguages, {
+        get: function () {
+            return localStorage.getItem('__customLocale') ? [localStorage.getItem('__customLocale')] : currentLanguages.get.apply(this);
+        }
+    }));
+
+    // Mock navigator.language (String)
+    var currentLanguage = Object.getOwnPropertyDescriptor(Navigator.prototype, "language");
+    Object.defineProperty(Navigator.prototype, "language", Object.assign({}, currentLanguage, {
+        get: function () {
+            return localStorage.getItem('__customLocale') ? localStorage.getItem('__customLocale') : currentLanguage.get.apply(this);
+        }
+    }));
+</script>
 <script type="application/javascript" src="composeApp.js"></script>
 </body>
 </html>

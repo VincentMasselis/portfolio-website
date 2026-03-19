@@ -29,22 +29,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateSetOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.data.Tag
 import com.masselis.portfolio.ui.components.Footer
 import com.masselis.portfolio.ui.components.MyselfImage
+import com.masselis.portfolio.ui.components.PortfolioMarkdown
 import com.masselis.portfolio.ui.components.Section
 import com.masselis.portfolio.ui.components.SkillBar
 import com.masselis.portfolio.ui.components.TimelineItem
@@ -55,6 +53,7 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.masselis.portfolio.ui.utils.string
+import com.mikepenz.markdown.m3.markdownColor
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.zacsweers.metro.AppScope
@@ -62,6 +61,19 @@ import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
 import kotlinx.datetime.YearMonth
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.yearsUntil
+import org.jetbrains.compose.resources.stringResource
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.about_expertise_coffee
+import portfolio.composeapp.generated.resources.about_expertise_connected_home
+import portfolio.composeapp.generated.resources.about_expertise_motorsports
+import portfolio.composeapp.generated.resources.about_expertise_software_architecture
+import portfolio.composeapp.generated.resources.about_expertise_title
+import portfolio.composeapp.generated.resources.about_filter_all
+import portfolio.composeapp.generated.resources.about_hero_body_md
+import portfolio.composeapp.generated.resources.about_hero_title
+import portfolio.composeapp.generated.resources.about_skills_title
+import portfolio.composeapp.generated.resources.about_timeline_subtitle
+import portfolio.composeapp.generated.resources.about_timeline_title
 import kotlin.math.absoluteValue
 import kotlin.time.Clock
 
@@ -132,48 +144,28 @@ private fun AboutHeroText(
     ) {
         SelectionContainer {
             Text(
-                text = "À propos de\nVincent MASSELIS",
+                text = stringResource(Res.string.about_hero_title),
                 style = MaterialTheme.typography.displaySmall,
                 color = Color.White,
             )
         }
         Spacer(Modifier.height(16.dp))
         SelectionContainer {
-            Text(
-                buildAnnotatedString {
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+            PortfolioMarkdown(
+                text = stringResource(
+                    Res.string.about_hero_body_md,
+                    remember {
                         Clock.System.now()
                             .toLocalDateTime(currentSystemDefault())
                             .let { YearMonth(it.year, it.month) }
                             .yearsUntil(YearMonth(2010, 10))
-                            .also { elapsedYears -> append("Senior avec ${elapsedYears.absoluteValue} ans d'expérience") }
+                            .absoluteValue
                     }
-                    append(" je conçois des systèmes robustes fondés sur la ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("Clean Architecture et MVVM/MVI")
-                    }
-                    append(". Spécialiste ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("Android, iOS et Multiplatform")
-                    }
-                    append(", je sais construire vos projets en ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("Kotlin")
-                    }
-                    append(", Kotlin Multiplatform (KMP) et Compose Multiplatform, afin unifier l'UX, l'UI et la qualité sur tous les systèmes.\n")
-                    append("Mon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("iOS")
-                    }
-                    append(" et une appétence naturelle à la découverte ainsi qu'à la remise en question des acquis. ")
-                    append("Ceci me permet de garder un ")
-                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("haut niveau d'exigence")
-                    }
-                    append(" envers moi même et les produits que je délivre.")
-                },
-                style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 25.sp),
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                ),
+                paragraphTypography = MaterialTheme.typography.bodyMedium.copy(lineHeight = 25.sp),
+                colors = markdownColor(
+                    text = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
             )
         }
     }
@@ -185,7 +177,7 @@ private fun SkillsSection() {
     val selectedTags = rememberSaveable { mutableStateSetOf<Tag>() }
     Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         Text(
-            text = "COMPÉTENCES TECHNIQUES",
+            text = stringResource(Res.string.about_skills_title),
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onBackground,
         )
@@ -199,7 +191,7 @@ private fun SkillsSection() {
                         selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                         selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     ),
-                    label = { Text("Tout") },
+                    label = { Text(stringResource(Res.string.about_filter_all)) },
                     selected = selectedTags.isEmpty(),
                     onClick = { selectedTags.clear() }
                 )
@@ -267,15 +259,24 @@ private fun SkillsSection() {
 private fun ExpertiseSection() {
     Section(backgroundColor = Color.White) {
         Text(
-            text = "EXPERTISE & PASSIONS",
+            text = stringResource(Res.string.about_expertise_title),
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(Modifier.height(24.dp))
-        ExpertiseItem(Icons.Default.Coffee, "Café et code propre")
-        ExpertiseItem(Icons.Default.SportsMotorsports, "Sports mécaniques")
-        ExpertiseItem(Icons.Default.Settings, "Architecture logicielle")
-        ExpertiseItem(Icons.Default.House, "Maison connectée")
+        ExpertiseItem(Icons.Default.Coffee, stringResource(Res.string.about_expertise_coffee))
+        ExpertiseItem(
+            Icons.Default.SportsMotorsports,
+            stringResource(Res.string.about_expertise_motorsports)
+        )
+        ExpertiseItem(
+            Icons.Default.Settings,
+            stringResource(Res.string.about_expertise_software_architecture)
+        )
+        ExpertiseItem(
+            Icons.Default.House,
+            stringResource(Res.string.about_expertise_connected_home)
+        )
     }
 }
 
@@ -306,13 +307,13 @@ private fun ExpertiseItem(icon: ImageVector, text: String) {
 private fun CareerTimelineSection() {
     Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
         Text(
-            text = "MOMENTS MARQUANT DE MA CARRIÈRE",
+            text = stringResource(Res.string.about_timeline_title),
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "De junior en ESN à créateur d'entreprise",
+            text = stringResource(Res.string.about_timeline_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
         )

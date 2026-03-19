@@ -10,12 +10,9 @@ import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.H2
-import org.jetbrains.compose.web.dom.H3
-import org.jetbrains.compose.web.dom.Li
 import org.jetbrains.compose.web.dom.Section
 import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
-import org.jetbrains.compose.web.dom.Ul
 import org.jetbrains.compose.web.renderComposable
 
 fun main() {
@@ -89,8 +86,8 @@ private fun TimelineSection() {
         PortfolioData.timelineEntries.forEach { entry ->
             Div({ classes("timeline-entry") }) {
                 Div({ classes("timeline-date") }) { Text(entry.time.toString()) }
-                Div({ classes("timeline-title") }) { Text(entry.title) }
-                Div({ classes("timeline-desc") }) { Text(entry.description) }
+                //Div({ classes("timeline-title") }) { Text(entry.title) }
+                //Div({ classes("timeline-desc") }) { Text(entry.description) }
             }
         }
     }
@@ -102,13 +99,13 @@ private fun ProjectsSection() {
         H2 { Text("R\u00C9ALISATIONS") }
         PortfolioData.projects.forEach { project ->
             Div({ classes("project-card") }) {
-                H3 { Text(project.title) }
+                // H3 { Text(project.title) }
                 //P { Text(project.description.toString()) }
-                Ul {
+                /*Ul {
                     project.bulletPoints.forEach { point ->
                         Li { Text(point) }
                     }
-                }
+                }*/
                 Div({ classes("tech-stack") }) {
                     project.skills.forEach { tech ->
                         Span({ classes("tech-tag") }) { Text(tech.name) }

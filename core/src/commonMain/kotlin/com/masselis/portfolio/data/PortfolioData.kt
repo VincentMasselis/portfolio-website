@@ -1,12 +1,5 @@
 package com.masselis.portfolio.data
 
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.LinkAnnotation.Url
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
 import com.masselis.portfolio.data.Skill.Level.Confirmed
 import com.masselis.portfolio.data.Skill.Level.Expert
 import com.masselis.portfolio.data.Skill.Level.Initiated
@@ -31,7 +24,66 @@ import portfolio.core.generated.resources.equisense_logo
 import portfolio.core.generated.resources.home_assistant_banner
 import portfolio.core.generated.resources.kadiska_banner
 import portfolio.core.generated.resources.kadiska_logo
+import portfolio.core.generated.resources.project_chronodrive_bullet_1
+import portfolio.core.generated.resources.project_chronodrive_bullet_2
+import portfolio.core.generated.resources.project_chronodrive_bullet_3
+import portfolio.core.generated.resources.project_chronodrive_description
+import portfolio.core.generated.resources.project_chronodrive_title
+import portfolio.core.generated.resources.project_cubeinstore_bullet_1
+import portfolio.core.generated.resources.project_cubeinstore_bullet_2
+import portfolio.core.generated.resources.project_cubeinstore_bullet_3
+import portfolio.core.generated.resources.project_cubeinstore_bullet_4
+import portfolio.core.generated.resources.project_cubeinstore_description
+import portfolio.core.generated.resources.project_cubeinstore_title
+import portfolio.core.generated.resources.project_embisdk_bullet_1
+import portfolio.core.generated.resources.project_embisdk_bullet_2
+import portfolio.core.generated.resources.project_embisdk_bullet_3
+import portfolio.core.generated.resources.project_embisdk_bullet_4
+import portfolio.core.generated.resources.project_embisdk_description
+import portfolio.core.generated.resources.project_embisdk_title
+import portfolio.core.generated.resources.project_equisense_bullet_1
+import portfolio.core.generated.resources.project_equisense_bullet_2
+import portfolio.core.generated.resources.project_equisense_bullet_3
+import portfolio.core.generated.resources.project_equisense_bullet_4
+import portfolio.core.generated.resources.project_equisense_description
+import portfolio.core.generated.resources.project_equisense_title
+import portfolio.core.generated.resources.project_express_payment_bullet_1
+import portfolio.core.generated.resources.project_express_payment_bullet_2
+import portfolio.core.generated.resources.project_express_payment_bullet_3
+import portfolio.core.generated.resources.project_express_payment_description
+import portfolio.core.generated.resources.project_express_payment_title
+import portfolio.core.generated.resources.project_home_assistant_bullet_1
+import portfolio.core.generated.resources.project_home_assistant_bullet_2
+import portfolio.core.generated.resources.project_home_assistant_bullet_3
+import portfolio.core.generated.resources.project_home_assistant_description
+import portfolio.core.generated.resources.project_home_assistant_title
+import portfolio.core.generated.resources.project_kadiska_bullet_1
+import portfolio.core.generated.resources.project_kadiska_bullet_2
+import portfolio.core.generated.resources.project_kadiska_bullet_3
+import portfolio.core.generated.resources.project_kadiska_bullet_4
+import portfolio.core.generated.resources.project_kadiska_description
+import portfolio.core.generated.resources.project_kadiska_title
+import portfolio.core.generated.resources.project_tpms_advanced_bullet_1
+import portfolio.core.generated.resources.project_tpms_advanced_bullet_2
+import portfolio.core.generated.resources.project_tpms_advanced_bullet_3
+import portfolio.core.generated.resources.project_tpms_advanced_description
+import portfolio.core.generated.resources.project_tpms_advanced_title
+import portfolio.core.generated.resources.project_xee_bullet_1
+import portfolio.core.generated.resources.project_xee_bullet_2
+import portfolio.core.generated.resources.project_xee_bullet_3
+import portfolio.core.generated.resources.project_xee_description
+import portfolio.core.generated.resources.project_xee_title
 import portfolio.core.generated.resources.rxvincent_logo
+import portfolio.core.generated.resources.timeline_career_start_description
+import portfolio.core.generated.resources.timeline_career_start_title
+import portfolio.core.generated.resources.timeline_decathlon_freelance_description
+import portfolio.core.generated.resources.timeline_decathlon_freelance_title
+import portfolio.core.generated.resources.timeline_equisense_description
+import portfolio.core.generated.resources.timeline_equisense_title
+import portfolio.core.generated.resources.timeline_first_developments_description
+import portfolio.core.generated.resources.timeline_first_developments_title
+import portfolio.core.generated.resources.timeline_htc_dream_description
+import portfolio.core.generated.resources.timeline_htc_dream_title
 import portfolio.core.generated.resources.tpms_advanced_banner
 import portfolio.core.generated.resources.vivawallet
 import portfolio.core.generated.resources.xee_banner
@@ -75,34 +127,34 @@ public object PortfolioData {
     public val timelineEntries: List<TimelineEntry> = listOf(
         TimelineEntry(
             Moment(YearMonth(2009, 6)),
-            "Mon premier smartphone Android",
-            "Sans le savoir, j'ai acheté l'HTC Dream, le tout premier téléphone commercialisé sous Android, qui tracera ma carrière pour les années à venir",
+            Res.string.timeline_htc_dream_title,
+            Res.string.timeline_htc_dream_description,
         ),
         TimelineEntry(
             Moment(YearMonth(2010, 10)),
-            "Mes premiers developpements",
-            "Système domotique X10 en C++",
+            Res.string.timeline_first_developments_title,
+            Res.string.timeline_first_developments_description,
         ),
         TimelineEntry(
             Range(
                 YearMonth(2013, 7),
                 YearMonth(2016, 9)
             ),
-            "Début de carrière professionnelle sous iOS et Android",
-            "Dès le début, les enjeux sont fort avec, entre autres, la refonte Android et iOS de l'application Chronodrive",
+            Res.string.timeline_career_start_title,
+            Res.string.timeline_career_start_description,
         ),
         TimelineEntry(
             Range(
                 YearMonth(2016, 10),
                 YearMonth(2020, 11),
             ),
-            "Ma première startup Equisense",
-            "Rejoint en early stage juste après leur levée de fond, j'ai conçu et développé from-scratch l'application iOS et Android, ensuite rejoint par 3 autres développeurs. Pendant 4 ans j'ai vécu l'effervescence et l'implication hors normes que représente le travail pour une startup avec laquelle on partage tout",
+            Res.string.timeline_equisense_title,
+            Res.string.timeline_equisense_description,
         ),
         TimelineEntry(
             Pending(YearMonth(2020, 12)),
-            "Début du freelancing chez Decathlon",
-            "Après 10 ans développement et une solide expérience, je décide, un peu par hasard, d'entrer dans le monde du Freelancing en commençant chez Decatlon"
+            Res.string.timeline_decathlon_freelance_title,
+            Res.string.timeline_decathlon_freelance_description,
         ),
     )
 
@@ -111,47 +163,14 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.decathlon,
             image = Res.drawable.cubeinstore,
-            title = "CubeInStore",
+            title = Res.string.project_cubeinstore_title,
             bulletPoints = listOf(
-                "100k utilisateurs mensuels",
-                "+600k lignes de code",
-                "+20 développeurs",
-                "+50 pays"
+                Res.string.project_cubeinstore_bullet_1,
+                Res.string.project_cubeinstore_bullet_2,
+                Res.string.project_cubeinstore_bullet_3,
+                Res.string.project_cubeinstore_bullet_4,
             ),
-            description = AnnotatedString(
-                "Conception, réalisation et maintenance de multiples sujets à haut niveau technique intégrés les équipes de développeurs(euses) au sein de la plus grosse application Android de Decathlon.\n" +
-                        "Dans l'équipe \"Platform\", j'ai travaillé sur des enjeux techniques transverses afin de répondre à des problématiques techniques complexe et/ou profondes.\n" +
-                        "\n" +
-                        "Éclatement d'une base de code unique en plusieurs répertoires associé à chaque équipe:\n" +
-                        " - Optimise le temps de compilation pour chaque développeur et pour la C.I.\n" +
-                        " - Redonne de l'ownership de code et de l'autonomie à chaque équipe\n" +
-                        " - Structure et normalise le code inter-équipe\n" +
-                        " - Création d'une application coquille scalable qui ne contient de base que le login, la home et les settings\n" +
-                        " - Normalisation des tests\n" +
-                        " - Normalisation de l'IOC Koin\n" +
-                        " - Normalisation du code avec, entre autres, des règles KtLint custom\n" +
-                        " - 100% Kotlin\n" +
-                        " - C.I. Bitrise puis Github Action\n" +
-                        " - Framework Gradle\n" +
-                        " - Google Artifact Registry\n" +
-                        " - Multi-modules\n" +
-                        "\n" +
-                        "Refonte du process d'authentification:\n" +
-                        " - 100% Kotlin\n" +
-                        " - 100% Coroutine + Flow\n" +
-                        " - Android Custom Tab\n" +
-                        " - Thread safe\n" +
-                        " - Énormément de tests pour simuler tous les cas de figure possible comme une application en background, une rotation, un changement d'app, plusieurs ouvertures en simultané, ouvertures en séquentiel, etc..\n" +
-                        "\n" +
-                        "Application et création d'un plugin pour contrôler l’offuscation de code avec R8:\n" +
-                        " - Framework Gradle\n" +
-                        " - Optimisation de la C.I. Bitrise\n" +
-                        " - Décompilation d'APK avec jadx\n" +
-                        "\n" +
-                        "Optimisation de la configuration Gradle:\n" +
-                        " - Publication et écriture des plugins\n" +
-                        " - Réécriture des scripts préexistants"
-            ),
+            descriptionMd = Res.string.project_cubeinstore_description,
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Coroutines/Flow"]!!,
@@ -168,40 +187,13 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.rxvincent_logo,
             image = Res.drawable.tpms_advanced_banner,
-            title = "TPMS Advanced",
+            title = Res.string.project_tpms_advanced_title,
             bulletPoints = listOf(
-                "Application référence open-source",
-                "Sert de laboratoire personnel pour expérimenter les nouvelles technologies",
-                "Utilise toutes les stacks techniques modernes et performantes",
+                Res.string.project_tpms_advanced_bullet_1,
+                Res.string.project_tpms_advanced_bullet_2,
+                Res.string.project_tpms_advanced_bullet_3,
             ),
-            description = buildAnnotatedString {
-                append(
-                    "Cette application sert d'application référence pour expériementer " +
-                            "chaque nouvel outil mis à disposition pour les développeurs. Au delà d'être une" +
-                            " application \"sandbox\", cette application est également publiée sur le "
-                )
-                withLink(Url("https://play.google.com/store/apps/details?id=com.masselis.tpmsadvanced")) {
-                    withStyle(style = SpanStyle(fontWeight = Bold)) {
-                        append("Play Store")
-                    }
-                }
-                append(
-                    " et est mis à disposition pour tout le monde avec 10k+ téléchargements.\n\n" +
-                            " - Laboratoire pour la veille technologique\n" +
-                            " - Volontairement over engineeré pour pousser les technologies à leur maximum\n" +
-                            " - Grosse automatisation de la CI/CD avec plugin Gradle maison gitflow, Github et Play Store\n"
-                )
-                withLink(Url("https://github.com/VincentMasselis/TPMS-advanced")) {
-                    withStyle(style = SpanStyle(fontWeight = Bold)) {
-                        append(" - Intégralement en open-source\n")
-                    }
-                }
-                append(
-                    " - DI de dernière génération avec Metro\n" +
-                            " - BDD innovante avec SQLDelight\n" +
-                            " - Multi-modules"
-                )
-            },
+            descriptionMd = Res.string.project_tpms_advanced_description,
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Coroutines/Flow"]!!,
@@ -218,38 +210,13 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.decathlon,
             image = Res.drawable.vivawallet,
-            title = "Express Payment",
+            title = Res.string.project_express_payment_title,
             bulletPoints = listOf(
-                "Une caisse Decathlon comme simple application",
-                "Haute disponibilité et de qualité élevée",
-                "Taux de conversion supérieur à une caisse classique",
+                Res.string.project_express_payment_bullet_1,
+                Res.string.project_express_payment_bullet_2,
+                Res.string.project_express_payment_bullet_3,
             ),
-            description = AnnotatedString(
-                "Conception et mis en place une refonte majeure d'une fonctionnalité permettant au collaborateur Decathlon d'encaisser un client sans passer en caisse.\n" +
-                        "Cette fonctionnalité dispose de:\n" +
-                        " - Composition panier\n" +
-                        " - Identification client\n" +
-                        " - Paiement par carte bancaire.\n" +
-                        "Tout était pris en charge, le stock, la facture, les portiques de sécurités, la carte de fidélité et surtout le paiement avec une carte bancaire via NFC.\n" +
-                        "\n" +
-                        "Afin de garantir un haut niveau de disponibilité, l'intégralité de la transaction était synchronisé en temps réel sur Firebase. Chaque transaction peut être complété soit par le collaborateur, soit par le serveur, la fonctionnalité s'adapte aux nouvelles informations suivant le principe du 2-way binding.\n" +
-                        "\n" +
-                        "Enjeux:\n" +
-                        "- Haute résilience du traitement des paiements, qu'ils soient en échec ou pas, chaque transaction aboutissait sur un résultat concret et actionnable pour le collaborateur dans un contexte où de nombreux services sont appelés en simultanés\n" +
-                        "- Forte stabilité y compris dans des environnements difficiles comme une connexion internet très faible\n" +
-                        "- Simple d'utilisation, clair, concis et efficace. Le teammate était amené à réaliser ces opérations devant un client, il devait donc pouvoir utiliser la fonctionnalité d'une main avec une faible attention\n" +
-                        "\n" +
-                        "Cette fonctionnalité fait partie d'une plus grande application interne à Decatlon:\n" +
-                        "- 100% Clean architecture\n" +
-                        "- 100% Kotlin\n" +
-                        "- 100% Flow\n" +
-                        "- 100% Compose\n" +
-                        "- Dagger puis Koin\n" +
-                        "- Firebase Realtime Database pour le 2-way binding\n" +
-                        "- Usage du SDK VivaWallet pour la lecture des informations de la carte bancaire\n" +
-                        "- A/B Testing avec Firebase\n" +
-                        "- Crash report avec Crashlytics"
-            ),
+            descriptionMd = Res.string.project_express_payment_description,
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Coroutines/Flow"]!!,
@@ -265,49 +232,14 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.kadiska_logo,
             image = Res.drawable.kadiska_banner,
-            title = "Kadiska Android",
+            title = Res.string.project_kadiska_title,
             bulletPoints = listOf(
-                "B2B",
-                "Analyse réseau low-level",
-                "Services en arrière-plan complexes",
-                "Fort enjeux business"
+                Res.string.project_kadiska_bullet_1,
+                Res.string.project_kadiska_bullet_2,
+                Res.string.project_kadiska_bullet_3,
+                Res.string.project_kadiska_bullet_4,
             ),
-            description = buildAnnotatedString {
-                append("Kadiska a depuis été racheté par ")
-                withLink(Url("https://www.netskope.com")) {
-                    withStyle(style = SpanStyle(fontWeight = Bold)) {
-                        append("netskope\n\n")
-                    }
-                }
-                append(
-                    "Étude de la faisabilité du projet avec un PoC contenant 3 approches différentes\n" +
-                            "Définition de l’architecture\n" +
-                            "Force de proposition sur la valeur ajoutée des données orientées mobile\n" +
-                            "Identification et contournement des limitations systèmes\n" +
-                            "Mise au point de la machine d'intégration et de livraison continue\n" +
-                            "Étude et configuration d'un logiciel de gestion de parc de smartphone\n" +
-                            "Écriture de scripts de livraison avancés à destination de plusieurs Play Stores Entreprise\n" +
-                            "Monté en compétence des collaborateurs confirmés\n" +
-                            "Banc de test et benchmark de smartphones Android\n" +
-                            "\n" +
-                            "Application 100% background dédié à l'analyse réseau entre le smartphone et un serveur donné:\n" +
-                            "- 100% Clean architecture\n" +
-                            "- Multi-modules\n" +
-                            "- 100% Kotlin Coroutine + Flow\n" +
-                            "- IOC avec Dagger2\n" +
-                            "- Base de donnée avec SQLDelight\n" +
-                            "- Intégration, compilation et exécution de sources C/C++ basées sur Traceroute debian\n" +
-                            "- Analyse de trames réseau IMPC/UDP et ipv4/ipv6 extraites du smartphone\n" +
-                            "- Extraction des données de connexion du téléphone (Wifi, 4G, 5G, dBm, BSSID, ip)\n" +
-                            "- Configuration entreprise avec VMware Workspace One\n" +
-                            "- Intégration continue avec Github Actions\n" +
-                            "- Livraison automatique sur plusieurs Play Store Entreprise en simultané\n" +
-                            "\n" +
-                            "SDK minimaliste avec une empreinte mémoire réduite pour accompagner l'application:\n" +
-                            "- Code en JAVA au lieu du Kotlin\n" +
-                            "- Aucune librairie externe n'est utilisée"
-                )
-            },
+            descriptionMd = Res.string.project_kadiska_description,
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Java"]!!,
@@ -322,38 +254,13 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.rxvincent_logo,
             image = Res.drawable.home_assistant_banner,
-            title = "Maison connectée avec Home Assistant",
+            title = Res.string.project_home_assistant_title,
             bulletPoints = listOf(
-                "100 périphériques connectés",
-                "Voiture, fenêtres, chauffe-eau, pompe à chaleur, etc.",
-                "Une maison presque entièrement connectée, + sécurisée, + autonome, - moins chère",
+                Res.string.project_home_assistant_bullet_1,
+                Res.string.project_home_assistant_bullet_2,
+                Res.string.project_home_assistant_bullet_3,
             ),
-            description = buildAnnotatedString {
-                append(
-                    "Bien qu'il ne s'agisse pas d'un projet profesionnel, je tiens à intégrer " +
-                            "dans mes projets qui font ma fierté celui de ma propre maison "
-                )
-                withStyle(style = SpanStyle(fontWeight = Bold)) {
-                    append("intégralement connectée")
-                }
-                append(
-                    ". Construit sur la solution open-source Home Assistant (plus gros projet" +
-                            " par contributeur open-source en 2024 sur GitHub), j'utilise mes" +
-                            " compétences techniques pour améliorer mon quotidien en scriptant et" +
-                            " en rendant intelligent tout ce qui peut améliorer mon confort et me" +
-                            " permettre de faire des économies. Même un vieux pôele à granulé de 15" +
-                            " ans peut être connecté à condition de trouver le contact sec sur le" +
-                            " circuit imprimé.\n\nAu delà du confort que cela m'apporte, construire" +
-                            " cette solution m'a aussi permit de decouvrir quelques briques en" +
-                            " Python afin d'extraire de Home Assistant le comportement exact que je" +
-                            " souhaite pour chacun de mes objets connectés. J'ai également découvert" +
-                            " quelques technologies de systèmes embarqués et bas niveau pour créer" +
-                            " mon propre frimware pour puce ESP32/ESP8266 à la base de nombreux" +
-                            " objets connectés en WiFi.\n\nHome Assistant est une solution très," +
-                            " très riche et complète, apprendre à l'utiliser à son plein potentiel" +
-                            " est un challenge particulièrement enrichissant."
-                )
-            },
+            descriptionMd = Res.string.project_home_assistant_description,
             skills = listOf(
                 skillMap["Home Assistant"]!!,
                 skillMap["Python"]!!,
@@ -363,36 +270,14 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.decathlon,
             image = Res.drawable.embipos,
-            title = "EmbiSDK et RfidLink",
+            title = Res.string.project_embisdk_title,
             bulletPoints = listOf(
-                "Kotlin et Compose Multiplatform",
-                "Point d'entré unique de tous les lecteurs RFID",
-                "Critique pour le business de Decathlon",
-                "Utilsé tous les jours par des milliers de collaborateurs",
+                Res.string.project_embisdk_bullet_1,
+                Res.string.project_embisdk_bullet_2,
+                Res.string.project_embisdk_bullet_3,
+                Res.string.project_embisdk_bullet_4,
             ),
-            description = AnnotatedString(
-                "EmbiSDK: Prend en charge les lecteurs interne Decathlon (ex-embisphere). Ce SDK est livré avec une application Desktop et Android :\n" +
-                        "- 100% clean architecture\n" +
-                        "- Kotlin multiplatform à destination d'Android et du Desktop\n" +
-                        "- Compose Multiplaform pour créer, à partir d'un code unique, une interface Desktop et Android\n" +
-                        "- 100% Kotlin coroutine + flow\n" +
-                        "- Manipulation bas niveau de la mémoire pour parser et sérialiser un flux d'octets\n" +
-                        "- Génération de classes Kotlin à partir d'une spécification json\n" +
-                        "- IOC avec Koin\n" +
-                        "- Quality gate avec Sonarqube et Jacoco\n" +
-                        "- Documentation complète pour l'intégrateur du SDK avec javadoc\n" +
-                        "- Build et livraison automatique avec github actions sur un serveur maven\n\n" +
-                        "RfidLink: SDK unifié qui prend en charge plusieurs fabricants de lecteurs RFID:\n" +
-                        "- 100% clean architecture\n" +
-                        "- 4 adapters (coroutine, RxJava2, RxJava3 et callback)\n" +
-                        "- 100% Kotlin avec RxJava3\n" +
-                        "- IOC avec Dagger2\n" +
-                        "- Quality gate avec Sonarqube et Jacoco\n" +
-                        "- BDD avec Room\n" +
-                        "- Documentation complète pour l'intégrateur du SDK avec javadoc\n" +
-                        "- 3 applications en Kotlin et 1 application en Java \"sample\" pour guider les intégrateurs dans la bonne manière d'exploiter le SDK\n" +
-                        "- Build et livraison automatique avec Bitrise sur un serveur maven"
-            ),
+            descriptionMd = Res.string.project_embisdk_description,
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["Coroutines/Flow"]!!,
@@ -408,30 +293,14 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.equisense_logo,
             image = Res.drawable.equisense_banner,
-            title = "Equisense",
+            title = Res.string.project_equisense_title,
             bulletPoints = listOf(
-                "Mesures sportives lors de séances d'équitation",
-                "Conception et intégration from scratch",
-                "Stack technique moderne et innovante",
-                "Une expérience humaine grisante",
+                Res.string.project_equisense_bullet_1,
+                Res.string.project_equisense_bullet_2,
+                Res.string.project_equisense_bullet_3,
+                Res.string.project_equisense_bullet_4,
             ),
-            description = AnnotatedString(
-                "Développement en reacting programming Swift (iOS) et Kotlin (Android) :\n" +
-                        " - Bluetooth Low Energy\n" +
-                        " - RxJava3 / RxSwift\n" +
-                        " - Création de SDK open-source et closed-source multi-platform (Android, iOS et backend avec ktor)\n" +
-                        " - Programmation Fonctionnelle\n" +
-                        " - Clean Architecture\n" +
-                        " - Injection de dépendance avec Dagger2\n" +
-                        " - Création de graphiques et de vues customs avec manipulation de canvas\n" +
-                        "\n" +
-                        "Maintenance, Qualité et SCRUM avec les outils JIRA et Firebase\n" +
-                        "Formation et montée en compétence des collaborateurs\n" +
-                        "Beta testing ouvert et fermé avec Beta by Crashlytics, TestFlight et Play Store\n" +
-                        "Intégration continue avec Bitrise\n" +
-                        "Review hebdomadaire de pull requests en Go pour le backend et Kotlin pour l'app Android\n" +
-                        "Publication sur les stores App Store et Play Store"
-            ),
+            descriptionMd = Res.string.project_equisense_description,
             skills = listOf(
                 skillMap["Kotlin"]!!,
                 skillMap["RxJava"]!!,
@@ -448,20 +317,13 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.xee_logo,
             image = Res.drawable.xee_banner,
-            title = "Xee app companion",
+            title = Res.string.project_xee_title,
             bulletPoints = listOf(
-                "Objet connecté pour automobile",
-                "Première expérience en autonomie totale",
-                "Monté en compétence des collaborateurs iOS",
+                Res.string.project_xee_bullet_1,
+                Res.string.project_xee_bullet_2,
+                Res.string.project_xee_bullet_3,
             ),
-            description = AnnotatedString(
-                "Développement Android en Reactive Programming (Java)\n" +
-                        "Développement de SDK iOS et Android avec communication Bluetooth 2.1\n" +
-                        "Formation et montée en compétence des collaborateurs sur les sujets mobiles\n" +
-                        "Maintenance Qualité avec les outils JIRA, Crashlytics et l'usine d'intégration continue Jenkins\n" +
-                        "Beta testing Android et iOS fermé avec Crashlytics\n" +
-                        "Publication sur les stores App Store et Play Store"
-            ),
+            descriptionMd = Res.string.project_xee_description,
             skills = listOf(
                 skillMap["iOS / Swift"]!!,
                 skillMap["Objective-C"]!!,
@@ -474,21 +336,13 @@ public object PortfolioData {
         Project(
             logo = Res.drawable.chronodrive_logo,
             image = Res.drawable.chronodrive_banner,
-            title = "Chronodrive Android et iOS",
+            title = Res.string.project_chronodrive_title,
             bulletPoints = listOf(
-                "+100k clients mensuels",
-                "Des contraintes métier nombreuses",
-                "Réalisé à la fois sur Android et iOS",
+                Res.string.project_chronodrive_bullet_1,
+                Res.string.project_chronodrive_bullet_2,
+                Res.string.project_chronodrive_bullet_3,
             ),
-            description = AnnotatedString(
-                "Il s'agit de mon premier projet profesionnel d'envergure, il a été développé" +
-                        " from scratch sur Android et en support pour iOS avec une équipe de 4" +
-                        " developpeurs au total (Android + iOS).\n" +
-                        "Malgré l'abscence de chef de projet et de référent technique, nous avons " +
-                        "réussi à nous organiser pour réussir à livrer le projet et apporter satistaction " +
-                        "au client.\nL'application Android a été, pour moi, ma première expérience" +
-                        " en tant que tech lead."
-            ),
+            descriptionMd = Res.string.project_chronodrive_description,
             skills = listOf(
                 skillMap["iOS / Swift"]!!,
                 skillMap["Objective-C"]!!,

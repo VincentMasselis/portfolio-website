@@ -1,8 +1,8 @@
 package com.masselis.portfolio.data
 
-import androidx.compose.ui.text.AnnotatedString
 import kotlinx.datetime.YearMonth
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import kotlin.jvm.JvmInline
 
 public enum class Tag {
@@ -34,8 +34,8 @@ public data class Skill(
 
 public data class TimelineEntry(
     val time: Time,
-    val title: String,
-    val description: String
+    val title: StringResource,
+    val description: StringResource
 ) {
     public sealed interface Time
 
@@ -51,9 +51,9 @@ public data class TimelineEntry(
 public data class Project(
     val logo: DrawableResource,
     val image: DrawableResource,
-    val title: String,
-    val bulletPoints: List<String>,
-    val description: AnnotatedString,
+    val title: StringResource,
+    val bulletPoints: List<StringResource>,
+    val descriptionMd: StringResource,
     val skills: List<Skill>,
 )
 
