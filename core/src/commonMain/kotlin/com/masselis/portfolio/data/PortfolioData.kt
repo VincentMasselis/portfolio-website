@@ -92,7 +92,8 @@ import portfolio.core.generated.resources.xee_banner
 import portfolio.core.generated.resources.xee_logo
 
 public object PortfolioData {
-    public val availability: LocalDate = LocalDate(2026, MARCH, 30)
+    @Suppress("RedundantNullableReturnType")
+    public val availability: LocalDate? = LocalDate(2026, MARCH, 30)
     public val skills: Set<Skill> = setOf(
         Skill("Kotlin", Mastery, Android, Multiplatform, Compose, Resume),
         Skill("iOS / Swift", Expert, Multiplatform, Resume),
