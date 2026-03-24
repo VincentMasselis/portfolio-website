@@ -45,7 +45,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -295,11 +294,6 @@ private fun AboutPreviewSection() {
         if (windowSizeClass == Compact) {
             MyselfImage(
                 modifier = Modifier
-                    .shadow(
-                        elevation = 8.dp,
-                        shape = RoundedCornerShape(16.dp),
-                    )
-                    .clip(RoundedCornerShape(16.dp))
                     .size(180.dp)
                     .align(Alignment.CenterHorizontally),
             )
@@ -311,13 +305,7 @@ private fun AboutPreviewSection() {
                 horizontalArrangement = Arrangement.spacedBy(32.dp),
             ) {
                 MyselfImage(
-                    modifier = Modifier
-                        .shadow(
-                            elevation = 8.dp,
-                            shape = RoundedCornerShape(16.dp),
-                        )
-                        .clip(RoundedCornerShape(16.dp))
-                        .size(220.dp)
+                    modifier = Modifier.size(220.dp)
                 )
                 Column(modifier = Modifier.weight(1f)) {
                     AboutText()

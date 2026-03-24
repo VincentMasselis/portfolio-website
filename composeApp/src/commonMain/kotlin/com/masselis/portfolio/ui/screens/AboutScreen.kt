@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -33,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -116,7 +114,9 @@ private fun AboutHeroSection() {
     ) {
         if (windowSizeClass == Compact) {
             MyselfImage(
-                Modifier.size(180.dp).clip(CircleShape).align(Alignment.CenterHorizontally)
+                Modifier
+                    .size(180.dp)
+                    .align(Alignment.CenterHorizontally)
             )
             Spacer(Modifier.height(24.dp))
             AboutHeroText()
@@ -126,7 +126,7 @@ private fun AboutHeroSection() {
                 horizontalArrangement = Arrangement.spacedBy(40.dp),
             ) {
                 MyselfImage(
-                    modifier = Modifier.size(220.dp).clip(CircleShape)
+                    modifier = Modifier.size(220.dp)
                 )
                 AboutHeroText(Modifier.weight(1f))
             }

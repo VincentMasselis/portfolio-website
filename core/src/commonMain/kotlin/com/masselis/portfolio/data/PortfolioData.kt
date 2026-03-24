@@ -12,6 +12,8 @@ import com.masselis.portfolio.data.Tag.Resume
 import com.masselis.portfolio.data.TimelineEntry.Moment
 import com.masselis.portfolio.data.TimelineEntry.Pending
 import com.masselis.portfolio.data.TimelineEntry.Range
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month.MARCH
 import kotlinx.datetime.YearMonth
 import portfolio.core.generated.resources.Res
 import portfolio.core.generated.resources.chronodrive_banner
@@ -90,6 +92,7 @@ import portfolio.core.generated.resources.xee_banner
 import portfolio.core.generated.resources.xee_logo
 
 public object PortfolioData {
+    public val availability: LocalDate = LocalDate(2026, MARCH, 30)
     public val skills: Set<Skill> = setOf(
         Skill("Kotlin", Mastery, Android, Multiplatform, Compose, Resume),
         Skill("iOS / Swift", Expert, Multiplatform, Resume),

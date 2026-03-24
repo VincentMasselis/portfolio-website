@@ -12,6 +12,8 @@
     <!-- About -->
     <string name="about_hero_title">About\nVincent MASSELIS</string>
     <string name="about_hero_body_md">**Senior with %1$d years of experience**, I design robust systems based on **Clean Architecture and MVVM/MVI**. Specialist in **Android, iOS and Multiplatform**, I build projects in **Kotlin**, Kotlin Multiplatform (KMP) and Compose Multiplatform, to unify UX, UI and quality across all platforms.\n\nMy experience extends beyond Kotlin and Android — I also have a solid background in **iOS** and a natural drive for discovery and challenging my knowledge. This allows me to maintain a **high standard of excellence** in myself and the products I deliver.</string>
+    <string name="about_hero_myself_overlay_future_date_availability">Available on\n%1$s</string>
+    <string name="about_hero_myself_overlay_immediate_availability">Open to\nwork</string>
     <string name="about_skills_title">TECHNICAL SKILLS</string>
     <string name="about_filter_all">All</string>
     <string name="about_expertise_title">EXPERTISE &amp; PASSIONS</string>

@@ -10,6 +10,8 @@
     <string name="landing_github_profile">Voir mon profil Github</string>
 
     <!-- About -->
+    <string name="about_hero_myself_overlay_future_date_availability">Disponible le\n%1$s</string>
+    <string name="about_hero_myself_overlay_immediate_availability">Disponible\nimmédiatement</string>
     <string name="about_hero_title">À propos de\nVincent MASSELIS</string>
     <string name="about_hero_body_md">**Senior avec %1$d ans d\'expérience**, je conçois des systèmes robustes fondés sur la **Clean Architecture et MVVM/MVI**. Spécialiste **Android, iOS et Multiplatform**, je sais construire vos projets en **Kotlin**, Kotlin Multiplatform (KMP) et Compose Multiplatform, afin d\'unifier l\'UX, l\'UI et la qualité sur tous les systèmes.\n\nMon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en **iOS** et une appétence naturelle à la découverte ainsi qu\'à la remise en question des acquis. Ceci me permet de garder un **haut niveau d\'exigence** envers moi même et les produits que je délivre.</string>
     <string name="about_skills_title">COMPÉTENCES TECHNIQUES</string>
