@@ -114,7 +114,7 @@ private fun AboutHeroSection() {
     ) {
         if (windowSizeClass == Compact) {
             MyselfImage(
-                Modifier
+                modifier = Modifier
                     .size(180.dp)
                     .align(Alignment.CenterHorizontally)
             )

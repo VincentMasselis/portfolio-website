@@ -9,6 +9,7 @@ plugins {
 android {
     namespace = "com.masselis.portfolio.android"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdkExtension = libs.versions.android.compileSdkExtension.get().toInt()
 
     defaultConfig {
         applicationId = "com.masselis.portfolio.android"

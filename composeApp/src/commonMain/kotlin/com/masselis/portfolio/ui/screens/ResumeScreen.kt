@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -44,7 +45,7 @@ internal fun ResumeScreen(
                 .padding(PaddingValues.Section)
         ) {
             Icon(
-                imageVector = Icons.Default.Save,
+                imageVector = Icons.Default.Print,
                 contentDescription = null,
             )
         }

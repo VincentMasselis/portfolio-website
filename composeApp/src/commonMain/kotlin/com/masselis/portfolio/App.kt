@@ -17,14 +17,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.intl.Locale
+import com.masselis.portfolio.data.PortfolioTheme
 import com.masselis.portfolio.di.MainGraph
 import com.masselis.portfolio.ui.components.BottomBar
 import com.masselis.portfolio.ui.components.TopNavBar
 import com.masselis.portfolio.ui.screens.Landing
 import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
-import com.masselis.portfolio.ui.theme.PortfolioTheme
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding

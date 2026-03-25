@@ -19,6 +19,7 @@ kotlin {
         namespace = "com.masselis.portfolio"
         minSdk = libs.versions.android.minSdk.get().toInt()
         compileSdk = libs.versions.android.compileSdk.get().toInt()
+        compileSdkExtension = libs.versions.android.compileSdkExtension.get().toInt()
         compilerOptions {
             jvmTarget.set(libs.versions.android.jvmTarget.map(JvmTarget::fromTarget))
         }
@@ -63,9 +64,10 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.pdf.compose)
+            implementation(libs.androidx.pdf.document.service)
         }
         commonMain.dependencies {
-            implementation(projects.core)
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -109,17 +111,3 @@ tasks.withType<KotlinCompilationTask<*>>().configureEach {
     dependsOn("kspCommonMainKotlinMetadata")
 }
 
-// Build the :resume module's HTML+JS, inline the JS into the HTML, and generate a Kotlin source
-// file so composeApp can embed the resume in Android/iOS WebViews.
-val copyResumeFiles by tasks.registering(Copy::class) {
-    dependsOn(":resume:jsBrowserDistribution")
-    from(project(":resume").layout.buildDirectory.dir("dist/js/productionExecutable"))
-    include("index.html", "resume.js")
-    into(layout.projectDirectory.dir("src/commonMain/composeResources/files/resume"))
-}
-
-// KSP also reads the source sets, so it must wait for the resume HTML to be generated
-tasks.matching { it.name == "kspCommonMainKotlinMetadata" || it.name == "copyNonXmlValueResourcesForCommonMain" }
-    .configureEach {
-        dependsOn(copyResumeFiles)
-    }

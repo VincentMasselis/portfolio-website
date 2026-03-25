@@ -1,4 +1,4 @@
-package com.masselis.portfolio.ui.utils
+package com.masselis.portfolio.data
 
 import kotlinx.datetime.LocalDate
 

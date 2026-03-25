@@ -1,6 +1,7 @@
-package com.masselis.portfolio.ui.utils
+package com.masselis.portfolio.data
 
 import androidx.compose.ui.text.intl.Locale
+import com.masselis.portfolio.ui.utils.displayedLocale
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.number
 
