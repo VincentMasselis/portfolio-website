@@ -56,7 +56,7 @@ Web build artifacts go to `composeApp/build/dist/`.
 
 ## Key Versions
 
-Kotlin 2.3.10, Compose Multiplatform 1.10.0, AGP 9.0.0, Gradle 9.3.1, Material 3 1.11.0-alpha02, Navigation Compose 2.9.2, kotlinx-serialization 1.10.0. Android min SDK 24, target/compile SDK 36, JVM target 17. All versions managed in `gradle/libs.versions.toml`.
+Kotlin 2.3.10, Compose Multiplatform 1.10.0, AGP 9.2.1, Gradle 9.4.1, Material 3 1.11.0-alpha02, Navigation Compose 2.9.2, kotlinx-serialization 1.10.0. Android min SDK 24, target/compile SDK 36, JVM target 17. All versions managed in `gradle/libs.versions.toml`.
 
 ## Coding Style
 
