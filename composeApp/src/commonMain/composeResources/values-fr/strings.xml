@@ -10,8 +10,6 @@
     <string name="landing_github_profile">Voir mon profil Github</string>
 
     <!-- About -->
-    <string name="about_hero_myself_overlay_future_date_availability">Disponible le\n%1$s</string>
-    <string name="about_hero_myself_overlay_immediate_availability">Disponible\nimmédiatement</string>
     <string name="about_hero_title">À propos de\nVincent MASSELIS</string>
     <string name="about_hero_body_md">**Senior avec %1$d ans d\'expérience**, je conçois des systèmes robustes fondés sur la **Clean Architecture et MVVM/MVI**. Spécialiste **Android, iOS et Multiplatform**, je sais construire vos projets en **Kotlin**, Kotlin Multiplatform (KMP) et Compose Multiplatform, afin d\'unifier l\'UX, l\'UI et la qualité sur tous les systèmes.\n\nMon expérience porte au delà de Kotlin et Android, je possède aussi un solide bagage en **iOS** et une appétence naturelle à la découverte ainsi qu\'à la remise en question des acquis. Ceci me permet de garder un **haut niveau d\'exigence** envers moi même et les produits que je délivre.</string>
     <string name="about_skills_title">COMPÉTENCES TECHNIQUES</string>
@@ -54,4 +52,72 @@
     <string name="repo_dialog_see_source">Voir le code source</string>
     <string name="dialog_ok">OK</string>
     <string name="timeline_now">Maintenant</string>
+
+    <!-- MyselfImage overlay -->
+    <string name="about_hero_myself_overlay_future_date_availability">Disponible le\n%1$s</string>
+    <string name="about_hero_myself_overlay_immediate_availability">Disponible\nimmédiatement</string>
+
+    <!-- Project descriptions -->
+    <string name="project_cubeinstore_description">Conception, réalisation et maintenance de multiples sujets à haut niveau technique intégrés les équipes de développeurs(euses) au sein de la plus grosse application Android de Decathlon.\nDans l\'équipe "Platform", j\'ai travaillé sur des enjeux techniques transverses afin de répondre à des problématiques techniques complexe et/ou profondes.\n\n**Éclatement d\'une base de code unique en plusieurs répertoires associé à chaque équipe :**\n- Optimise le temps de compilation pour chaque développeur et pour la C.I.\n- Redonne de l\'ownership de code et de l\'autonomie à chaque équipe\n- Structure et normalise le code inter-équipe\n- Création d\'une application coquille scalable qui ne contient de base que le login, la home et les settings\n- Normalisation des tests\n- Normalisation de l\'IOC Koin\n- Normalisation du code avec, entre autres, des règles KtLint custom\n- 100% Kotlin\n- C.I. Bitrise puis Github Action\n- Framework Gradle\n- Google Artifact Registry\n- Multi-modules\n\n**Refonte du process d\'authentification :**\n- 100% Kotlin\n- 100% Coroutine + Flow\n- Android Custom Tab\n- Thread safe\n- Énormément de tests pour simuler tous les cas de figure possible\n\n**Application et création d\'un plugin pour contrôler l\'offuscation de code avec R8 :**\n- Framework Gradle\n- Optimisation de la C.I. Bitrise\n- Décompilation d\'APK avec jadx\n\n**Optimisation de la configuration Gradle :**\n- Publication et écriture des plugins\n- Réécriture des scripts préexistants</string>
+    <string name="project_tpms_advanced_description">Cette application sert d\'application référence pour expérimenter chaque nouvel outil mis à disposition pour les développeurs. Au delà d\'être une application "sandbox", cette application est également publiée sur le [Play Store](https://play.google.com/store/apps/details?id=com.masselis.tpmsadvanced) et est mise à disposition pour tout le monde avec 10k+ téléchargements.\n\n- Laboratoire pour la veille technologique\n- Volontairement over-engineeré pour pousser les technologies à leur maximum\n- Grosse automatisation de la CI/CD avec plugin Gradle maison gitflow, Github et Play Store\n- [Intégralement en open-source](https://github.com/VincentMasselis/TPMS-advanced)\n- DI de dernière génération avec Metro\n- BDD innovante avec SQLDelight\n- Multi-modules</string>
+    <string name="project_express_payment_description">Conception et mise en place d\'une refonte majeure d\'une fonctionnalité permettant au collaborateur Decathlon d\'encaisser un client sans passer en caisse.\n\nCette fonctionnalité dispose de :\n- Composition panier\n- Identification client\n- Paiement par carte bancaire\n\nTout était pris en charge : le stock, la facture, les portiques de sécurité, la carte de fidélité et surtout le paiement avec une carte bancaire via NFC.\n\nAfin de garantir un haut niveau de disponibilité, l\'intégralité de la transaction était synchronisée en temps réel sur Firebase. Chaque transaction peut être complétée soit par le collaborateur, soit par le serveur, selon le principe du 2-way binding.\n\n**Enjeux :**\n- Haute résilience du traitement des paiements, chaque transaction aboutissait sur un résultat concret et actionnable\n- Forte stabilité y compris dans des environnements difficiles (connexion internet très faible)\n- Simple d\'utilisation, clair, concis et efficace\n\n**Stack technique :**\n- 100% Clean architecture\n- 100% Kotlin\n- 100% Flow\n- 100% Compose\n- Dagger puis Koin\n- Firebase Realtime Database pour le 2-way binding\n- SDK VivaWallet pour la lecture de carte bancaire\n- A/B Testing avec Firebase\n- Crash report avec Crashlytics</string>
+    <string name="project_kadiska_description">Kadiska a depuis été racheté par [Netskope](https://www.netskope.com).\n\nÉtude de la faisabilité du projet avec un PoC contenant 3 approches différentes\nDéfinition de l\'architecture\nForce de proposition sur la valeur ajoutée des données orientées mobile\nIdentification et contournement des limitations systèmes\nMise au point de la machine d\'intégration et de livraison continue\nÉtude et configuration d\'un logiciel de gestion de parc de smartphones\nÉcriture de scripts de livraison avancés à destination de plusieurs Play Stores Entreprise\nMontée en compétence des collaborateurs confirmés\nBanc de test et benchmark de smartphones Android\n\n**Application 100% background dédiée à l\'analyse réseau :**\n- 100% Clean architecture\n- Multi-modules\n- 100% Kotlin Coroutine + Flow\n- IOC avec Dagger2\n- Base de données avec SQLDelight\n- Intégration, compilation et exécution de sources C/C++ basées sur Traceroute debian\n- Analyse de trames réseau ICMP/UDP et ipv4/ipv6 extraites du smartphone\n- Extraction des données de connexion du téléphone (Wifi, 4G, 5G, dBm, BSSID, ip)\n- Configuration entreprise avec VMware Workspace One\n- Intégration continue avec Github Actions\n- Livraison automatique sur plusieurs Play Store Entreprise en simultané\n\n**SDK minimaliste avec une empreinte mémoire réduite :**\n- Code en JAVA au lieu du Kotlin\n- Aucune librairie externe n\'est utilisée</string>
+    <string name="project_home_assistant_description">Bien qu\'il ne s\'agisse pas d\'un projet professionnel, je tiens à intégrer dans mes projets qui font ma fierté celui de ma propre maison **intégralement connectée**. Construit sur la solution open-source Home Assistant (plus gros projet par contributeur open-source en 2024 sur GitHub), j\'utilise mes compétences techniques pour améliorer mon quotidien en scriptant et en rendant intelligent tout ce qui peut améliorer mon confort et me permettre de faire des économies. Même un vieux poêle à granulé de 15 ans peut être connecté à condition de trouver le contact sec sur le circuit imprimé.\n\nAu delà du confort que cela m\'apporte, construire cette solution m\'a aussi permis de découvrir quelques briques en Python afin d\'extraire de Home Assistant le comportement exact que je souhaite pour chacun de mes objets connectés. J\'ai également découvert quelques technologies de systèmes embarqués et bas niveau pour créer mon propre firmware pour puce ESP32/ESP8266 à la base de nombreux objets connectés en WiFi.\n\nHome Assistant est une solution très riche et complète, apprendre à l\'utiliser à son plein potentiel est un challenge particulièrement enrichissant.</string>
+    <string name="project_embisdk_description">**EmbiSDK :** Prend en charge les lecteurs internes Decathlon (ex-embisphere). Livré avec une application Desktop et Android :\n- 100% clean architecture\n- Kotlin multiplatform à destination d\'Android et du Desktop\n- Compose Multiplatform pour créer une interface Desktop et Android à partir d\'un code unique\n- 100% Kotlin coroutine + flow\n- Manipulation bas niveau de la mémoire pour parser et sérialiser un flux d\'octets\n- Génération de classes Kotlin à partir d\'une spécification JSON\n- IOC avec Koin\n- Quality gate avec Sonarqube et Jacoco\n- Documentation complète pour l\'intégrateur du SDK avec javadoc\n- Build et livraison automatique avec Github Actions sur un serveur Maven\n\n**RfidLink :** SDK unifié qui prend en charge plusieurs fabricants de lecteurs RFID :\n- 100% clean architecture\n- 4 adapters (coroutine, RxJava2, RxJava3 et callback)\n- 100% Kotlin avec RxJava3\n- IOC avec Dagger2\n- Quality gate avec Sonarqube et Jacoco\n- BDD avec Room\n- Documentation complète pour l\'intégrateur du SDK avec javadoc\n- 3 applications Kotlin et 1 application Java "sample" pour guider les intégrateurs\n- Build et livraison automatique avec Bitrise sur un serveur Maven</string>
+    <string name="project_equisense_description">Développement en reactive programming Swift (iOS) et Kotlin (Android) :\n- Bluetooth Low Energy\n- RxJava3 / RxSwift\n- Création de SDK open-source et closed-source multi-platform (Android, iOS et backend avec ktor)\n- Programmation Fonctionnelle\n- Clean Architecture\n- Injection de dépendance avec Dagger2\n- Création de graphiques et de vues customs avec manipulation de canvas\n\nMaintenance, Qualité et SCRUM avec les outils JIRA et Firebase\nFormation et montée en compétence des collaborateurs\nBeta testing ouvert et fermé avec Beta by Crashlytics, TestFlight et Play Store\nIntégration continue avec Bitrise\nReview hebdomadaire de pull requests en Go pour le backend et Kotlin pour l\'app Android\nPublication sur les stores App Store et Play Store</string>
+    <string name="project_xee_description">Développement Android en Reactive Programming (Java)\nDéveloppement de SDK iOS et Android avec communication Bluetooth 2.1\nFormation et montée en compétence des collaborateurs sur les sujets mobiles\nMaintenance Qualité avec les outils JIRA, Crashlytics et l\'usine d\'intégration continue Jenkins\nBeta testing Android et iOS fermé avec Crashlytics\nPublication sur les stores App Store et Play Store</string>
+    <string name="project_chronodrive_description">Il s\'agit de mon premier projet professionnel d\'envergure, développé from scratch sur Android et en support pour iOS avec une équipe de 4 développeurs au total (Android + iOS).\n\nMalgré l\'absence de chef de projet et de référent technique, nous avons réussi à nous organiser pour livrer le projet et apporter satisfaction au client.\n\nL\'application Android a été, pour moi, ma première expérience en tant que tech lead.</string>
+    <!-- Project titles -->
+    <string name="project_cubeinstore_title">CubeInStore</string>
+    <string name="project_tpms_advanced_title">TPMS Advanced</string>
+    <string name="project_express_payment_title">Express Payment</string>
+    <string name="project_kadiska_title">Kadiska Android</string>
+    <string name="project_home_assistant_title">Maison connectée avec Home Assistant</string>
+    <string name="project_embisdk_title">EmbiSDK et RfidLink</string>
+    <string name="project_equisense_title">Equisense</string>
+    <string name="project_xee_title">Xee app companion</string>
+    <string name="project_chronodrive_title">Chronodrive Android et iOS</string>
+    <!-- Timeline entries -->
+    <string name="timeline_htc_dream_title">Mon premier smartphone Android</string>
+    <string name="timeline_htc_dream_description">Sans le savoir, j\'ai acheté l\'HTC Dream, le tout premier téléphone commercialisé sous Android, qui tracera ma carrière pour les années à venir</string>
+    <string name="timeline_first_developments_title">Mes premiers developpements</string>
+    <string name="timeline_first_developments_description">Système domotique X10 en C++</string>
+    <string name="timeline_career_start_title">Début de carrière professionnelle sous iOS et Android</string>
+    <string name="timeline_career_start_description">Dès le début, les enjeux sont fort avec, entre autres, la refonte Android et iOS de l\'application Chronodrive</string>
+    <string name="timeline_equisense_title">Ma première startup Equisense</string>
+    <string name="timeline_equisense_description">Rejoint en early stage juste après leur levée de fond, j\'ai conçu et développé from-scratch l\'application iOS et Android, ensuite rejoint par 3 autres développeurs. Pendant 4 ans j\'ai vécu l\'effervescence et l\'implication hors normes que représente le travail pour une startup avec laquelle on partage tout</string>
+    <string name="timeline_decathlon_freelance_title">Début du freelancing chez Decathlon</string>
+    <string name="timeline_decathlon_freelance_description">Après 10 ans développement et une solide expérience, je décide, un peu par hasard, d\'entrer dans le monde du Freelancing en commençant chez Decatlon</string>
+    <!-- Project bullet points -->
+    <string name="project_cubeinstore_bullet_1">100k utilisateurs mensuels</string>
+    <string name="project_cubeinstore_bullet_2">+600k lignes de code</string>
+    <string name="project_cubeinstore_bullet_3">+20 développeurs</string>
+    <string name="project_cubeinstore_bullet_4">+50 pays</string>
+    <string name="project_tpms_advanced_bullet_1">Application référence open-source</string>
+    <string name="project_tpms_advanced_bullet_2">Sert de laboratoire personnel pour expérimenter les nouvelles technologies</string>
+    <string name="project_tpms_advanced_bullet_3">Utilise toutes les stacks techniques modernes et performantes</string>
+    <string name="project_express_payment_bullet_1">Une caisse Decathlon comme simple application</string>
+    <string name="project_express_payment_bullet_2">Haute disponibilité et de qualité élevée</string>
+    <string name="project_express_payment_bullet_3">Taux de conversion supérieur à une caisse classique</string>
+    <string name="project_kadiska_bullet_1">B2B</string>
+    <string name="project_kadiska_bullet_2">Analyse réseau low-level</string>
+    <string name="project_kadiska_bullet_3">Services en arrière-plan complexes</string>
+    <string name="project_kadiska_bullet_4">Fort enjeux business</string>
+    <string name="project_home_assistant_bullet_1">100 périphériques connectés</string>
+    <string name="project_home_assistant_bullet_2">Voiture, fenêtres, chauffe-eau, pompe à chaleur, etc.</string>
+    <string name="project_home_assistant_bullet_3">Une maison presque entièrement connectée, + sécurisée, + autonome, - moins chère</string>
+    <string name="project_embisdk_bullet_1">Kotlin et Compose Multiplatform</string>
+    <string name="project_embisdk_bullet_2">Point d\'entré unique de tous les lecteurs RFID</string>
+    <string name="project_embisdk_bullet_3">Critique pour le business de Decathlon</string>
+    <string name="project_embisdk_bullet_4">Utilisé tous les jours par des milliers de collaborateurs</string>
+    <string name="project_equisense_bullet_1">Mesures sportives lors de séances d\'équitation</string>
+    <string name="project_equisense_bullet_2">Conception et intégration from scratch</string>
+    <string name="project_equisense_bullet_3">Stack technique moderne et innovante</string>
+    <string name="project_equisense_bullet_4">Une expérience humaine grisante</string>
+    <string name="project_xee_bullet_1">Objet connecté pour automobile</string>
+    <string name="project_xee_bullet_2">Première expérience en autonomie totale</string>
+    <string name="project_xee_bullet_3">Monté en compétence des collaborateurs iOS</string>
+    <string name="project_chronodrive_bullet_1">+100k clients mensuels</string>
+    <string name="project_chronodrive_bullet_2">Des contraintes métier nombreuses</string>
+    <string name="project_chronodrive_bullet_3">Réalisé à la fois sur Android et iOS</string>
 </resources>

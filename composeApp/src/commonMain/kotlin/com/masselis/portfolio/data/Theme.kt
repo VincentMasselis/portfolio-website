@@ -1,5 +1,6 @@
-package com.masselis.portfolio.ui.theme
+package com.masselis.portfolio.data
 
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -10,13 +11,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+
 private val DarkNavy = Color(0xFF1C2E3F)
 private val AccentGreen = Color(0xFF4CAF50)
 private val LightGray = Color(0xFFF5F5F5)
 private val RepoCardBlue = Color(0xFF4A90D9)
 private val TextWhite = Color(0xFFE0E0E0)
 
-private val PortfolioColorScheme = darkColorScheme(
+private val PortfolioColorScheme: ColorScheme = darkColorScheme(
     primary = AccentGreen,
     onPrimary = Color.White,
     primaryContainer = DarkNavy,
@@ -31,7 +33,7 @@ private val PortfolioColorScheme = darkColorScheme(
     onSurfaceVariant = Color(0xFF444444),
 )
 
-private val PortfolioTypography = Typography(
+private val PortfolioTypography: Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Bold,
@@ -98,7 +100,7 @@ private val PortfolioTypography = Typography(
 )
 
 @Composable
-internal fun PortfolioTheme(content: @Composable () -> Unit) {
+public fun PortfolioTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = PortfolioColorScheme,
         typography = PortfolioTypography,

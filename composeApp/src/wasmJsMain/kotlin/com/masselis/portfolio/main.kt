@@ -116,11 +116,7 @@ internal fun main() {
                 .collect { record ->
                     val path = (record.screen as Route).path
                     if (path == Resume.path) {
-                        // On Android and iOS, an embedded WebView is used to render the page but
-                        // this kind of Composable doesn't exist in Compose for Web. Instead of
-                        // displaying this route, a new tab is opened directly with the content from
-                        // resume.js. By doing this, the web browser renders by itself the page.
-                        window.open("/resume", "_blank")
+                        window.open("/resume.pdf", "_blank")
                         navigator.backward()
                         return@collect
                     }

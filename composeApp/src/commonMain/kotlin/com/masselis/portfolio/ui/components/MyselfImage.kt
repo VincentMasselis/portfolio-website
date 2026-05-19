@@ -32,7 +32,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
-import com.masselis.portfolio.ui.utils.formatDayMonth
+import com.masselis.portfolio.data.formatDayMonth
 import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
 import kotlinx.datetime.todayIn
 import org.jetbrains.compose.resources.painterResource
@@ -47,7 +47,8 @@ import kotlin.math.sin
 import kotlin.time.Clock
 
 @Composable
-internal fun MyselfImage(
+public fun MyselfImage(
+    allowRingAndPill: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     Box(modifier) {
@@ -60,7 +61,7 @@ internal fun MyselfImage(
                 .shadow(elevation = 8.dp, shape = CircleShape)
                 .clip(CircleShape)
         )
-        if (PortfolioData.availability != null) {
+        if (PortfolioData.availability != null && allowRingAndPill) {
             val availability = PortfolioData.availability!!
             RingAndPill(
                 pillText =
