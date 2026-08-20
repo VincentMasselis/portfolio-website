@@ -15,6 +15,7 @@ import com.masselis.portfolio.data.TimelineEntry.Range
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month.AUGUST
 import kotlinx.datetime.Month.MARCH
+import kotlinx.datetime.Month.NOVEMBER
 import kotlinx.datetime.YearMonth
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.chronodrive_banner
@@ -96,7 +97,7 @@ public object PortfolioData {
     public val birthday: LocalDate = LocalDate(1988, AUGUST, 5)
 
     @Suppress("RedundantNullableReturnType")
-    public val availability: LocalDate? get() = null
+    public val availability: LocalDate? get() = LocalDate(2026, NOVEMBER, 16)
     public val skills: Set<Skill> = setOf(
         Skill("Kotlin", Mastery, Android, Multiplatform, Compose, Resume),
         Skill("iOS / Swift", Expert, Multiplatform, Resume),
