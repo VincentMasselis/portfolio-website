@@ -15,9 +15,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -41,13 +43,19 @@ import portfolio.composeapp.generated.resources.nav_resume
 @Composable
 internal fun TopNavBar(
     currentRoute: Route,
+    scrollBehavior: TopAppBarScrollBehavior,
     openRoute: (Route) -> Unit,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
     additionalActions: @Composable RowScope.() -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = containerColor,
+            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        ),
         navigationIcon = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.width(16.dp))

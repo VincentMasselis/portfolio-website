@@ -2,6 +2,7 @@ package com.masselis.portfolio.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -36,6 +38,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -48,12 +52,19 @@ import portfolio.composeapp.generated.resources.dialog_ok
 @Composable
 internal fun ProjectCard(
     project: Project,
+    shape: Shape = CardDefaults.shape,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
+    elevation: CardElevation = CardDefaults.cardElevation(),
+    interactionSource: MutableInteractionSource? = null,
     modifier: Modifier = Modifier,
 ) {
     var showDetails by rememberSaveable { mutableStateOf(false) }
     Card(
         onClick = { showDetails = true },
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        shape = shape,
+        elevation = elevation,
+        interactionSource = interactionSource,
         modifier = modifier.fillMaxWidth()
     ) {
         Image(

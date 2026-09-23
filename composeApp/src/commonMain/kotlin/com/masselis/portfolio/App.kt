@@ -13,10 +13,17 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.masselis.portfolio.data.PortfolioTheme
 import com.masselis.portfolio.di.MainGraph
 import com.masselis.portfolio.ui.components.BottomBar
@@ -41,7 +48,7 @@ import com.slack.circuit.runtime.navigation.NavStackList
 
 internal val defaultStartRoute: Route = Landing
 
-@OptIn(InternalCircuitApi::class)
+@OptIn(InternalCircuitApi::class, ExperimentalMaterial3Api::class)
 @Composable
 public fun App(
     navStack: NavStack<out NavStack.Record> = rememberSaveableNavStack(defaultStartRoute),
@@ -65,11 +72,19 @@ public fun App(
                         navigator.goTo(route)
                     }
 
+                    // Keyed on the route so a screen never inherits the previous screen's scroll
+                    // offset and gets recomputed each time the screen changes
+                    // Filled arguments are the default values for `rememberTopAppBarState`
+                    val topBarState = remember(currentRoute) { TopAppBarState(-Float.MIN_VALUE, 0f, 0f) }
+                    val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
                     Scaffold(
                         topBar = {
                             TopNavBar(
                                 currentRoute = currentRoute,
+                                scrollBehavior = topBarScrollBehavior,
                                 openRoute = openRoute,
+                                containerColor = if (currentRoute == Landing) Color.Transparent
+                                else MaterialTheme.colorScheme.surfaceContainerHigh,
                                 additionalActions = additionalActions,
                             )
                         },
@@ -89,7 +104,9 @@ public fun App(
                                 )
                             }
                         },
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .nestedScroll(topBarScrollBehavior.nestedScrollConnection),
                         bottomBar = {
                             if (windowSizeClass == Compact) {
                                 BottomBar(

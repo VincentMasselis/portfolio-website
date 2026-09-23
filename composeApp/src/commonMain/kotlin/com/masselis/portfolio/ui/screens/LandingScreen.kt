@@ -7,9 +7,11 @@ import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +38,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.Phonelink
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -55,7 +58,9 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
+import com.masselis.portfolio.data.Project
 import com.masselis.portfolio.ui.components.Footer
+import com.masselis.portfolio.ui.components.MeshGradientBackground
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.PortfolioMarkdown
 import com.masselis.portfolio.ui.components.ProjectCard
@@ -74,6 +79,13 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import dev.chrisbanes.haze.ExperimentalHazeApi
+import dev.chrisbanes.haze.HazeInput
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.glass.GlassStyle
+import dev.chrisbanes.haze.glass.hazeGlass
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -124,14 +136,25 @@ internal fun LandingScreen(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val hazeState = rememberHazeState()
     Box(modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-            HeroSection(showProjects = state.onShowProjects)
-            ProjectsPreviewSection(onSeeMore = state.onShowProjects)
+            Box {
+                MeshGradientBackground(
+                    scrollState = scrollState,
+                    modifier = Modifier
+                        .matchParentSize()
+                        .hazeSource(hazeState),
+                )
+                Column {
+                    HeroSection(showProjects = state.onShowProjects)
+                    ProjectsPreviewSection(hazeState = hazeState, onSeeMore = state.onShowProjects)
+                }
+            }
             AboutPreviewSection()
             OSSSection()
             Footer()
@@ -170,7 +193,7 @@ private fun HeroSection(
     )
     Section(
         paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
-        backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        backgroundColor = Color.Transparent,
     ) {
         Spacer(Modifier.height(32.dp))
         val cursorId = "cursor"
@@ -219,7 +242,10 @@ private fun HeroSection(
 }
 
 @Composable
-private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
+private fun ProjectsPreviewSection(
+    hazeState: HazeState,
+    onSeeMore: () -> Unit,
+) {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
         backgroundColor = Color.Transparent,
@@ -233,40 +259,92 @@ private fun ProjectsPreviewSection(onSeeMore: () -> Unit) {
         }
     ) {
         if (windowSizeClass == Compact) {
-            ProjectCard(remember { PortfolioData.projects.first() })
+            ProjectGlassItem(
+                project = remember { PortfolioData.projects.first() },
+                hazeState = hazeState,
+            )
             Spacer(Modifier.height(16.dp))
-            ProjectCard(remember { PortfolioData.projects[3] })
+            ProjectGlassItem(
+                project = remember { PortfolioData.projects[3] },
+                hazeState = hazeState,
+            )
             Spacer(Modifier.height(16.dp))
-            SeeMore(onClick = onSeeMore)
+            SeeMore(hazeState = hazeState, onClick = onSeeMore)
         } else {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects.first() }) }
-                Box(Modifier.weight(1f)) { ProjectCard(remember { PortfolioData.projects[3] }) }
+                Box(Modifier.weight(1f)) {
+                    ProjectGlassItem(
+                        project = remember { PortfolioData.projects.first() },
+                        hazeState = hazeState,
+                    )
+                }
+                Box(Modifier.weight(1f)) {
+                    ProjectGlassItem(
+                        project = remember { PortfolioData.projects[3] },
+                        hazeState = hazeState,
+                    )
+                }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.weight(0.3f)
-                ) { SeeMore(onClick = onSeeMore) }
+                ) { SeeMore(hazeState = hazeState, onClick = onSeeMore) }
             }
         }
     }
 }
 
+@OptIn(ExperimentalHazeApi::class)
+@Composable
+private fun ProjectGlassItem(
+    project: Project,
+    hazeState: HazeState,
+    modifier: Modifier = Modifier,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val shape = RoundedCornerShape(12.dp)
+    ProjectCard(
+        project = project,
+        containerColor = Color.Transparent,
+        shape = shape,
+        // Card's hover elevation redraws its surface layer over the glass; glass has its own hover response
+        elevation = CardDefaults.cardElevation(0.dp, 0.dp, 0.dp, 0.dp, 0.dp, 0.dp),
+        interactionSource = interactionSource,
+        modifier = modifier.hazeGlass(
+            input = HazeInput.Backdrop(hazeState),
+            style = GlassStyle.clear.then { shape(shape) },
+            interactionSource = interactionSource,
+        ),
+    )
+}
+
+@OptIn(ExperimentalHazeApi::class)
 @Composable
 private fun SeeMore(
+    hazeState: HazeState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val shape = RoundedCornerShape(12.dp)
+    val interactionSource = remember { MutableInteractionSource() }
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick)
+            .hazeGlass(
+                input = HazeInput.Backdrop(hazeState),
+                 style = GlassStyle.clear.then { shape(shape) },
+                interactionSource = interactionSource,
+            )
+            .clip(shape)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = LocalIndication.current,
+                onClick = onClick,
+            )
             .padding(24.dp),
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -385,7 +463,7 @@ private fun OSSSection() {
         )
         Spacer(Modifier.height(20.dp))
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.CenterHorizontally),
             modifier = Modifier.fillMaxWidth(),
         ) {
             item {
