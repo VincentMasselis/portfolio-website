@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import org.jetbrains.compose.resources.stringResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.repo_card_portfolio_label
@@ -31,14 +30,14 @@ internal fun RepoCardPortfolioLabel(
         Text(
             text = stringResource(Res.string.repo_card_portfolio_label),
             style = MaterialTheme.typography.labelSmall,
-            color = Color.White.copy(alpha = 0.8f),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f)
         )
         IconButton(
             content = {
                 Icon(
                     imageVector = Icons.Default.Info,
-                    tint = MaterialTheme.colorScheme.onSecondary,
+                    tint = MaterialTheme.colorScheme.primary,
                     contentDescription = null
                 )
             },

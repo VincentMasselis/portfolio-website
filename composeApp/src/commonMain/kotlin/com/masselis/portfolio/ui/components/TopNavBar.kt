@@ -18,7 +18,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -48,7 +47,7 @@ internal fun TopNavBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
         navigationIcon = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.width(16.dp))
@@ -65,7 +64,7 @@ internal fun TopNavBar(
                 text = "RxVincent",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
         actions = {
@@ -123,7 +122,7 @@ private fun NavLink(
     Text(
         text = label,
         style = MaterialTheme.typography.labelLarge,
-        color = if (isActive) MaterialTheme.colorScheme.primary else Color.White,
+        color = if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
         textDecoration = if (isActive) TextDecoration.Underline else TextDecoration.None,
         modifier = Modifier.clickable { onNavigate(route) },
     )

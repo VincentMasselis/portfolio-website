@@ -57,7 +57,7 @@ internal fun RepositoryTechnologiesDialog(
                 Text(stringResource(Res.string.dialog_ok))
             }
         },
-        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         textContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }

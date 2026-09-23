@@ -35,7 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
@@ -163,12 +162,12 @@ internal fun ContactScreen(
 private fun ContactHeaderSection() {
     Section(
         paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
-        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh,
     ) {
         Text(
             text = stringResource(Res.string.contact_header_title),
             style = MaterialTheme.typography.displaySmall,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }
@@ -190,7 +189,7 @@ private fun ContactGridCard(
     Box(modifier) {
         Card(
             onClick = onClick,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
             modifier = Modifier
                 .align(
                     when (lane) {
@@ -222,7 +221,7 @@ private fun ContactGridCard(
                     imageVector = icon,
                     contentDescription = label,
                     modifier = Modifier.size(96.dp),
-                    tint = MaterialTheme.colorScheme.primaryContainer,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Column {
                     Text(
@@ -234,7 +233,7 @@ private fun ContactGridCard(
                     Text(
                         text = label,
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -259,7 +258,7 @@ private fun LocationGridCard(
     val mapController = rememberMapController()
     Box(modifier) {
         Card(
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
             modifier = Modifier
                 .widthIn(max = SectionMaxWidth)
                 .padding(start = leftPadding, end = rightPadding)
@@ -288,7 +287,7 @@ private fun LocationGridCard(
                         imageVector = Icons.Default.LocationOn,
                         contentDescription = null,
                         modifier = Modifier.size(96.dp),
-                        tint = MaterialTheme.colorScheme.primaryContainer,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Column(

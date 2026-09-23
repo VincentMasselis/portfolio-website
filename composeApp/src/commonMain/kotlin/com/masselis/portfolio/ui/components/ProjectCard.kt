@@ -1,6 +1,7 @@
 package com.masselis.portfolio.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialogDefaults
@@ -33,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,7 +53,7 @@ internal fun ProjectCard(
     var showDetails by rememberSaveable { mutableStateOf(false) }
     Card(
         onClick = { showDetails = true },
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
         modifier = modifier.fillMaxWidth()
     ) {
         Image(
@@ -65,10 +68,15 @@ internal fun ProjectCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                // Client logos are raster assets designed for light backgrounds
                 Image(
                     painter = painterResource(project.logo),
                     contentDescription = stringResource(project.title),
-                    modifier = Modifier.height(20.dp),
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(MaterialTheme.colorScheme.inverseSurface)
+                        .padding(horizontal = 4.dp, vertical = 2.dp)
+                        .height(16.dp),
                 )
                 Spacer(Modifier.width(4.dp))
                 Text(
@@ -84,7 +92,7 @@ internal fun ProjectCard(
                     .map { stringResource(it) }
                     .joinToString(separator = "\n") { "• $it" },
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 2.dp),
             )
         }
@@ -107,7 +115,7 @@ private fun DetailDialog(
     BasicAlertDialog(onDismissRequest = onDismissRequest) {
         Surface(
             shape = AlertDialogDefaults.shape,
-            color = MaterialTheme.colorScheme.surface,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
             tonalElevation = AlertDialogDefaults.TonalElevation,
             modifier = Modifier.heightIn(max = 560.dp),
         ) {
@@ -146,8 +154,8 @@ private fun DetailDialog(
                         ) {
                             project.skills.forEach { skill ->
                                 Badge(
-                                    containerColor = MaterialTheme.colorScheme.secondary,
-                                    contentColor = MaterialTheme.colorScheme.onSecondary,
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                                 ) {
                                     Text(
                                         text = skill.name,

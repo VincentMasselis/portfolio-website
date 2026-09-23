@@ -170,7 +170,7 @@ private fun HeroSection(
     )
     Section(
         paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
-        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh,
     ) {
         Spacer(Modifier.height(32.dp))
         val cursorId = "cursor"
@@ -179,7 +179,7 @@ private fun HeroSection(
             PortfolioMarkdown(
                 text = stringResource(Res.string.landing_hero_title_md, "[inline]($cursorId)"),
                 paragraphTypography = style.copy(
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
                 ),
                 inlineContent = markdownInlineContent(
@@ -210,7 +210,7 @@ private fun HeroSection(
         Text(
             text = stringResource(Res.string.landing_hero_subtitle),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -290,7 +290,7 @@ private fun SeeMore(
 @Composable
 private fun AboutPreviewSection() {
     val windowSizeClass = LocalWindowSizeClass.current
-    Section(backgroundColor = Color.White) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh) {
         if (windowSizeClass == Compact) {
             MyselfImage(
                 modifier = Modifier
@@ -336,7 +336,7 @@ private fun AboutText() {
         Text(
             text = stringResource(Res.string.landing_about_tagline),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
     Spacer(Modifier.height(12.dp))
@@ -366,7 +366,7 @@ private fun AboutText() {
 private fun OSSSection() {
     val layoutDirection = LocalLayoutDirection.current
     Section(
-        backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
+        backgroundColor = MaterialTheme.colorScheme.surface,
         paddingValues = PaddingValues.Section.copy(start = 0.dp, end = 0.dp)
     ) {
         Text(
@@ -419,7 +419,7 @@ private fun OSSSection() {
                         .clip(RoundedCornerShape(12.dp))
                         .border(
                             1.dp,
-                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.primary,
                             RoundedCornerShape(12.dp)
                         )
                         .clickable(onClick = { uriHandler.openUri("https://github.com/VincentMasselis") })
@@ -430,12 +430,12 @@ private fun OSSSection() {
                         painter = painterResource(Res.drawable.ic_github),
                         contentDescription = null,
                         modifier = Modifier.size(28.dp),
-                        tint = MaterialTheme.colorScheme.secondary,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
                         text = stringResource(Res.string.landing_github_profile),
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
