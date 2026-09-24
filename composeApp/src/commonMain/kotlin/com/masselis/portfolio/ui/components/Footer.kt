@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextDecoration
@@ -53,7 +52,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
             .padding(horizontal = 24.dp, vertical = 16.dp)
             .windowInsetsPadding(WindowInsets.navigationBars),
     ) {
@@ -68,7 +67,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
                     ),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = Bold,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -79,12 +78,12 @@ internal fun Footer(modifier: Modifier = Modifier) {
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = Bold,
                         textDecoration = TextDecoration.Underline,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Icon(
                         imageVector = Icons.Default.Info,
                         contentDescription = null,
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier
                             .padding(start = 4.dp)
                             .size(12.dp),
@@ -97,7 +96,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_linkedin),
                         contentDescription = stringResource(Res.string.footer_linkedin_cd),
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(24.dp),
                     )
                 }
@@ -105,7 +104,7 @@ internal fun Footer(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_bluesky),
                         contentDescription = stringResource(Res.string.footer_bluesky_cd),
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(24.dp),
                     )
                 }

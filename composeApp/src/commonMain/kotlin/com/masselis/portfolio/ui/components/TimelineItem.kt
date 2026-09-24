@@ -46,7 +46,7 @@ internal fun TimelineItem(
                 is TimelineEntry.Pending -> "${time.moment.year}-${stringResource(Res.string.timeline_now)}"
             },
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.width(80.dp).padding(top = 4.dp),
         )
 
@@ -108,7 +108,7 @@ internal fun TimelineItem(
                 Text(
                     text = stringResource(timelineEntry.description),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

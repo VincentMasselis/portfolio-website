@@ -98,7 +98,7 @@ internal fun RepoCardStats(
             modifier = modifier
         ) {
             CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = MaterialTheme.colorScheme.primary,
                 strokeWidth = 3.dp,
                 strokeCap = StrokeCap.Round,
                 modifier = Modifier.size(24.dp)
@@ -119,7 +119,7 @@ internal fun RepoCardStats(
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
-                contentColor = MaterialTheme.colorScheme.onSecondary,
+                contentColor = MaterialTheme.colorScheme.primary,
             ),
             onClick = { state.eventSink(State.Error.Event.Retry) },
             modifier = modifier,
@@ -134,37 +134,37 @@ internal fun RepoCardStats(
                     imageVector = Icons.Default.Star,
                     contentDescription = null,
                     modifier = Modifier.size(14.dp),
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
                     text = "${state.stars}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.width(4.dp))
                 Icon(
                     imageVector = Icons.Default.ForkRight,
                     contentDescription = null,
                     modifier = Modifier.size(14.dp),
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
                     text = "${state.forks}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
                     text = state.mainLanguage,
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.White.copy(alpha = 0.8f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.weight(1f))
                 IconButton(
                     content = {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.OpenInNew,
-                            tint = MaterialTheme.colorScheme.onSecondary,
+                            tint = MaterialTheme.colorScheme.primary,
                             contentDescription = null
                         )
                     },

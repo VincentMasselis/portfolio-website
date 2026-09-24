@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wasm-dev",
+      "runtimeExecutable": "./gradlew",
+      "runtimeArgs": ["composeApp:wasmJsBrowserDevelopmentRun", "--continuous"],
+      "port": 8080
+    }
+  ]
+}

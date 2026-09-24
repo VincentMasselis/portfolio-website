@@ -37,8 +37,8 @@ internal fun BottomBar(
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = modifier,
     ) {
         Item(Landing, currentRoute, openRoute, Icons.Default.Home, stringResource(Res.string.nav_home))
@@ -72,8 +72,8 @@ private fun RowScope.Item(
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = MaterialTheme.colorScheme.primary,
             selectedTextColor = MaterialTheme.colorScheme.primary,
-            unselectedIconColor = MaterialTheme.colorScheme.surfaceVariant,
-            unselectedTextColor = MaterialTheme.colorScheme.surfaceVariant,
+            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
         ),
         modifier = modifier,
     )

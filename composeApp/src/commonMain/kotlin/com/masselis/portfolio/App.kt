@@ -13,10 +13,15 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.masselis.portfolio.data.PortfolioTheme
 import com.masselis.portfolio.di.MainGraph
 import com.masselis.portfolio.ui.components.BottomBar
@@ -27,6 +32,7 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.masselis.portfolio.ui.utils.isStackableMainNav
 import com.slack.circuit.backstack.NavDecoration
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -38,10 +44,11 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.navigation.NavArgument
 import com.slack.circuit.runtime.navigation.NavStack
 import com.slack.circuit.runtime.navigation.NavStackList
+import dev.chrisbanes.haze.rememberHazeState
 
 internal val defaultStartRoute: Route = Landing
 
-@OptIn(InternalCircuitApi::class)
+@OptIn(InternalCircuitApi::class, ExperimentalMaterial3Api::class)
 @Composable
 public fun App(
     navStack: NavStack<out NavStack.Record> = rememberSaveableNavStack(defaultStartRoute),
@@ -65,16 +72,27 @@ public fun App(
                         navigator.goTo(route)
                     }
 
+                    // Keyed on the route so a screen never inherits the previous screen's scroll
+                    // offset and gets recomputed each time the screen changes
+                    // Filled arguments are the default values for `rememberTopAppBarState`
+                    val topBarState = remember(currentRoute) { TopAppBarState(-Float.MIN_VALUE, 0f, 0f) }
+                    val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
+                    val topBarHazeState = rememberHazeState()
                     Scaffold(
                         topBar = {
                             TopNavBar(
                                 currentRoute = currentRoute,
+                                scrollBehavior = topBarScrollBehavior,
                                 openRoute = openRoute,
+                                hazeState = topBarHazeState,
                                 additionalActions = additionalActions,
                             )
                         },
                         content = { padding ->
-                            CompositionLocalProvider(LocalScaffoldPadding provides padding) {
+                            CompositionLocalProvider(
+                                LocalScaffoldPadding provides padding,
+                                LocalTopBarHazeState provides topBarHazeState,
+                            ) {
                                 NavigableCircuitContent(
                                     navigator = navigator,
                                     navStack = navStack,
@@ -89,7 +107,9 @@ public fun App(
                                 )
                             }
                         },
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .nestedScroll(topBarScrollBehavior.nestedScrollConnection),
                         bottomBar = {
                             if (windowSizeClass == Compact) {
                                 BottomBar(

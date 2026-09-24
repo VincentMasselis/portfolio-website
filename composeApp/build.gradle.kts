@@ -19,7 +19,6 @@ kotlin {
         namespace = "com.masselis.portfolio"
         minSdk = libs.versions.android.minSdk.get().toInt()
         compileSdk = libs.versions.android.compileSdk.get().toInt()
-        compileSdkExtension = libs.versions.android.compileSdkExtension.get().toInt()
         compilerOptions {
             jvmTarget.set(libs.versions.android.jvmTarget.map(JvmTarget::fromTarget))
         }
@@ -85,6 +84,9 @@ kotlin {
             implementation(libs.circuit.foundation)
             implementation(libs.circuit.codegen.annotations)
             implementation(libs.markdown.renderer)
+            implementation(libs.haze)
+            implementation(libs.haze.blur)
+            implementation(libs.haze.glass)
         }
         wasmJsMain {
             dependencies {
@@ -108,6 +110,11 @@ ksp { arg("circuit.codegen.mode", "metro") }
 
 // Ensure KSP generates the Circuit factories before any Kotlin compilation runs
 tasks.withType<KotlinCompilationTask<*>>().configureEach {
+    dependsOn("kspCommonMainKotlinMetadata")
+}
+
+// Platform KSP tasks read commonMain sources, which include the metadata KSP output
+tasks.matching { it.name.startsWith("ksp") && it.name != "kspCommonMainKotlinMetadata" }.configureEach {
     dependsOn("kspCommonMainKotlinMetadata")
 }
 

@@ -32,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,11 +49,15 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.masselis.portfolio.ui.utils.string
 import com.mikepenz.markdown.m3.markdownColor
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
+import dev.chrisbanes.haze.hazeSource
 import dev.zacsweers.metro.AppScope
+import kotlin.math.absoluteValue
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
 import kotlinx.datetime.YearMonth
 import kotlinx.datetime.toLocalDateTime
@@ -72,8 +75,6 @@ import portfolio.composeapp.generated.resources.about_hero_title
 import portfolio.composeapp.generated.resources.about_skills_title
 import portfolio.composeapp.generated.resources.about_timeline_subtitle
 import portfolio.composeapp.generated.resources.about_timeline_title
-import kotlin.math.absoluteValue
-import kotlin.time.Clock
 
 @CommonParcelize
 public data object About : Route, StaticScreen
@@ -88,6 +89,7 @@ internal fun AboutScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .hazeSource(LocalTopBarHazeState.current)
                 .verticalScroll(scrollState)
         ) {
             AboutHeroSection()
@@ -110,7 +112,7 @@ private fun AboutHeroSection() {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
         paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
-        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+        backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh,
     ) {
         if (windowSizeClass == Compact) {
             MyselfImage(
@@ -146,7 +148,7 @@ private fun AboutHeroText(
             Text(
                 text = stringResource(Res.string.about_hero_title),
                 style = MaterialTheme.typography.displaySmall,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
         Spacer(Modifier.height(16.dp))
@@ -164,7 +166,7 @@ private fun AboutHeroText(
                 ),
                 paragraphTypography = MaterialTheme.typography.bodyMedium.copy(lineHeight = 25.sp),
                 colors = markdownColor(
-                    text = MaterialTheme.colorScheme.onPrimaryContainer,
+                    text = MaterialTheme.colorScheme.onSurface,
                 )
             )
         }
@@ -175,7 +177,7 @@ private fun AboutHeroText(
 private fun SkillsSection() {
     val windowSizeClass = LocalWindowSizeClass.current
     val selectedTags = rememberSaveable { mutableStateSetOf<Tag>() }
-    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surface) {
         Text(
             text = stringResource(Res.string.about_skills_title),
             style = MaterialTheme.typography.headlineLarge,
@@ -188,8 +190,8 @@ private fun SkillsSection() {
             ) {
                 FilterChip(
                     colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                        selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer,
                     ),
                     label = { Text(stringResource(Res.string.about_filter_all)) },
                     selected = selectedTags.isEmpty(),
@@ -198,8 +200,8 @@ private fun SkillsSection() {
                 Tag.entries.forEach { tag ->
                     FilterChip(
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         ),
                         label = { Text(tag.string()) },
                         selected = selectedTags.contains(tag),
@@ -257,7 +259,7 @@ private fun SkillsSection() {
 
 @Composable
 private fun ExpertiseSection() {
-    Section(backgroundColor = Color.White) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh) {
         Text(
             text = stringResource(Res.string.about_expertise_title),
             style = MaterialTheme.typography.headlineLarge,
@@ -305,7 +307,7 @@ private fun ExpertiseItem(icon: ImageVector, text: String) {
 
 @Composable
 private fun CareerTimelineSection() {
-    Section(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
+    Section(backgroundColor = MaterialTheme.colorScheme.surface) {
         Text(
             text = stringResource(Res.string.about_timeline_title),
             style = MaterialTheme.typography.headlineLarge,
@@ -315,7 +317,7 @@ private fun CareerTimelineSection() {
         Text(
             text = stringResource(Res.string.about_timeline_subtitle),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(24.dp))
         PortfolioData.timelineEntries.forEachIndexed { index, entry ->

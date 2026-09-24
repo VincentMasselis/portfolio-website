@@ -25,6 +25,18 @@
     <!-- Projects -->
     <string name="projects_header_title">MES RÉALISATIONS</string>
     <string name="projects_header_subtitle">Découvrez tous mes projets</string>
+    <string name="projects_chapter_freelance_title">Freelance</string>
+    <string name="projects_chapter_freelance_subtitle">Missions longues pour Decathlon et Kadiska</string>
+    <string name="projects_chapter_startups_title">Startups &amp; premières années</string>
+    <string name="projects_chapter_startups_subtitle">De l'ESN à ma première startup</string>
+    <string name="projects_chapter_personal_title">Personnel &amp; open source</string>
+    <string name="projects_chapter_personal_subtitle">Mon laboratoire d'expérimentation</string>
+    <plurals name="projects_chapter_count">
+        <item quantity="one">%1$d projet</item>
+        <item quantity="other">%1$d projets</item>
+    </plurals>
+    <string name="projects_featured_badge">Projet phare</string>
+    <string name="projects_see_details">Voir le détail →</string>
 
     <!-- Contact -->
     <string name="contact_header_title">Restons en Contact</string>

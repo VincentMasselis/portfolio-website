@@ -1,24 +1,24 @@
 [versions]
 agp = "9.2.1"
-android-compileSdk = "36"
-android-compileSdkExtension = "19"
+android-compileSdk = "37"
 android-jvmTarget = "17"
 android-minSdk = "28"
-android-targetSdk = "36"
+android-targetSdk = "37"
 androidx-activity = "1.12.4"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
 androidx-lifecycle = "2.9.6"
 circuit = "0.33.1"
-composeMultiplatform = "1.10.1"
-kotlin = "2.3.10"
+haze = "2.0.0"
+composeMultiplatform = "1.12.0"
+kotlin = "2.4.20"
 kotlinx-serialization = "1.10.0"
-ksp = "2.3.5"
+ksp = "2.3.12"
 ktor = "3.4.0"
 markdown-renderer = "0.39.2"
 androidx-pdf = "1.0.0-alpha18"
 material3 = "1.11.0-alpha02"
-metro = "0.11.2"
+metro = "1.4.4"
 
 [libraries]
 android-desugar = "com.android.tools:desugar_jdk_libs:2.1.5"
@@ -30,6 +30,9 @@ androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecyc
 circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "circuit" }
 circuit-codegen-annotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuit" }
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
+haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
+haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
+haze-glass = { module = "dev.chrisbanes.haze:haze-glass", version.ref = "haze" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
 compose-material-icons = "org.jetbrains.compose.material:material-icons-extended:1.7.3"

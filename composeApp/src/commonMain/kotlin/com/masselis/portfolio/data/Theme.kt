@@ -12,25 +12,40 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 
-private val DarkNavy = Color(0xFF1C2E3F)
-private val AccentGreen = Color(0xFF4CAF50)
-private val LightGray = Color(0xFFF5F5F5)
-private val RepoCardBlue = Color(0xFF4A90D9)
-private val TextWhite = Color(0xFFE0E0E0)
-
+// Tonal palettes generated with material-color-utilities (HCT): primary from brand green #4CAF50,
+// neutrals from brand navy #1C2E3F, tertiary from the navy hue at higher chroma. Dark scheme tones.
 private val PortfolioColorScheme: ColorScheme = darkColorScheme(
-    primary = AccentGreen,
-    onPrimary = Color.White,
-    primaryContainer = DarkNavy,
-    onPrimaryContainer = TextWhite,
-    secondary = RepoCardBlue,
-    onSecondary = Color.White,
-    background = LightGray,
-    onBackground = Color(0xFF1C1C1C),
-    surface = Color.White,
-    onSurface = Color(0xFF1C1C1C),
-    surfaceVariant = LightGray,
-    onSurfaceVariant = Color(0xFF444444),
+    primary = Color(0xFF78DC77),
+    onPrimary = Color(0xFF00390A),
+    primaryContainer = Color(0xFF005313),
+    onPrimaryContainer = Color(0xFF94F990),
+    inversePrimary = Color(0xFF006E1C),
+    secondary = Color(0xFFBACCB3),
+    onSecondary = Color(0xFF253423),
+    secondaryContainer = Color(0xFF3B4B38),
+    onSecondaryContainer = Color(0xFFD5E8CF),
+    tertiary = Color(0xFF97CBFF),
+    onTertiary = Color(0xFF003354),
+    tertiaryContainer = Color(0xFF004A77),
+    onTertiaryContainer = Color(0xFFCEE5FF),
+    background = Color(0xFF08141F),
+    onBackground = Color(0xFFD7E4F4),
+    surface = Color(0xFF08141F),
+    onSurface = Color(0xFFD7E4F4),
+    surfaceVariant = Color(0xFF35495C),
+    onSurfaceVariant = Color(0xFFB4C9E0),
+    surfaceTint = Color(0xFF78DC77),
+    inverseSurface = Color(0xFFD7E4F4),
+    inverseOnSurface = Color(0xFF26313E),
+    outline = Color(0xFF7F93A9),
+    outlineVariant = Color(0xFF35495C),
+    surfaceBright = Color(0xFF2F3A47),
+    surfaceDim = Color(0xFF08141F),
+    surfaceContainerLowest = Color(0xFF040F1A),
+    surfaceContainerLow = Color(0xFF111D28),
+    surfaceContainer = Color(0xFF15212C),
+    surfaceContainerHigh = Color(0xFF1F2B37),
+    surfaceContainerHighest = Color(0xFF2A3642),
 )
 
 private val PortfolioTypography: Typography = Typography(

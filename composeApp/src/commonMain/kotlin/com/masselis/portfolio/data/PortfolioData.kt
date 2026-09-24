@@ -17,6 +17,7 @@ import kotlinx.datetime.Month.AUGUST
 import kotlinx.datetime.Month.MARCH
 import kotlinx.datetime.Month.NOVEMBER
 import kotlinx.datetime.YearMonth
+import org.jetbrains.compose.resources.StringResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.chronodrive_banner
 import portfolio.composeapp.generated.resources.chronodrive_logo
@@ -77,6 +78,12 @@ import portfolio.composeapp.generated.resources.project_xee_bullet_2
 import portfolio.composeapp.generated.resources.project_xee_bullet_3
 import portfolio.composeapp.generated.resources.project_xee_description
 import portfolio.composeapp.generated.resources.project_xee_title
+import portfolio.composeapp.generated.resources.projects_chapter_freelance_subtitle
+import portfolio.composeapp.generated.resources.projects_chapter_freelance_title
+import portfolio.composeapp.generated.resources.projects_chapter_personal_subtitle
+import portfolio.composeapp.generated.resources.projects_chapter_personal_title
+import portfolio.composeapp.generated.resources.projects_chapter_startups_subtitle
+import portfolio.composeapp.generated.resources.projects_chapter_startups_title
 import portfolio.composeapp.generated.resources.rxvincent_logo
 import portfolio.composeapp.generated.resources.timeline_career_start_description
 import portfolio.composeapp.generated.resources.timeline_career_start_title
@@ -360,4 +367,36 @@ public object PortfolioData {
             )
         ),
     )
+    public val projectChapters: List<ProjectChapter> = listOf(
+        ProjectChapter(
+            period = Pending(YearMonth(2020, 12)),
+            title = Res.string.projects_chapter_freelance_title,
+            subtitle = Res.string.projects_chapter_freelance_subtitle,
+            featured = project(Res.string.project_cubeinstore_title),
+            others = listOf(
+                project(Res.string.project_express_payment_title),
+                project(Res.string.project_embisdk_title),
+                project(Res.string.project_kadiska_title),
+            ),
+        ),
+        ProjectChapter(
+            period = Range(YearMonth(2013, 9),YearMonth(2020, 11)),
+            title = Res.string.projects_chapter_startups_title,
+            subtitle = Res.string.projects_chapter_startups_subtitle,
+            featured = project(Res.string.project_equisense_title),
+            others = listOf(
+                project(Res.string.project_xee_title),
+                project(Res.string.project_chronodrive_title),
+            ),
+        ),
+        ProjectChapter(
+            period = Pending(YearMonth(2018, 6)),
+            title = Res.string.projects_chapter_personal_title,
+            subtitle = Res.string.projects_chapter_personal_subtitle,
+            featured = project(Res.string.project_tpms_advanced_title),
+            others = listOf(project(Res.string.project_home_assistant_title)),
+        ),
+    )
+
+    private fun project(title: StringResource): Project = projects.first { it.title == title }
 }

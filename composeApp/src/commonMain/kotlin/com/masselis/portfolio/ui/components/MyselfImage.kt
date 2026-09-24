@@ -91,7 +91,7 @@ private fun RingAndPill(
     val textMeasurer = rememberTextMeasurer()
     val overlayTextStyle = MaterialTheme.typography
         .headlineMedium
-        .copy(textAlign = TextAlign.Center)
+        .copy(color = MaterialTheme.colorScheme.onPrimary, textAlign = TextAlign.Center)
     val measurements = textMeasurer.measure(
         text = pillText,
         style = overlayTextStyle

@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
@@ -37,7 +36,7 @@ internal fun RepoCard(
             .width(240.dp)
             .height(100.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.secondary)
+            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
     ) {
         Row(
@@ -48,19 +47,19 @@ internal fun RepoCard(
                 painter = painterResource(Res.drawable.ic_github),
                 contentDescription = null,
                 modifier = Modifier.size(14.dp),
-                tint = MaterialTheme.colorScheme.onSecondary,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
                 text = stringResource(Res.string.repo_card_source),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.White.copy(alpha = 0.8f),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Text(
             text = name,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onSurface,
         )
         content(Modifier.weight(1f).fillMaxWidth())
     }
