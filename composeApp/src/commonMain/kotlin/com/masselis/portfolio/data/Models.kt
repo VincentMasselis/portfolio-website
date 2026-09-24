@@ -57,5 +57,13 @@ public data class Project(
     val skills: List<Skill>,
 )
 
+public data class ProjectChapter(
+    val period: TimelineEntry.Time,
+    val title: StringResource,
+    val subtitle: StringResource,
+    val featured: Project,
+    val others: List<Project>,
+)
+
 public data class ContactInfo(val label: String, val url: String, val iconName: String)
 public data class RepoInfo(val name: String, val stars: String, val language: String)

@@ -1,5 +1,6 @@
 package com.masselis.portfolio.ui.components
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +35,11 @@ import com.masselis.portfolio.ui.screens.Resume
 import com.masselis.portfolio.ui.screens.Route
 import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
+import dev.chrisbanes.haze.HazeInput
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.blur.HazeBlurStyle
+import dev.chrisbanes.haze.blur.HazeColorEffect
+import dev.chrisbanes.haze.blur.hazeBlur
 import org.jetbrains.compose.resources.stringResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.nav_about
@@ -45,16 +54,26 @@ internal fun TopNavBar(
     currentRoute: Route,
     scrollBehavior: TopAppBarScrollBehavior,
     openRoute: (Route) -> Unit,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
+    hazeState: HazeState,
     additionalActions: @Composable RowScope.() -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
+    val isContentUnderneath by remember(scrollBehavior.state) {
+        derivedStateOf { scrollBehavior.state.overlappedFraction > 0.01f }
+    }
+    val blurAlpha by animateFloatAsState(
+        targetValue = if (isContentUnderneath) 1f else 0f,
+        label = "topBarBlurAlpha",
+    )
     TopAppBar(
-        modifier = modifier,
+        modifier = modifier.hazeBlur(
+            input = HazeInput.Backdrop(hazeState),
+            style = HazeBlurStyle.topBar.then { alpha(blurAlpha) },
+        ),
         scrollBehavior = scrollBehavior,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = containerColor,
-            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent,
         ),
         navigationIcon = {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -135,3 +154,13 @@ private fun NavLink(
         modifier = Modifier.clickable { onNavigate(route) },
     )
 }
+
+private val HazeBlurStyle.Companion.topBar: HazeBlurStyle
+    @Composable
+    get() {
+        val tint = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.7f)
+        return HazeBlurStyle {
+            blurRadius(20.dp)
+            colorEffects(listOf(HazeColorEffect.tint(tint)))
+        }
+    }

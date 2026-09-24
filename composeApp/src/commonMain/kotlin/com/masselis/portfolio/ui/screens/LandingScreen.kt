@@ -60,10 +60,10 @@ import androidx.compose.ui.unit.dp
 import com.masselis.portfolio.data.PortfolioData
 import com.masselis.portfolio.data.Project
 import com.masselis.portfolio.ui.components.Footer
+import com.masselis.portfolio.ui.components.LandingProjectCard
 import com.masselis.portfolio.ui.components.MeshGradientBackground
 import com.masselis.portfolio.ui.components.MyselfImage
 import com.masselis.portfolio.ui.components.PortfolioMarkdown
-import com.masselis.portfolio.ui.components.ProjectCard
 import com.masselis.portfolio.ui.components.RepoCard
 import com.masselis.portfolio.ui.components.RepoCardPortfolioLabel
 import com.masselis.portfolio.ui.components.RepoCardStats
@@ -74,6 +74,7 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.mikepenz.markdown.model.markdownInlineContent
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.CircuitUiState
@@ -141,6 +142,7 @@ internal fun LandingScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .hazeSource(LocalTopBarHazeState.current)
                 .verticalScroll(scrollState)
         ) {
             Box {
@@ -306,7 +308,7 @@ private fun ProjectGlassItem(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(12.dp)
-    ProjectCard(
+    LandingProjectCard(
         project = project,
         containerColor = Color.Transparent,
         shape = shape,

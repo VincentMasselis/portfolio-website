@@ -1,10 +1,9 @@
 [versions]
 agp = "9.2.1"
 android-compileSdk = "37"
-android-compileSdkExtension = "19"
 android-jvmTarget = "17"
 android-minSdk = "28"
-android-targetSdk = "36"
+android-targetSdk = "37"
 androidx-activity = "1.12.4"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
@@ -32,6 +31,7 @@ circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = 
 circuit-codegen-annotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuit" }
 circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
+haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
 haze-glass = { module = "dev.chrisbanes.haze:haze-glass", version.ref = "haze" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }

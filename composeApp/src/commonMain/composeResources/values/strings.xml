@@ -25,6 +25,18 @@
     <!-- Projects -->
     <string name="projects_header_title">MY PROJECTS</string>
     <string name="projects_header_subtitle">Discover all my projects</string>
+    <string name="projects_chapter_freelance_title">Freelance</string>
+    <string name="projects_chapter_freelance_subtitle">Long-term engagements for Decathlon and Kadiska</string>
+    <string name="projects_chapter_startups_title">Startups &amp; early years</string>
+    <string name="projects_chapter_startups_subtitle">From IT consulting to my first startup</string>
+    <string name="projects_chapter_personal_title">Personal &amp; open source</string>
+    <string name="projects_chapter_personal_subtitle">My experimentation lab</string>
+    <plurals name="projects_chapter_count">
+        <item quantity="one">%1$d project</item>
+        <item quantity="other">%1$d projects</item>
+    </plurals>
+    <string name="projects_featured_badge">Featured</string>
+    <string name="projects_see_details">See details →</string>
 
     <!-- Contact -->
     <string name="contact_header_title">Let's Stay in Touch</string>

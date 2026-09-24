@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarState
@@ -22,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.masselis.portfolio.data.PortfolioTheme
 import com.masselis.portfolio.di.MainGraph
@@ -34,6 +32,7 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.masselis.portfolio.ui.utils.isStackableMainNav
 import com.slack.circuit.backstack.NavDecoration
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -45,6 +44,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.navigation.NavArgument
 import com.slack.circuit.runtime.navigation.NavStack
 import com.slack.circuit.runtime.navigation.NavStackList
+import dev.chrisbanes.haze.rememberHazeState
 
 internal val defaultStartRoute: Route = Landing
 
@@ -77,19 +77,22 @@ public fun App(
                     // Filled arguments are the default values for `rememberTopAppBarState`
                     val topBarState = remember(currentRoute) { TopAppBarState(-Float.MIN_VALUE, 0f, 0f) }
                     val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
+                    val topBarHazeState = rememberHazeState()
                     Scaffold(
                         topBar = {
                             TopNavBar(
                                 currentRoute = currentRoute,
                                 scrollBehavior = topBarScrollBehavior,
                                 openRoute = openRoute,
-                                containerColor = if (currentRoute == Landing) Color.Transparent
-                                else MaterialTheme.colorScheme.surfaceContainerHigh,
+                                hazeState = topBarHazeState,
                                 additionalActions = additionalActions,
                             )
                         },
                         content = { padding ->
-                            CompositionLocalProvider(LocalScaffoldPadding provides padding) {
+                            CompositionLocalProvider(
+                                LocalScaffoldPadding provides padding,
+                                LocalTopBarHazeState provides topBarHazeState,
+                            ) {
                                 NavigableCircuitContent(
                                     navigator = navigator,
                                     navStack = navStack,

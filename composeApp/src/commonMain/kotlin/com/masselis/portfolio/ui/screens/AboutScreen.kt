@@ -49,11 +49,15 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.masselis.portfolio.ui.utils.string
 import com.mikepenz.markdown.m3.markdownColor
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
+import dev.chrisbanes.haze.hazeSource
 import dev.zacsweers.metro.AppScope
+import kotlin.math.absoluteValue
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
 import kotlinx.datetime.YearMonth
 import kotlinx.datetime.toLocalDateTime
@@ -71,8 +75,6 @@ import portfolio.composeapp.generated.resources.about_hero_title
 import portfolio.composeapp.generated.resources.about_skills_title
 import portfolio.composeapp.generated.resources.about_timeline_subtitle
 import portfolio.composeapp.generated.resources.about_timeline_title
-import kotlin.math.absoluteValue
-import kotlin.time.Clock
 
 @CommonParcelize
 public data object About : Route, StaticScreen
@@ -87,6 +89,7 @@ internal fun AboutScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .hazeSource(LocalTopBarHazeState.current)
                 .verticalScroll(scrollState)
         ) {
             AboutHeroSection()

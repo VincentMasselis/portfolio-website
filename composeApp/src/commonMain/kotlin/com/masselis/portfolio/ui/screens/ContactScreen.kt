@@ -55,8 +55,10 @@ import com.masselis.portfolio.ui.theme.LocalWindowSizeClass
 import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.utils.CommonParcelize
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
+import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.StaticScreen
+import dev.chrisbanes.haze.hazeSource
 import dev.zacsweers.metro.AppScope
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -93,6 +95,7 @@ internal fun ContactScreen(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .hazeSource(LocalTopBarHazeState.current)
     ) {
         item(span = { GridItemSpan(if (windowSizeClass == Compact) 1 else 2) }) {
             ContactHeaderSection()
