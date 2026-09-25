@@ -109,6 +109,7 @@ import portfolio.composeapp.generated.resources.landing_see_more
 public data object Landing : Route {
     public data class State(
         val onShowProjects: () -> Unit,
+        val openContactScreen: () -> Unit,
     ) : CircuitUiState
 }
 
@@ -126,7 +127,8 @@ public class LandingPresenter(
 
     @Composable
     override fun present(): Landing.State = Landing.State(
-        onShowProjects = { navigator.goTo(Projects) }
+        onShowProjects = { navigator.goTo(Projects) },
+        openContactScreen = { navigator.goTo(Contact) }
     )
 }
 
@@ -157,7 +159,7 @@ internal fun LandingScreen(
                     ProjectsPreviewSection(hazeState = hazeState, onSeeMore = state.onShowProjects)
                 }
             }
-            AboutPreviewSection()
+            AboutPreviewSection(openContactScreen = state.openContactScreen)
             OSSSection()
             Footer()
         }
@@ -338,7 +340,7 @@ private fun SeeMore(
             .fillMaxWidth()
             .hazeGlass(
                 input = HazeInput.Backdrop(hazeState),
-                 style = GlassStyle.clear.then { shape(shape) },
+                style = GlassStyle.clear.then { shape(shape) },
                 interactionSource = interactionSource,
             )
             .clip(shape)
@@ -368,11 +370,14 @@ private fun SeeMore(
 }
 
 @Composable
-private fun AboutPreviewSection() {
+private fun AboutPreviewSection(
+    openContactScreen: () -> Unit,
+) {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh) {
         if (windowSizeClass == Compact) {
             MyselfImage(
+                openContactScreen = openContactScreen,
                 modifier = Modifier
                     .size(180.dp)
                     .align(Alignment.CenterHorizontally),
@@ -385,6 +390,7 @@ private fun AboutPreviewSection() {
                 horizontalArrangement = Arrangement.spacedBy(32.dp),
             ) {
                 MyselfImage(
+                    openContactScreen = openContactScreen,
                     modifier = Modifier.size(220.dp)
                 )
                 Column(modifier = Modifier.weight(1f)) {
@@ -465,7 +471,10 @@ private fun OSSSection() {
         )
         Spacer(Modifier.height(20.dp))
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(
+                16.dp,
+                alignment = Alignment.CenterHorizontally
+            ),
             modifier = Modifier.fillMaxWidth(),
         ) {
             item {

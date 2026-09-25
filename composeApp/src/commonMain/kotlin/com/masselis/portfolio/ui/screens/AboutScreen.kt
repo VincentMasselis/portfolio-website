@@ -53,9 +53,15 @@ import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
 import com.masselis.portfolio.ui.utils.string
 import com.mikepenz.markdown.m3.markdownColor
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.runtime.CircuitUiState
+import com.slack.circuit.runtime.Navigator
+import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.StaticScreen
 import dev.chrisbanes.haze.hazeSource
 import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import kotlin.math.absoluteValue
 import kotlin.time.Clock
 import kotlinx.datetime.TimeZone.Companion.currentSystemDefault
@@ -77,11 +83,34 @@ import portfolio.composeapp.generated.resources.about_timeline_subtitle
 import portfolio.composeapp.generated.resources.about_timeline_title
 
 @CommonParcelize
-public data object About : Route, StaticScreen
+public data object About : Route    {
+    public data class State(
+        val openContactScreen: () -> Unit,
+    ) : CircuitUiState
+}
+
+@AssistedInject
+public class AboutPresenter(
+    @Assisted private val screen: About,
+    @Assisted private val navigator: Navigator,
+) : Presenter<About.State> {
+
+    @CircuitInject(About::class, AppScope::class)
+    @AssistedFactory
+    public interface Factory {
+        public fun create(screen: About, navigator: Navigator): AboutPresenter
+    }
+
+    @Composable
+    override fun present(): About.State = About.State(
+        openContactScreen = { navigator.goTo(Contact) }
+    )
+}
 
 @CircuitInject(About::class, AppScope::class)
 @Composable
 internal fun AboutScreen(
+    state: About.State,
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
@@ -92,7 +121,7 @@ internal fun AboutScreen(
                 .hazeSource(LocalTopBarHazeState.current)
                 .verticalScroll(scrollState)
         ) {
-            AboutHeroSection()
+            AboutHeroSection(openContactScreen = state.openContactScreen)
             SkillsSection()
             ExpertiseSection()
             CareerTimelineSection()
@@ -108,7 +137,9 @@ internal fun AboutScreen(
 }
 
 @Composable
-private fun AboutHeroSection() {
+private fun AboutHeroSection(
+    openContactScreen: () -> Unit,
+) {
     val windowSizeClass = LocalWindowSizeClass.current
     Section(
         paddingValues = PaddingValues.Section.copy(top = LocalScaffoldPadding.current.calculateTopPadding()),
@@ -116,6 +147,7 @@ private fun AboutHeroSection() {
     ) {
         if (windowSizeClass == Compact) {
             MyselfImage(
+                openContactScreen = openContactScreen,
                 modifier = Modifier
                     .size(180.dp)
                     .align(Alignment.CenterHorizontally)
@@ -128,6 +160,7 @@ private fun AboutHeroSection() {
                 horizontalArrangement = Arrangement.spacedBy(40.dp),
             ) {
                 MyselfImage(
+                    openContactScreen = openContactScreen,
                     modifier = Modifier.size(220.dp)
                 )
                 AboutHeroText(Modifier.weight(1f))
