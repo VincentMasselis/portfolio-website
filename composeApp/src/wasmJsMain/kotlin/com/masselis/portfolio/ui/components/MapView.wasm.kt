@@ -1,5 +1,6 @@
 package com.masselis.portfolio.ui.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +34,11 @@ internal actual fun MapView(
     }
     val borderRadiusTopStart = remember { shape?.topStart?.toPx(Unspecified, Density(1f)) }
     val borderRadiusBottomStart = remember { shape?.bottomStart?.toPx(Unspecified, Density(1f)) }
-    if (html != null) {
+    if (html == null) {
+        // Reserves the map's size while its HTML loads, otherwise the page is shorter for a frame
+        // and a scroll position restored near the bottom gets clamped
+        Box(modifier)
+    } else {
         HtmlElementView(
             factory = {
                 (document.createElement("iframe") as HTMLIFrameElement).apply {

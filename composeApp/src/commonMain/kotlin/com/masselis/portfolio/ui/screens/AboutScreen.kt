@@ -252,7 +252,7 @@ private fun SkillsSection() {
                 .sortedByDescending { it.level.fraction }
                 .filter {
                     if (selectedTags.isEmpty()) return@filter true
-                    it.tags.intersect(selectedTags).isNotEmpty().also(::println)
+                    it.tags.intersect(selectedTags).isNotEmpty()
                 }
                 .iterator()
                 .also { iterator ->

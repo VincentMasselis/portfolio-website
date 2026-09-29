@@ -19,7 +19,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.masselis.portfolio.data.PortfolioTheme
@@ -33,6 +36,7 @@ import com.masselis.portfolio.ui.theme.WindowSizeClass.Compact
 import com.masselis.portfolio.ui.theme.rememberWindowSizeClass
 import com.masselis.portfolio.ui.utils.LocalScaffoldPadding
 import com.masselis.portfolio.ui.utils.LocalTopBarHazeState
+import com.masselis.portfolio.ui.utils.TopBarStatesSaver
 import com.masselis.portfolio.ui.utils.isStackableMainNav
 import com.slack.circuit.backstack.NavDecoration
 import com.slack.circuit.foundation.CircuitCompositionLocals
@@ -64,7 +68,8 @@ public fun App(
             val windowSizeClass = rememberWindowSizeClass(maxWidth.value.toInt())
             CircuitCompositionLocals(MainGraph.circuit) {
                 CompositionLocalProvider(LocalWindowSizeClass provides windowSizeClass) {
-                    val currentRoute = navStack.currentRecord!!.screen as Route
+                    val currentRecord = navStack.currentRecord!!
+                    val currentRoute = currentRecord.screen as Route
                     val openRoute: (Route) -> Unit = { route ->
                         if (isStackableMainNav().not()) {
                             navigator.resetRoot(Landing)
@@ -72,11 +77,16 @@ public fun App(
                         navigator.goTo(route)
                     }
 
-                    // Keyed on the route so a screen never inherits the previous screen's scroll
-                    // offset and gets recomputed each time the screen changes
-                    // Filled arguments are the default values for `rememberTopAppBarState`
-                    val topBarState = remember(currentRoute) { TopAppBarState(-Float.MIN_VALUE, 0f, 0f) }
-                    val topBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topBarState)
+                    // Contains the TopAppBarState for each screen in the nav stack in order to be
+                    // resued in case the user go back in the nav stack
+                    val topBarStates = rememberSaveable(saver = TopBarStatesSaver) { mutableMapOf() }
+                    // Retrieve the TopAppBarState associated to the current screen, if it doesn't
+                    // exist a new TopAppBarState instance is created.
+                    val topBarScrollBehavior = TopAppBarDefaults
+                        .pinnedScrollBehavior(topBarStates.getOrPut(currentRecord.key) {
+                            // Filled arguments are the default values for `rememberTopAppBarState`
+                            TopAppBarState(-Float.MIN_VALUE, 0f, 0f)
+                        })
                     val topBarHazeState = rememberHazeState()
                     Scaffold(
                         topBar = {
@@ -119,6 +129,13 @@ public fun App(
                             }
                         }
                     )
+                    // Cleans the map of TopBarStates in case the remembered state can no longer be
+                    // reached in the navigation stack
+                    LaunchedEffect(currentRecord.key) {
+                        topBarStates.keys
+                            .filterNot { navStack.isRecordReachable(it, navStack.size, true) }
+                            .forEach(topBarStates::remove)
+                    }
                 }
             }
         }

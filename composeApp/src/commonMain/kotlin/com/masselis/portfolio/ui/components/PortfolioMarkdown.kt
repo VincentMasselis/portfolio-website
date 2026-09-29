@@ -19,8 +19,10 @@ import com.mikepenz.markdown.m3.markdownColor
 import com.mikepenz.markdown.m3.markdownTypography
 import com.mikepenz.markdown.model.MarkdownColors
 import com.mikepenz.markdown.model.MarkdownInlineContent
+import com.mikepenz.markdown.model.MarkdownState
 import com.mikepenz.markdown.model.markdownAnnotator
 import com.mikepenz.markdown.model.markdownInlineContent
+import com.mikepenz.markdown.model.rememberMarkdownState
 import com.mikepenz.markdown.utils.getUnescapedTextInNode
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.ast.findChildOfType
@@ -69,7 +71,12 @@ internal fun PortfolioMarkdown(
         }
     }
     Markdown(
-        content = text,
+        markdownState = rememberMarkdownState(
+            // Renders the text immediately instead of an async job, it is useful to avoid drift in
+            // scroll states when going back to an old screen.
+            immediate = true,
+            content = text
+        ),
         colors = colors,
         annotator = annotator,
         inlineContent = inlineContent,
