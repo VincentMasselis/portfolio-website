@@ -104,7 +104,7 @@ public object PortfolioData {
     public val birthday: LocalDate = LocalDate(1988, AUGUST, 5)
 
     @Suppress("RedundantNullableReturnType")
-    public val availability: LocalDate? get() = LocalDate(2026, NOVEMBER, 16)
+    public val availability: LocalDate? get() = null
     public val skills: Set<Skill> = setOf(
         Skill("Kotlin", Mastery, Android, Multiplatform, Compose, Resume),
         Skill("iOS / Swift", Expert, Multiplatform, Resume),
